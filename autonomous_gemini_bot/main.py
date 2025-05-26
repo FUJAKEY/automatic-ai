@@ -9,6 +9,10 @@ from bot_core.file_system_tools import (
 )
 import os
 import json # Для вывода словарей в красивом виде
+from bot_core.plan_structures import ConceptualPlanStep, ToolCallLogEntry 
+import uuid # For generating step_ids if not provided by Planner
+from datetime import datetime, timezone # For timestamps in ToolCallLogEntry
+from typing import List, Dict, Any, Tuple, Optional 
 
 # Словарь, связывающий имена инструментов с их функциями
 AVAILABLE_FUNCTIONS = {
@@ -31,91 +35,142 @@ def ensure_workspace_exists():
             print(f"Критическая ошибка: Не удалось создать рабочую директорию {workspace_path}: {e}")
             raise
 
-from typing import List, Dict, Any, Tuple # Added for type hinting
-
-def execute_plan(plan_steps: list) -> List[Dict[str, Any]]:
+# --- New Conceptual Plan Executor ---
+def execute_conceptual_plan(
+    conceptual_plan: List[ConceptualPlanStep],
+    planner: Planner, 
+    conversation_history: List[Dict[str, str]], 
+    available_functions: Dict[str, callable]
+) -> Tuple[List[ConceptualPlanStep], Optional[str]]:
     """
-    Выполняет шаги плана автоматически и агрегирует результаты.
-    Возвращает список словарей, каждый из которых представляет результат выполнения одного шага.
-    Каждый словарь содержит ключи: "tool_name", "args", "data" (результат от инструмента), 
-    и "error" (сообщение об ошибке, если есть).
-    В случае ошибки на каком-либо шаге, выполнение плана прерывается, 
-    и возвращается список результатов, собранных до этого момента (включая ошибочный шаг).
+    Выполняет концептуальный план, взаимодействуя с Planner для определения конкретных шагов.
+    Возвращает обновленный концептуальный план и опциональное сообщение о глобальной ошибке,
+    если какой-либо шаг не удалось выполнить и требуется коррекция всего плана.
     """
-    if not plan_steps:
-        print("План пуст, нечего выполнять.")
-        return []
+    current_conceptual_plan = conceptual_plan 
+    MAX_ACTIONS_PER_GOAL = 5 
 
-    print("\nНачало автоматического выполнения плана...")
-    aggregated_results: List[Dict[str, Any]] = []
+    print("\n--- Начало выполнения концептуального плана ---")
 
-    for i, step in enumerate(plan_steps):
-        tool_name = step.get("tool_name")
-        args = step.get("args")
+    for i, concept_step in enumerate(current_conceptual_plan):
+        # Ensure 'tool_logs' exists and is a list, as per ConceptualPlanStep definition
+        # and other fields are initialized if they were somehow missing from planner output
+        # (though planner validation should catch this)
+        if 'tool_logs' not in concept_step or not isinstance(concept_step.get('tool_logs'), list):
+            concept_step['tool_logs'] = []
+        if 'status' not in concept_step: # Should be 'pending' from planner
+             concept_step['status'] = 'pending'
+        if 'reason_for_status' not in concept_step:
+             concept_step['reason_for_status'] = None
+        if 'final_result' not in concept_step:
+            concept_step['final_result'] = None
+
+
+        if concept_step['status'] in ['achieved', 'failed_terminal']:
+            print(f"Концептуальный шаг ({i+1}/{len(current_conceptual_plan)}) '{concept_step['goal']}' уже выполнен ранее со статусом '{concept_step['status']}'. Пропуск.")
+            continue
         
-        print(f"  Выполнение шага {i+1}/{len(plan_steps)}: {tool_name}({json.dumps(args, ensure_ascii=False)})")
+        # If a step was marked for correction by a previous execution, it should be handled by main_loop's correction mechanism
+        # before re-entering execute_conceptual_plan with a (potentially new) plan.
+        # So, we assume 'failed_needs_correction' means it's a fresh attempt or a corrected plan being executed.
+        
+        print(f"\nВыполнение концептуального шага ({i+1}/{len(current_conceptual_plan)}): {concept_step['goal']}")
+        concept_step['status'] = 'in_progress'
+        concept_step['reason_for_status'] = "Выполняется..."
 
-        step_outcome: Dict[str, Any] = {
-            "tool_name": tool_name,
-            "args": args,
-            "data": None,
-            "error": None
-        }
 
-        if tool_name in AVAILABLE_FUNCTIONS:
-            try:
-                function_to_call = AVAILABLE_FUNCTIONS[tool_name]
-                # file_system_tools functions now return (data, error_message)
-                data, error_message = function_to_call(**args)
+        for action_count in range(MAX_ACTIONS_PER_GOAL):
+            print(f"  Попытка действия {action_count + 1}/{MAX_ACTIONS_PER_GOAL} для цели: {concept_step['goal']}")
+            
+            action_thought, next_tool_call, goal_status_update = planner.determine_next_action_for_goal(
+                goal_description=concept_step['goal'],
+                history=conversation_history, 
+                goal_execution_log=concept_step['tool_logs']
+            )
+
+            if action_thought:
+                print(f"    Мысли планировщика (для действия): {action_thought}")
+
+            if goal_status_update:
+                concept_step['status'] = goal_status_update
+                # The reason from planner.determine_next_action_for_goal's thought is usually good here.
+                # Planner.py appends "Причина: <reason>" to thought for goal_status updates.
+                concept_step['reason_for_status'] = action_thought 
                 
-                step_outcome["data"] = data
-                step_outcome["error"] = error_message
-
-                if error_message:
-                    print(f"      Ошибка: {error_message}")
-                    aggregated_results.append(step_outcome)
-                    print(f"      Выполнение плана прервано на шаге {i+1} из-за ошибки.")
-                    return aggregated_results
-                elif data is not None:
-                    # Для list_directory_contents, data может быть пустым списком, что нормально
-                    if isinstance(data, list) and not data:
-                         print("      Результат: Директория пуста или команда не вернула вывод.")
+                if goal_status_update == "achieved":
+                    # Populate final_result if achieved.
+                    if concept_step['tool_logs'] and not concept_step['tool_logs'][-1]['outcome_error']:
+                        last_log_data = concept_step['tool_logs'][-1]['outcome_data']
+                        concept_step['final_result'] = last_log_data if last_log_data is not None else "Действие выполнено, нет специфичных данных для результата."
+                    elif action_thought and "Причина:" not in action_thought : 
+                         concept_step['final_result'] = action_thought
                     else:
-                        print(f"      Результат: {data}")
+                        concept_step['final_result'] = "Цель достигнута (нет специфичных данных от последнего шага или детальной мысли планировщика)."
+                
+                print(f"    Концептуальный шаг '{concept_step['goal']}' завершен со статусом: {goal_status_update}. Пояснение: {concept_step['reason_for_status']}")
+                break # Break from actions loop for this conceptual step
+
+            elif next_tool_call:
+                tool_name = next_tool_call.get('tool_name')
+                tool_args = next_tool_call.get('args', {})
+                
+                print(f"      Следующее действие: вызов инструмента '{tool_name}' с аргументами {json.dumps(tool_args, ensure_ascii=False)}")
+
+                current_tool_log_entry = ToolCallLogEntry(
+                    tool_name=str(tool_name), 
+                    args=dict(tool_args),    
+                    outcome_data=None,
+                    outcome_error=None,
+                    timestamp=datetime.now(timezone.utc).isoformat()
+                )
+
+                if tool_name in available_functions:
+                    try:
+                        function_to_call = available_functions[tool_name]
+                        tool_data, tool_error_msg_str = function_to_call(**tool_args)
+                        
+                        current_tool_log_entry['outcome_data'] = tool_data
+                        current_tool_log_entry['outcome_error'] = tool_error_msg_str
+
+                        if tool_error_msg_str:
+                            print(f"        Ошибка инструмента '{tool_name}': {tool_error_msg_str}")
+                        else:
+                            print(f"        Результат инструмента '{tool_name}': {json.dumps(tool_data, ensure_ascii=False, indent=2)}")
+                    
+                    except Exception as e:
+                        tool_error_msg_str = f"Неожиданная ошибка при вызове инструмента '{tool_name}': {str(e)}"
+                        print(f"        {tool_error_msg_str}")
+                        current_tool_log_entry['outcome_error'] = tool_error_msg_str
                 else:
-                    # Случай, когда data is None и error_message is None
-                    print("      Шаг выполнен успешно (нет специфичных данных для вывода).")
+                    tool_error_msg_str = f"Инструмент '{tool_name}' не найден."
+                    print(f"        {tool_error_msg_str}")
+                    current_tool_log_entry['outcome_error'] = tool_error_msg_str
+                
+                concept_step['tool_logs'].append(current_tool_log_entry)
 
-            except TypeError as te:
-                error_msg = f"Ошибка вызова функции {tool_name}: неверные аргументы. {te}"
-                print(f"      {error_msg}")
-                step_outcome["error"] = error_msg
-                aggregated_results.append(step_outcome)
-                print(f"      Выполнение плана прервано на шаге {i+1}.")
-                return aggregated_results
-            except Exception as e:
-                error_msg = f"Неожиданная ошибка при выполнении шага {tool_name}: {e}"
-                print(f"      {error_msg}")
-                step_outcome["error"] = error_msg
-                aggregated_results.append(step_outcome)
-                print(f"      Выполнение плана прервано на шаге {i+1}.")
-                return aggregated_results
-        else:
-            error_msg = f"Инструмент '{tool_name}' не найден."
-            print(f"    Ошибка: {error_msg}")
-            step_outcome["error"] = error_msg
-            aggregated_results.append(step_outcome)
-            print(f"    Выполнение плана прервано на шаге {i+1}.")
-            return aggregated_results
+            else: 
+                print("    Ошибка: Планировщик не вернул ни следующего действия, ни статуса цели.")
+                concept_step['status'] = 'failed_needs_correction' 
+                concept_step['reason_for_status'] = "Планировщик не смог определить следующее действие или статус цели после предыдущих попыток."
+                return current_conceptual_plan, f"Планировщик не смог определить действие для цели: '{concept_step['goal']}'" 
         
-        aggregated_results.append(step_outcome)
+        else: # Inner loop (action_count) completed without break (i.e., MAX_ACTIONS_PER_GOAL reached)
+            if concept_step['status'] == 'in_progress': 
+                print(f"  Достигнут лимит действий ({MAX_ACTIONS_PER_GOAL}) для концептуального шага: {concept_step['goal']}")
+                concept_step['status'] = 'failed_needs_correction'
+                concept_step['reason_for_status'] = f"Достигнут лимит действий ({MAX_ACTIONS_PER_GOAL}) для достижения этой цели."
+        
+        if concept_step['status'] in ['failed_needs_correction', 'failed_terminal']:
+            error_detail = f"Концептуальный шаг '{concept_step['goal']}' не удалось выполнить (статус: {concept_step['status']}). Причина: {concept_step.get('reason_for_status', 'Нет деталей')}"
+            print(f"  {error_detail}")
+            return current_conceptual_plan, error_detail
 
-    # Если цикл завершился без прерываний (т.е. все шаги успешны)
-    print("\nВсе шаги плана выполнены.") # Сообщение о завершении, но не обязательно об успехе каждого шага
-                                         # Успех определяется анализом aggregated_results вызывающей стороной
-    return aggregated_results
+    print("\n--- Выполнение концептуального плана успешно завершено (все шаги обработаны) ---")
+    return current_conceptual_plan, None
+
 
 MAX_HISTORY_EXCHANGES = 5
+MAX_MAIN_CORRECTION_ATTEMPTS = 1
 
 def main_loop():
     print("Запуск основного цикла Autonomous Gemini Bot...")
@@ -126,139 +181,196 @@ def main_loop():
         return
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    main_system_prompt_content = None
     client_system_prompt_path = os.path.join(script_dir, "prompts", "system_prompt.txt")
-
-    if not os.path.exists(client_system_prompt_path):
+    if os.path.exists(client_system_prompt_path):
+        try:
+            with open(client_system_prompt_path, 'r', encoding='utf-8') as f:
+                main_system_prompt_content = f.read().strip()
+            if not main_system_prompt_content:
+                print(f"ПРЕДУПРЕЖДЕНИЕ: Системный промпт в файле {client_system_prompt_path} пуст.")
+                main_system_prompt_content = None 
+            else:
+                print(f"Содержимое системного промпта клиента загружено из {client_system_prompt_path}")
+        except Exception as e:
+            print(f"Ошибка при чтении файла системного промпта клиента {client_system_prompt_path}: {e}")
+            main_system_prompt_content = None
+    else:
         print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта клиента {client_system_prompt_path} не найден.")
-        gemini_cli = GeminiClient()
-    else:
-        print(f"Файл системного промпта клиента найден: {client_system_prompt_path}")
-        gemini_cli = GeminiClient(system_prompt_path=client_system_prompt_path)
 
-    if gemini_cli.system_prompt:
-        print(f"Загруженный системный промпт КЛИЕНТА: {gemini_cli.system_prompt}")
-    else:
-        print("Системный промпт КЛИЕНТА не был загружен.")
-
-    planner = Planner(gemini_cli)
+    # This GeminiClient is for the main assistant's direct responses (if any, currently planner handles all)
+    # The Planner instantiates its own GeminiClient with its specific system prompt.
+    # _ = GeminiClient(system_prompt_text=main_system_prompt_content) # Keep if used directly, or remove
+    
+    planner = Planner() 
 
     if not os.getenv('GOOGLE_API_KEY'):
         print("\nПРЕДУПРЕЖДЕНИЕ: Переменная окружения GOOGLE_API_KEY не установлена.")
-        # return # Можно раскомментировать для строгой проверки
 
     print("\nВведите ваш запрос (или 'выход' для завершения):")
+    
+    original_user_request_for_correction = "" 
+    main_correction_attempts = 0 
+    
+    conceptual_plan_steps: Optional[List[ConceptualPlanStep]] = None # Holds the current conceptual plan
+
     while True:
         try:
-            user_request = input("> ")
-            if user_request.lower() == 'выход':
-                print("Завершение работы.")
-                break
-            if not user_request:
-                continue
+            if not original_user_request_for_correction or main_correction_attempts == 0:
+                user_request = input("> ")
+                if user_request.lower() == 'выход':
+                    print("Завершение работы.")
+                    break
+                if not user_request:
+                    continue
+                original_user_request_for_correction = user_request 
+                main_correction_attempts = 0 
+                conceptual_plan_steps = None # Clear previous plan for a new request
+                if conversation_history and conversation_history[-1]['role'] == 'user' and conversation_history[-1]['content'] == user_request:
+                    pass # Avoid duplicating user message if it's the same as last one (e.g. after a correction)
+                else:
+                     conversation_history.append({"role": "user", "content": user_request})
 
-            # Add user request to history
-            conversation_history.append({"role": "user", "content": user_request})
+            else: # We are in a correction loop for the main plan
+                user_request = original_user_request_for_correction
+            
             if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
                 conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
             
-            # Pass conversation_history to planner.generate_plan
-            print("\nДумаю над вашим запросом...")
-            thought_or_direct_answer, plan_steps = planner.generate_plan(user_request, history=conversation_history)
+            if not conceptual_plan_steps: # Only generate a new plan if one isn't already being corrected/executed
+                print("\nДумаю над вашим запросом (генерация концептуального плана)...")
+                thought_or_direct_answer, new_plan_steps = planner.generate_plan(user_request, history=conversation_history)
 
-            if plan_steps is None: # This is the direct answer case from planner
-                print(f"Ответ Gemini (или мысли): {thought_or_direct_answer}")
-                if thought_or_direct_answer: # Ensure we don't append None
-                    conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
-                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
-                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
-                continue
+                if new_plan_steps is None: 
+                    print(f"Ответ Gemini (или мысли): {thought_or_direct_answer}")
+                    if thought_or_direct_answer: 
+                        conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
+                    original_user_request_for_correction = "" 
+                    main_correction_attempts = 0 
+                    continue
 
-            if thought_or_direct_answer:
-                 print(f"Мои размышления по поводу задачи: {thought_or_direct_answer}")
+                if thought_or_direct_answer:
+                     print(f"Мои размышления по поводу задачи: {thought_or_direct_answer}")
+                
+                if not new_plan_steps: 
+                    print("План не содержит шагов. Считаю задачу выполненной или не требующей действий.")
+                    if thought_or_direct_answer: 
+                        conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
+                    original_user_request_for_correction = "" 
+                    main_correction_attempts = 0 
+                    continue
+                conceptual_plan_steps = new_plan_steps
+
+
+            print("\n--- Текущий концептуальный план ---")
+            if not conceptual_plan_steps: # Should not happen if logic above is correct
+                 print("Ошибка: Концептуальный план отсутствует перед выполнением.")
+                 original_user_request_for_correction = "" 
+                 main_correction_attempts = 0
+                 continue
+
+            for i, step_detail in enumerate(conceptual_plan_steps):
+                print(f"  Шаг {i+1} ({step_detail.get('step_id', 'N/A')}): {step_detail.get('goal','N/A')} (Статус: {step_detail.get('status','N/A')})")
             
-            if not plan_steps: # Empty plan, but there was a thought_or_direct_answer
-                print("План не содержит шагов. Считаю задачу выполненной или не требующей действий.")
-                # This thought_or_direct_answer is the AI's response for an empty plan.
-                if thought_or_direct_answer: # Ensure we don't append None
-                    conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
-                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
-                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
-                continue
-
-            print("\nСгенерирован следующий план:")
-            for i, step in enumerate(plan_steps):
-                print(f"  Шаг {i+1}: {step['tool_name']}({json.dumps(step['args'], ensure_ascii=False)})")
-            
-            # Выполнение плана
-            execution_outcomes = execute_plan(plan_steps)
-
-            # Определяем успешность выполнения плана
-            plan_successful = (
-                execution_outcomes and 
-                execution_outcomes[-1].get("error") is None
+            updated_conceptual_plan, execution_error_message = execute_conceptual_plan(
+                conceptual_plan_steps, planner, conversation_history, AVAILABLE_FUNCTIONS
             )
+            conceptual_plan_steps = updated_conceptual_plan # Keep the mutated plan with updated statuses/logs
 
-            if plan_successful:
-                print("\nПлан выполнен успешно. Формирую итоговый ответ...")
-                # Конструируем контекст для итогового ответа от планировщика
-                context_for_summarization = (
-                    f"Первоначальный запрос пользователя был: '{user_request}'.\n"
-                    f"Был выполнен следующий план из {len(plan_steps)} шагов:\n"
+            if execution_error_message: # A conceptual step failed and requires plan-level correction
+                print(f"\nОшибка выполнения концептуального плана: {execution_error_message}")
+                main_correction_attempts += 1
+                
+                if main_correction_attempts >= MAX_MAIN_CORRECTION_ATTEMPTS:
+                    final_error_msg = f"Достигнут лимит ({MAX_MAIN_CORRECTION_ATTEMPTS}) попыток исправления концептуального плана. Завершение попыток для запроса: '{original_user_request_for_correction}'. Последняя ошибка: {execution_error_message}"
+                    print(final_error_msg)
+                    conversation_history.append({"role": "assistant", "content": final_error_msg})
+                    original_user_request_for_correction = "" 
+                    main_correction_attempts = 0 
+                    conceptual_plan_steps = None # Clear plan
+                    continue 
+
+                print(f"Попытка # {main_correction_attempts} сгенерировать корректирующий КОНЦЕПТУАЛЬНЫЙ план...")
+                
+                # Pass the entire current (failed) conceptual plan as failed_plan_outcomes context
+                corrective_thought, new_conceptual_correction_plan = planner.generate_correction_plan(
+                    original_user_request=original_user_request_for_correction,
+                    history=conversation_history,
+                    failed_plan_outcomes=conceptual_plan_steps, # Send the whole plan with its current states
+                    error_message=execution_error_message 
                 )
-                for i, step_cfg in enumerate(plan_steps): # Renamed step to step_cfg to avoid conflict
-                    context_for_summarization += f"  Шаг {i+1}: {step_cfg['tool_name']}({json.dumps(step_cfg['args'], ensure_ascii=False)})\n"
-                
-                context_for_summarization += "\nРезультаты выполнения шагов:\n"
-                for i, outcome in enumerate(execution_outcomes):
-                    outcome_data_str = ""
-                    # Prioritize error message if it exists
-                    if outcome.get('error') is not None:
-                        outcome_data_str = f"  Ошибка: {outcome['error']}"
-                    elif outcome.get('data') is not None:
-                        # Handle empty list case for data (e.g. list_directory_contents on empty dir)
-                        if isinstance(outcome['data'], list) and not outcome['data']:
-                            outcome_data_str = "  Данные: (пустой список или нет вывода)"
-                        else:
-                            outcome_data_str = f"  Данные: {json.dumps(outcome['data'], ensure_ascii=False, indent=2)}"
-                    else: # No error, no data
-                        outcome_data_str = "  (нет специфичных данных или ошибки)"
-                    
-                    context_for_summarization += f"  Результат шага {i+1} ({outcome['tool_name']}): {outcome_data_str}\n"
 
-                context_for_summarization += "\nПожалуйста, проанализируй результаты и предоставь окончательный ответ на первоначальный запрос пользователя."
+                if new_conceptual_correction_plan:
+                    print("Получен корректирующий концептуальный план. Попытка выполнения...")
+                    if corrective_thought: print(f"Мысли по поводу корректирующего плана: {corrective_thought}")
+                    conceptual_plan_steps = new_conceptual_correction_plan # Replace the old plan
+                    # Loop continues to re-attempt execute_conceptual_plan with the new plan
+                else:
+                    no_correction_msg = corrective_thought or "Gemini не смог предложить корректирующий концептуальный план."
+                    print(no_correction_msg)
+                    conversation_history.append({"role": "assistant", "content": no_correction_msg})
+                    original_user_request_for_correction = "" 
+                    main_correction_attempts = 0
+                    conceptual_plan_steps = None # Clear plan
+                    continue
+            
+            else: # Conceptual plan executed without returning a global error message
+                print("\nКонцептуальный план выполнен (все шаги обработаны или помечены как завершенные). Формирую итоговый ответ...")
+                main_correction_attempts = 0 # Reset on successful execution path
+
+                context_for_summarization = f"Первоначальный запрос пользователя был: '{original_user_request_for_correction}'.\nБыл выполнен следующий концептуальный план:\n"
+                all_steps_achieved = True
+                for i, step in enumerate(conceptual_plan_steps):
+                    context_for_summarization += f"\nШаг {i+1}: Цель: {step['goal']}\n"
+                    context_for_summarization += f"  Статус: {step['status']}\n"
+                    if step['reason_for_status']:
+                        context_for_summarization += f"  Пояснение к статусу: {step['reason_for_status']}\n"
+                    if step['final_result'] is not None:
+                        context_for_summarization += f"  Итоговый результат шага: {json.dumps(step['final_result'], ensure_ascii=False, indent=2)}\n"
+                    
+                    context_for_summarization += "  Лог действий:\n"
+                    if not step['tool_logs']:
+                        context_for_summarization += "    (Не было предпринято действий с инструментами для этой цели)\n"
+                    else:
+                        for j, log_entry in enumerate(step['tool_logs']):
+                            context_for_summarization += f"    Действие {j+1}: {log_entry['tool_name']}({json.dumps(log_entry['args'], ensure_ascii=False)})"
+                            if log_entry['outcome_error']:
+                                context_for_summarization += f" -> Ошибка: {log_entry['outcome_error']}\n"
+                            else:
+                                context_for_summarization += f" -> Результат: {json.dumps(log_entry['outcome_data'], ensure_ascii=False, indent=2)}\n"
+                    if step['status'] != 'achieved':
+                        all_steps_achieved = False
                 
-                # print(f"\nDEBUG: Контекст для суммаризации:\n{context_for_summarization}\n") # Для отладки
+                if not all_steps_achieved:
+                     context_for_summarization += "\nПримечание: Не все концептуальные шаги были успешно достигнуты."
                 
-                final_thought, final_plan = planner.generate_plan(context_for_summarization, history=conversation_history)
+                context_for_summarization += "\n\nПожалуйста, проанализируй результаты и предоставь окончательный ответ на первоначальный запрос пользователя."
                 
-                # Ожидаем, что final_plan будет None или пустым, а final_thought - ответом.
+                final_thought, final_direct_answer_plan = planner.generate_plan(context_for_summarization, history=conversation_history)
+                
                 if final_thought:
                     print(f"\nИтоговый ответ Gemini:\n{final_thought}")
                     conversation_history.append({"role": "assistant", "content": final_thought})
-                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
-                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
                 else:
                     print("\nGemini не предоставил итогового ответа.")
-                    # Optionally, add a generic "I could not generate a final response" to history
-                    # For now, only adding if final_thought is present.
-                if final_plan:
-                    print(f"DEBUG: Неожиданный дополнительный план от Gemini: {final_plan}")
-            
-            # This 'elif not plan_steps:' block is now handled before plan execution.
-            # The case where plan_steps is an empty list (not None) and has a thought
-            # is now handled by the 'if not plan_steps:' block after planner.generate_plan call.
+                
+                if final_direct_answer_plan: # Should be None or empty from planner in "summarization" mode
+                    print(f"DEBUG: Неожиданный дополнительный план от Gemini при суммаризации: {final_direct_answer_plan}")
 
-            else: # План не был успешно выполнен (error in execution_outcomes[-1])
-                print("\nПлан не был полностью выполнен из-за ошибки на одном из шагов. "
-                      "Результаты выполнения (если есть) были выведены выше.")
-                # We don't add a new "assistant" message here as the errors from execute_plan are already printed.
-                # The summarization step (which would generate a new assistant message) was skipped.
+                original_user_request_for_correction = "" # Clear for next independent request
+                conceptual_plan_steps = None # Clear plan
 
         except KeyboardInterrupt:
             print("\nПрервано пользователем. Завершение работы.")
             break
         except Exception as e:
-            print(f"Произошла непредвиденная ошибка в основном цикле: {e}")
+            print(f"Произошла непредвиденная ошибка в основном цикле: {type(e).__name__} - {e}")
+            import traceback
+            traceback.print_exc() # Print full traceback for debugging
+            original_user_request_for_correction = "" # Reset state to avoid loop with bad data
+            main_correction_attempts = 0
+            conceptual_plan_steps = None
 
 
 def main():
