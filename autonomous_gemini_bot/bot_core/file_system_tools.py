@@ -48,128 +48,138 @@ def _get_safe_path(filepath: str) -> str:
         
     return full_path
 
-def execute_terminal_command(command: str) -> str:
+from typing import Tuple, Optional, List, Any
+
+def execute_terminal_command(command: str) -> Tuple[Optional[str], Optional[str]]:
     """
-    Выполняет команду в терминале в контексте WORKING_DIRECTORY и возвращает ее вывод (stdout и stderr).
+    Выполняет команду в терминале в контексте WORKING_DIRECTORY.
+    Возвращает кортеж (result_data, error_message).
+    result_data: строка с stdout и stderr, если успешно.
+    error_message: строка с описанием ошибки, если неуспешно.
     Опасно! Эту функцию нужно использовать с большой осторожностью.
     """
     # TODO: Добавить дополнительные меры безопасности. Например, белый список разрешенных команд.
-    # Сейчас функция позволяет выполнить любую команду, что небезопасно.
     if not command:
-        return "Ошибка: Команда не может быть пустой."
+        return None, "Ошибка: Команда не может быть пустой."
     try:
-        # Убедимся, что рабочая директория существует для выполнения команды
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         workspace_path = os.path.join(base_dir, WORKING_DIRECTORY)
         if not os.path.exists(workspace_path):
             os.makedirs(workspace_path, exist_ok=True)
             
-        # Выполняем команду
-        # Важно: `shell=True` может быть небезопасным, если команда формируется из ненадежного источника.
-        # Для большей безопасности лучше передавать команду как список аргументов (shell=False).
-        # Но для простоты "терминальной команды" пока оставим shell=True.
         process = subprocess.run(
             command,
             shell=True,
             capture_output=True,
             text=True,
-            cwd=workspace_path, # Выполняем команду в рабочей директории
-            timeout=30  # Таймаут для предотвращения зависания
+            cwd=workspace_path,
+            timeout=30
         )
         if process.returncode == 0:
-            return f"Команда выполнена успешно.\nStdout:\n{process.stdout}\nStderr:\n{process.stderr}"
+            return f"Команда выполнена успешно.\nStdout:\n{process.stdout}\nStderr:\n{process.stderr}", None
         else:
-            return f"Ошибка выполнения команды (код {process.returncode}).\nStdout:\n{process.stdout}\nStderr:\n{process.stderr}"
+            return None, f"Ошибка выполнения команды (код {process.returncode}).\nStdout:\n{process.stdout}\nStderr:\n{process.stderr}"
     except subprocess.TimeoutExpired:
-        return "Ошибка: Время выполнения команды истекло."
+        return None, "Ошибка: Время выполнения команды истекло."
     except Exception as e:
-        return f"Исключение при выполнении команды: {e}"
+        return None, f"Исключение при выполнении команды: {e}"
 
-def read_file(filepath: str) -> str:
-    """Читает содержимое файла и возвращает его."""
+def read_file(filepath: str) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Читает содержимое файла.
+    Возвращает кортеж (file_content, error_message).
+    file_content: строка с содержимым файла, если успешно.
+    error_message: строка с описанием ошибки, если неуспешно.
+    """
     if not filepath:
-        return "Ошибка: Путь к файлу не может быть пустым."
+        return None, "Ошибка: Путь к файлу не может быть пустым."
     try:
         safe_path = _get_safe_path(filepath)
         with open(safe_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        return content
+        return content, None
     except FileNotFoundError:
-        return f"Ошибка: Файл не найден по пути '{filepath}' (внутри {WORKING_DIRECTORY})."
-    except ValueError as ve: # Ошибка из _get_safe_path
-        return str(ve)
+        return None, f"Ошибка: Файл не найден по пути '{filepath}' (внутри {WORKING_DIRECTORY})."
+    except ValueError as ve:
+        return None, str(ve)
     except Exception as e:
-        return f"Ошибка при чтении файла '{filepath}': {e}"
+        return None, f"Ошибка при чтении файла '{filepath}': {e}"
 
-def write_to_file(filepath: str, content: str) -> str:
-    """Записывает/создает файл с указанным содержимым."""
+def write_to_file(filepath: str, content: str) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Записывает/создает файл с указанным содержимым.
+    Возвращает кортеж (success_message, error_message).
+    success_message: строка с сообщением об успехе.
+    error_message: строка с описанием ошибки, если неуспешно.
+    """
     if not filepath:
-        return "Ошибка: Путь к файлу не может быть пустым."
+        return None, "Ошибка: Путь к файлу не может быть пустым."
     try:
         safe_path = _get_safe_path(filepath)
-        # Убедимся, что директория для файла существует
         os.makedirs(os.path.dirname(safe_path), exist_ok=True)
         with open(safe_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        return f"Файл успешно записан: '{filepath}' (внутри {WORKING_DIRECTORY})."
-    except ValueError as ve: # Ошибка из _get_safe_path
-        return str(ve)
+        return f"Файл успешно записан: '{filepath}' (внутри {WORKING_DIRECTORY}).", None
+    except ValueError as ve:
+        return None, str(ve)
     except Exception as e:
-        return f"Ошибка при записи в файл '{filepath}': {e}"
+        return None, f"Ошибка при записи в файл '{filepath}': {e}"
 
-def create_directory(path: str) -> str:
-    """Создает новую директорию."""
+def create_directory(path: str) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Создает новую директорию.
+    Возвращает кортеж (success_message, error_message).
+    success_message: строка с сообщением об успехе.
+    error_message: строка с описанием ошибки, если неуспешно.
+    """
     if not path:
-        return "Ошибка: Путь для создания директории не может быть пустым."
+        return None, "Ошибка: Путь для создания директории не может быть пустым."
     try:
         safe_path = _get_safe_path(path)
         if os.path.exists(safe_path):
-            return f"Ошибка: Директория или файл уже существует по пути '{path}' (внутри {WORKING_DIRECTORY})."
+            return None, f"Ошибка: Директория или файл уже существует по пути '{path}' (внутри {WORKING_DIRECTORY})."
         os.makedirs(safe_path)
-        return f"Директория успешно создана: '{path}' (внутри {WORKING_DIRECTORY})."
-    except ValueError as ve: # Ошибка из _get_safe_path
-        return str(ve)
+        return f"Директория успешно создана: '{path}' (внутри {WORKING_DIRECTORY}).", None
+    except ValueError as ve:
+        return None, str(ve)
     except Exception as e:
-        return f"Ошибка при создании директории '{path}': {e}"
+        return None, f"Ошибка при создании директории '{path}': {e}"
 
-def list_directory_contents(path: str = ".") -> str:
-    """Возвращает список файлов и директорий по указанному пути (по умолчанию текущая рабочая директория)."""
+def list_directory_contents(path: str = ".") -> Tuple[Optional[List[str]], Optional[str]]:
+    """
+    Возвращает список файлов и директорий по указанному пути.
+    Возвращает кортеж (items_list, error_message).
+    items_list: список строк с именами файлов/директорий, если успешно. Директории имеют '/' в конце.
+    error_message: строка с описанием ошибки, если неуспешно.
+    """
     try:
-        # Если path ".", это текущая директория workspace.
-        # Если path не ".", то это поддиректория внутри workspace.
         safe_path = _get_safe_path(path)
         if not os.path.isdir(safe_path):
-            return f"Ошибка: '{path}' не является директорией (внутри {WORKING_DIRECTORY})."
+            return None, f"Ошибка: '{path}' не является директорией (внутри {WORKING_DIRECTORY})."
         
         items = os.listdir(safe_path)
         if not items:
-            return f"Директория '{path}' пуста (внутри {WORKING_DIRECTORY})."
+            return [], None # Успех, но директория пуста
         
-        # Добавим слеш к директориям для наглядности
         processed_items = []
         for item in items:
             if os.path.isdir(os.path.join(safe_path, item)):
                 processed_items.append(item + "/")
             else:
                 processed_items.append(item)
-        return f"Содержимое директории '{path}' (внутри {WORKING_DIRECTORY}):\n" + "\n".join(processed_items)
-    except ValueError as ve: # Ошибка из _get_safe_path
-        return str(ve)
-    except FileNotFoundError: # Если сама директория path не найдена после _get_safe_path (маловероятно, если _get_safe_path отработал)
-        return f"Ошибка: Директория не найдена по пути '{path}' (внутри {WORKING_DIRECTORY})."
+        return processed_items, None
+    except ValueError as ve:
+        return None, str(ve)
+    except FileNotFoundError:
+        return None, f"Ошибка: Директория не найдена по пути '{path}' (внутри {WORKING_DIRECTORY})."
     except Exception as e:
-        return f"Ошибка при просмотре содержимого директории '{path}': {e}"
+        return None, f"Ошибка при просмотре содержимого директории '{path}': {e}"
 
 if __name__ == '__main__':
     # Тестирование функций
-    # Создадим директорию workspace, если она не существует, на уровне autonomous_gemini_bot/
-    # Это нужно для локального тестирования file_system_tools.py
-    # В реальном сценарии это будет сделано при инициализации бота или _get_safe_path
-    
-    # Путь к директории /autonomous_gemini_bot/
-    current_script_path = os.path.abspath(__file__) # .../autonomous_gemini_bot/bot_core/file_system_tools.py
-    bot_core_dir = os.path.dirname(current_script_path) # .../autonomous_gemini_bot/bot_core/
-    project_root_dir = os.path.dirname(bot_core_dir) # .../autonomous_gemini_bot/
+    current_script_path = os.path.abspath(__file__)
+    bot_core_dir = os.path.dirname(current_script_path)
+    project_root_dir = os.path.dirname(bot_core_dir)
     
     workspace_abs_path = os.path.join(project_root_dir, WORKING_DIRECTORY)
     if not os.path.exists(workspace_abs_path):
@@ -179,74 +189,119 @@ if __name__ == '__main__':
     print("--- Тестирование функций файловой системы ---")
     print(f"Все операции будут выполняться в '{WORKING_DIRECTORY}/'")
 
-    # Перед тестами убедимся, что workspace чист или содержит только то, что нужно
-    # Для простоты, можно вручную очищать перед запуском этого скрипта, если нужно.
+    def print_result(data: Optional[Any], error: Optional[str]):
+        if error:
+            print(f"  Ошибка: {error}")
+        elif data is not None: # data может быть пустой строкой или списком, что не False
+            if isinstance(data, list):
+                if not data:
+                    print("  Результат: Директория пуста.")
+                else:
+                    print("  Результат (список):")
+                    for item in data:
+                        print(f"    - {item}")
+            else:
+                 print(f"  Результат: {data}")
+        else: # Должно быть либо data, либо error, но на всякий случай
+            print("  Неожиданный результат: нет ни данных, ни ошибки.")
+
 
     print("\n1. Создание директории 'test_dir':")
-    print(create_directory("test_dir"))
+    data, error = create_directory("test_dir")
+    print_result(data, error)
+
+    print("\n1a. Создание директории '' (пустой путь):")
+    data, error = create_directory("")
+    print_result(data, error)
 
     print("\n2. Повторное создание директории 'test_dir':")
-    print(create_directory("test_dir")) # Должна быть ошибка
+    data, error = create_directory("test_dir") # Должна быть ошибка
+    print_result(data, error)
 
     print("\n3. Создание вложенной директории 'test_dir/inner_dir':")
-    # Сначала убедимся что test_dir существует
-    # _get_safe_path("test_dir") # Это создаст test_dir, если его нет, из-за логики в _get_safe_path
-                               # Нет, _get_safe_path создает только сам WORKING_DIRECTORY, а не поддиректории.
-                               # create_directory должен сам создавать.
-    # Если test_dir не была создана успешно на шаге 1, этот шаг может провалиться.
-    # Лучше делать create_directory("test_dir/inner_dir") напрямую, т.к. makedirs создаст промежуточные.
-    print(create_directory("test_dir/inner_dir"))
-
+    data, error = create_directory("test_dir/inner_dir")
+    print_result(data, error)
 
     print("\n4. Запись в файл 'test_file.txt' в 'test_dir':")
-    print(write_to_file("test_dir/test_file.txt", "Привет, мир!\nЭто тестовый файл."))
+    data, error = write_to_file("test_dir/test_file.txt", "Привет, мир!\nЭто тестовый файл.")
+    print_result(data, error)
+    
+    print("\n4a. Запись в файл с пустым путем '':")
+    data, error = write_to_file("", "Не должно записаться")
+    print_result(data, error)
 
     print("\n5. Чтение файла 'test_dir/test_file.txt':")
-    content = read_file("test_dir/test_file.txt")
-    print(content)
+    data, error = read_file("test_dir/test_file.txt")
+    print_result(data, error)
+
+    print("\n5a. Чтение файла с пустым путем '':")
+    data, error = read_file("")
+    print_result(data, error)
 
     print("\n6. Чтение несуществующего файла 'non_existent_file.txt':")
-    print(read_file("non_existent_file.txt"))
+    data, error = read_file("non_existent_file.txt")
+    print_result(data, error)
 
     print("\n7. Просмотр содержимого директории 'test_dir':")
-    print(list_directory_contents("test_dir"))
+    data, error = list_directory_contents("test_dir")
+    print_result(data, error)
     
     print("\n8. Просмотр содержимого корневой рабочей директории ('.') :")
-    print(list_directory_contents("."))
-    
+    # Создадим там временный файл для проверки непустого листинга
+    write_to_file("temp_root_file.txt", "temp")
+    data, error = list_directory_contents(".")
+    print_result(data, error)
+    # Удалим временный файл
+    if os.path.exists(_get_safe_path("temp_root_file.txt")):
+        os.remove(_get_safe_path("temp_root_file.txt"))
+
+    print("\n8a. Просмотр содержимого пустой созданной директории 'empty_dir':")
+    create_directory("empty_dir")
+    data, error = list_directory_contents("empty_dir")
+    print_result(data, error)
+    # Удалим empty_dir
+    if os.path.exists(_get_safe_path("empty_dir")):
+        os.rmdir(_get_safe_path("empty_dir"))
+
+
     print("\n9. Просмотр содержимого несуществующей директории 'non_existent_dir':")
-    print(list_directory_contents("non_existent_dir"))
+    data, error = list_directory_contents("non_existent_dir")
+    print_result(data, error)
 
     print("\n10. Попытка записи файла за пределами рабочей директории (должна быть ошибка):")
-    print(write_to_file("../outside_file.txt", "Этот файл не должен быть создан"))
-    # Проверим, что он действительно не создан
+    data, error = write_to_file("../outside_file.txt", "Этот файл не должен быть создан")
+    print_result(data, error)
+    
     outside_file_path = os.path.join(os.path.dirname(workspace_abs_path), "outside_file.txt")
     if os.path.exists(outside_file_path):
-        print(f"ОШИБКА БЕЗОПАСНОСТИ: Файл '{outside_file_path}' был создан за пределами рабочей директории!")
-        # os.remove(outside_file_path) # Удалить для чистоты
+        print(f"  ОШИБКА БЕЗОПАСНОСТИ: Файл '{outside_file_path}' был создан за пределами рабочей директории!")
     else:
-        print("Тест безопасности пройден: файл за пределами рабочей директории не создан.")
+        print("  Тест безопасности пройден: файл за пределами рабочей директории не создан.")
 
 
     print("\n11. Выполнение команды терминала (ls или dir):")
-    # ВНИМАНИЕ: Эта команда выполняется в рабочей директории.
-    # Для Windows: 'dir', для Linux/macOS: 'ls -la'
-    # Эта команда безопасна, но будьте осторожны с другими командами.
     command_to_run = "ls -la" if os.name != 'nt' else "dir"
-    print(f"Выполнение команды: {command_to_run}")
-    print(execute_terminal_command(command_to_run))
+    print(f"  Выполнение команды: {command_to_run}")
+    data, error = execute_terminal_command(command_to_run)
+    print_result(data, error)
+
+    print("\n11a. Выполнение команды терминала с пустым вводом:")
+    data, error = execute_terminal_command("")
+    print_result(data, error)
     
     print("\n12. Выполнение опасной команды (rm -rf / или аналогичной):")
-    # Мы не будем ее выполнять, но здесь нужно помнить о рисках.
-    # print(execute_terminal_command("echo 'Это тест опасной команды, но она не должна ничего удалять'"))
-    # print(execute_terminal_command("mkdir test_command_dir && echo 'hello' > test_command_dir/file.txt && ls test_command_dir && rm -r test_command_dir"))
-    print("Тест опасной команды пропущен (для безопасности).")
+    print("  Тест опасной команды пропущен (для безопасности).")
 
+    print("\n--- Очистка тестовых файлов и директорий ---")
+    try:
+        if os.path.exists(_get_safe_path("test_dir/test_file.txt")):
+            os.remove(_get_safe_path("test_dir/test_file.txt"))
+        if os.path.exists(_get_safe_path("test_dir/inner_dir")):
+            os.rmdir(_get_safe_path("test_dir/inner_dir"))
+        if os.path.exists(_get_safe_path("test_dir")):
+            os.rmdir(_get_safe_path("test_dir"))
+        print("  Тестовые файлы и директории удалены.")
+    except Exception as e:
+        print(f"  Ошибка при очистке: {e}")
 
     print("\n--- Тестирование завершено ---")
-    # При желании можно добавить код для очистки созданных файлов и директорий
-    # Например:
-    # os.remove(_get_safe_path("test_dir/test_file.txt"))
-    # os.rmdir(_get_safe_path("test_dir/inner_dir"))
-    # os.rmdir(_get_safe_path("test_dir"))
-    # print("Тестовые файлы и директории удалены.")
