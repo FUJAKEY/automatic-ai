@@ -20,7 +20,7 @@ class GeminiClient:
                 pass
 
 
-        self.model = genai.GenerativeModel('gemini-pro') # Используем gemini-pro по умолчанию
+        self.model = genai.GenerativeModel('gemini-1.5-flash-latest') # Используем gemini-1.5-flash-latest по умолчанию
         self.system_prompt = None
         if system_prompt_path:
             try:
