@@ -126,21 +126,32 @@ def main_loop():
         return
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    main_system_prompt_content = None
     client_system_prompt_path = os.path.join(script_dir, "prompts", "system_prompt.txt")
-
-    if not os.path.exists(client_system_prompt_path):
-        print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта клиента {client_system_prompt_path} не найден.")
-        gemini_cli = GeminiClient()
+    if os.path.exists(client_system_prompt_path):
+        try:
+            with open(client_system_prompt_path, 'r', encoding='utf-8') as f:
+                main_system_prompt_content = f.read().strip()
+            if not main_system_prompt_content:
+                print(f"ПРЕДУПРЕЖДЕНИЕ: Системный промпт в файле {client_system_prompt_path} пуст.")
+                main_system_prompt_content = None # Ensure it's None if empty after stripping
+            else:
+                print(f"Содержимое системного промпта клиента загружено из {client_system_prompt_path}")
+        except Exception as e:
+            print(f"Ошибка при чтении файла системного промпта клиента {client_system_prompt_path}: {e}")
+            main_system_prompt_content = None
     else:
-        print(f"Файл системного промпта клиента найден: {client_system_prompt_path}")
-        gemini_cli = GeminiClient(system_prompt_path=client_system_prompt_path)
+        print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта клиента {client_system_prompt_path} не найден.")
+
+    gemini_cli = GeminiClient(system_prompt_text=main_system_prompt_content)
 
     if gemini_cli.system_prompt:
         print(f"Загруженный системный промпт КЛИЕНТА: {gemini_cli.system_prompt}")
     else:
-        print("Системный промпт КЛИЕНТА не был загружен.")
+        print("Системный промпт КЛИЕНТА не был загружен (либо файл не найден, пуст, или произошла ошибка при чтении).")
 
-    planner = Planner(gemini_cli)
+    planner = Planner() # Planner теперь сам управляет своим GeminiClient
 
     if not os.getenv('GOOGLE_API_KEY'):
         print("\nПРЕДУПРЕЖДЕНИЕ: Переменная окружения GOOGLE_API_KEY не установлена.")

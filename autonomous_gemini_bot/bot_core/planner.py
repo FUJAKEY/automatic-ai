@@ -86,19 +86,20 @@ PLANNER_SYSTEM_PROMPT = f"""
 """
 
 class Planner:
-    def __init__(self, gemini_client: GeminiClient):
-        self.gemini_client = gemini_client
-        # Мы могли бы использовать отдельную модель Gemini или конфигурацию для планировщика,
-        # но пока будем использовать тот же клиент.
-        # Важно, чтобы системный промпт для планирования был правильно подан.
+    def __init__(self):
+        # Planner теперь сам создает свой GeminiClient с нужным системным промптом
+        self.gemini_client = GeminiClient(system_prompt_text=PLANNER_SYSTEM_PROMPT)
+        # Важно, чтобы GeminiClient корректно обрабатывал API ключ (например, из переменных окружения)
 
     def generate_plan(self, user_request: str, history: Optional[List[Dict[str, str]]] = None) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
         """
         Генерирует план выполнения для запроса пользователя, учитывая историю диалога.
         Возвращает кортеж: (размышления_бота_или_ответ, список_шагов_плана_или_None)
         """
-        if not self.gemini_client:
-            return "Ошибка: Gemini клиент не инициализирован.", None
+        # Проверка self.gemini_client может остаться, если есть шанс, что инициализация GeminiClient
+        # не удалась, хотя текущая реализация GeminiClient не выбрасывает исключение при отсутствии ключа.
+        if not self.gemini_client: # Эта проверка может быть избыточной, если GeminiClient всегда создается.
+            return "Ошибка: Gemini клиент не инициализирован в Planner.", None
 
         formatted_history = ""
         if history:
@@ -170,8 +171,8 @@ if __name__ == '__main__':
         print("Переменная окружения GOOGLE_API_KEY не установлена. Пропуск теста Planner.")
     else:
         print("--- Тестирование Planner ---")
-        gemini_cli = GeminiClient() 
-        planner = Planner(gemini_cli)
+        # planner = Planner(gemini_cli) # Старая инициализация
+        planner = Planner() # Новая инициализация, Planner сам создает GeminiClient
 
         # Пример 1: Задача без истории
         print("\nПример 1: Задача без истории")
