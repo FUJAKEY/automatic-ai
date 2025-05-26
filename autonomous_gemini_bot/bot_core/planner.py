@@ -1,10 +1,12 @@
 import google.generativeai as genai
 from bot_core.gemini_client import GeminiClient # Предполагаем, что GeminiClient доступен
 import json
-from typing import Optional, List, Dict, Tuple, Any # Added for type hinting
+from typing import Optional, List, Dict, Tuple, Any, Union # Added Union
+from .plan_structures import ConceptualPlanStep, ToolCallLogEntry # Assuming plan_structures.py is in the same directory
 
 # Описание доступных инструментов для использования в промпте планировщика
 # Это должно соответствовать функциям в file_system_tools.py
+# THIS IS NO LONGER DIRECTLY INCLUDED IN PLANNER_SYSTEM_PROMPT for conceptual planning
 # Позже это будет использоваться для реального function calling.
 AVAILABLE_TOOLS_DESCRIPTIONS = """
 Доступные инструменты для взаимодействия с файловой системой (все пути относительные к рабочей директории 'workspace/'):
@@ -24,10 +26,8 @@ PLANNER_SYSTEM_PROMPT = f"""
 --- Конец Контекста Диалога ---
 
 Ты — продвинутый ИИ-ассистент, отвечающий за планирование и декомпозицию задач.
-Твоя главная цель — разбить сложный запрос пользователя на последовательность конкретных, выполнимых шагов.
-Каждый шаг должен представлять собой вызов одного из доступных инструментов.
-
-{AVAILABLE_TOOLS_DESCRIPTIONS}
+Твоя главная цель — разбить сложный запрос пользователя на последовательность высокоуровневых КОНЦЕПТУАЛЬНЫХ ШАГОВ (целей). Каждый шаг должен описывать, ЧТО нужно достичь, а не конкретный вызов инструмента.
+# {AVAILABLE_TOOLS_DESCRIPTIONS} # REMOVED for conceptual planning
 
 --- Режим Ответа по Результатам Выполнения ---
 Иногда ты получишь запрос, который уже содержит первоначальный запрос пользователя, выполненный план и детальные результаты каждого шага (включая данные или ошибки). Такой запрос будет содержать фразы вроде "Первоначальный запрос пользователя был:", "Результаты выполнения шагов:" и "Пожалуйста, проанализируй результаты...".
@@ -54,26 +54,48 @@ PLANNER_SYSTEM_PROMPT = f"""
 --- Конец Режима Ответа ---
 
 Правила составления плана (применяются, если это не Режим Ответа):
-- Не стесняйся использовать `execute_terminal_command` для проверки состояния файлов, содержимого директорий или для других операций, если подходящего специализированного инструмента нет или он неудобен в данном случае.
-- План должен быть списком шагов.
-- Каждый шаг должен быть словарем с ключами "tool_name" (имя одной из доступных функций, например, "write_to_file") и "args" (словарь аргументов для этой функции, например, {{"filepath": "output.txt", "content": "Результат"}}).
-- Думай пошагово. Прежде чем сгенерировать план, опиши свои размышления о том, как лучше всего выполнить запрос пользователя, какие инструменты использовать и в каком порядке.
-- Если запрос пользователя не является задачей (например, это простое приветствие, общий вопрос, или просьба о информации, не требующая инструментов), то верни пустой список шагов (`"plan": []`). В этом случае, поле `"thought"` должно содержать **прямой и дружелюбный ответ пользователю**.
-- Всегда создавай файлы и директории внутри поддиректорий, чтобы поддерживать порядок. Не создавай много файлов на верхнем уровне рабочей директории. Придумывай осмысленные имена для директорий.
-- Если нужно создать файл, сначала убедись, что директория для него существует, или создай её (если это не было сделано ранее).
-- Результат должен быть строкой в формате JSON, содержащей два ключа: "thought" (твои размышления о задаче и плане, прямой ответ пользователю если план пуст, или ответ по результатам выполнения) и "plan" (список шагов, или пустой список для Режима Ответа и простых вопросов).
+- План должен быть списком концептуальных шагов.
+- Каждый шаг должен описывать высокоуровневую цель, а не конкретный инструмент.
+- Думай пошагово. Прежде чем сгенерировать план, опиши свои размышления о том, как лучше всего выполнить запрос пользователя, какие концептуальные этапы для этого нужны.
+- КРИТИЧЕСКИ ВАЖНО: Если запрос пользователя явно не подразумевает выполнение действий с файлами, командами терминала или другими инструментами (например, это общение, приветствие, общий вопрос, просьба дать совет, идею, предложение, или обсудить что-либо), то **"plan" ДОЛЖЕН быть ПУСТЫМ СПИСКОМ (`[]`)**. В этом случае, ВСЯ информация, ответ, предложение или идея должны быть полностью изложены в поле "thought". Не создавай план для простого ответа на вопрос или для генерации идей.
+- Результат должен быть строкой в формате JSON, содержащей два ключа: "thought" (твои размышления о задаче и общем плане) и "plan" (список этих концептуальных шагов).
+Каждый шаг в списке "plan" должен быть объектом со следующими ключами:
+  - "goal": (строка) Описание высокоуровневой цели этого шага. Например: "Найти папку 'docs' и изучить её содержимое" или "Подготовить отчет на основе файла 'summary.txt'".
+  - "step_id": (строка) Уникальный идентификатор для этого шага (ты можешь его сгенерировать, например, "step_N").
+  - "status": (строка) Изначально всегда "pending".
+  - "reason_for_status": (строка или null) Изначально null.
+  - "tool_logs": (список) Изначально пустой список `[]`.
+  - "final_result": (строка или null) Изначально null.
 
-Пример JSON ответа для ПЛАНИРОВАНИЯ ЗАДАЧИ:
+Пример JSON ответа для ПЛАНИРОВАНИЯ ЗАДАЧИ (КОНЦЕПТУАЛЬНЫЙ ПЛАН):
+Если пользователь просит: "Найди папку 'project_files', прочитай все .txt файлы в ней и сделай краткое резюме."
+Твой ответ должен выглядеть примерно так:
 {{
-  "thought": "Пользователь хочет создать файл с приветствием. Я использую write_to_file. Создам его в директории 'texts'.",
+  "thought": "Пользователь хочет найти папку, прочитать текстовые файлы и получить резюме. Я разделю это на три концептуальных шага: поиск папки и листинг файлов, чтение содержимого файлов, затем генерация резюме.",
   "plan": [
     {{
-      "tool_name": "create_directory",
-      "args": {{"path": "texts"}}
+      "step_id": "step_1",
+      "goal": "Найти папку 'project_files' и получить список всех .txt файлов внутри нее и ее поддиректорий.",
+      "status": "pending",
+      "reason_for_status": null,
+      "tool_logs": [],
+      "final_result": null
     }},
     {{
-      "tool_name": "write_to_file",
-      "args": {{"filepath": "texts/greeting.txt", "content": "Привет, это автономный бот!"}}
+      "step_id": "step_2",
+      "goal": "Прочитать содержимое каждого .txt файла, найденного на предыдущем шаге.",
+      "status": "pending",
+      "reason_for_status": null,
+      "tool_logs": [],
+      "final_result": null
+    }},
+    {{
+      "step_id": "step_3",
+      "goal": "Составить краткое резюме на основе прочитанного содержимого текстовых файлов и предоставить его пользователю.",
+      "status": "pending",
+      "reason_for_status": null,
+      "tool_logs": [],
+      "final_result": null
     }}
   ]
 }}
@@ -83,22 +105,35 @@ PLANNER_SYSTEM_PROMPT = f"""
   "thought": "Привет! Я Gemini, ваш автономный ИИ-ассистент. Чем могу помочь сегодня?",
   "plan": []
 }}
+
+Если пользователь просит идею или предложение (например, "предложи мне проект" или "какую книгу почитать?"):
+{{
+  "thought": "Вот несколько идей для проектов, которые вы могли бы рассмотреть: 1. Персональный трекер задач для учета ежедневных дел. 2. Простой бот для Telegram, который отвечает на базовые команды. 3. Веб-скрейпер для сбора данных с вашего любимого новостного сайта.",
+  "plan": []
+}}
+
+Если пользователь просит информацию, которая не требует использования инструментов (например, "объясни концепцию Х" или "какие у тебя есть возможности?"):
+{{
+  "thought": "Я могу помочь вам с различными задачами, включая работу с файлами (чтение, запись, создание директорий, листинг содержимого), выполнение команд в терминале (с ограничениями безопасности), а также предоставление информации и генерацию текста. Я также могу составлять планы для выполнения более сложных запросов.",
+  "plan": []
+}}
 """
 
 class Planner:
-    def __init__(self, gemini_client: GeminiClient):
-        self.gemini_client = gemini_client
-        # Мы могли бы использовать отдельную модель Gemini или конфигурацию для планировщика,
-        # но пока будем использовать тот же клиент.
-        # Важно, чтобы системный промпт для планирования был правильно подан.
+    def __init__(self):
+        # Planner теперь сам создает свой GeminiClient с нужным системным промптом
+        self.gemini_client = GeminiClient(system_prompt_text=PLANNER_SYSTEM_PROMPT)
+        # Важно, чтобы GeminiClient корректно обрабатывал API ключ (например, из переменных окружения)
 
-    def generate_plan(self, user_request: str, history: Optional[List[Dict[str, str]]] = None) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
+    def generate_plan(self, user_request: str, history: Optional[List[Dict[str, str]]] = None) -> Tuple[Optional[str], Optional[List[ConceptualPlanStep]]]:
         """
-        Генерирует план выполнения для запроса пользователя, учитывая историю диалога.
-        Возвращает кортеж: (размышления_бота_или_ответ, список_шагов_плана_или_None)
+        Генерирует концептуальный план выполнения для запроса пользователя, учитывая историю диалога.
+        Возвращает кортеж: (размышления_бота_или_ответ, список_концептуальных_шагов_или_None)
         """
-        if not self.gemini_client:
-            return "Ошибка: Gemini клиент не инициализирован.", None
+        # Проверка self.gemini_client может остаться, если есть шанс, что инициализация GeminiClient
+        # не удалась, хотя текущая реализация GeminiClient не выбрасывает исключение при отсутствии ключа.
+        if not self.gemini_client: # Эта проверка может быть избыточной, если GeminiClient всегда создается.
+            return "Ошибка: Gemini клиент не инициализирован в Planner.", None
 
         formatted_history = ""
         if history:
@@ -112,56 +147,386 @@ class Planner:
         prompt_parts.append(f"\n\nВот текущий запрос пользователя, который нужно обработать (учитывая предыдущий диалог, если он есть):\n{user_request}")
         
         full_request_to_gemini = "".join(prompt_parts)
+        full_request_to_gemini += "\n\nIMPORTANT: Your entire response for this specific turn MUST be a single, valid JSON object. Start directly with '{' and end directly with '}'. Do not include any other text, explanations, conversational filler, or markdown formatting before or after the JSON object." # New line added
         
         # print(f"\nDEBUG: Полный промпт для Gemini (включая историю):\n{full_request_to_gemini}\n") # Для отладки
 
         raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
 
         if not raw_response:
-            return "Не удалось получить ответ от Gemini для планирования.", None # type: ignore
+            return "Не удалось получить ответ от Gemini для планирования.", None
 
+        if not isinstance(raw_response, str):
+            return "Ошибка: Ответ от Gemini не является строкой.", None
+
+        json_string_to_parse = None # Initialize for use in exception handling
         try:
-            # Ожидаем JSON в ответе
-            # Убираем возможные ```json ... ``` обертки
-            if raw_response.strip().startswith("```json"):
-                clean_response = raw_response.strip()[7:-3].strip()
-            elif raw_response.strip().startswith("```"): # на случай если просто ```
-                 clean_response = raw_response.strip()[3:-3].strip()
-            else:
-                clean_response = raw_response.strip()
+            first_brace = raw_response.find('{')
+            last_brace = raw_response.rfind('}')
+
+            if first_brace == -1 or last_brace == -1 or last_brace < first_brace:
+                error_message = f"Ошибка: Не удалось найти корректные ограничители JSON ('{{' и '}}') в ответе Gemini.\nОтвет Gemini:\n{raw_response}"
+                print(error_message)
+                return error_message, None
             
-            parsed_data = json.loads(clean_response)
+            json_string_to_parse = raw_response[first_brace:last_brace+1]
+            
+            parsed_data = json.loads(json_string_to_parse)
             
             thought = parsed_data.get("thought", "Мысли отсутствуют.")
             plan_steps_raw = parsed_data.get("plan", [])
 
-            # Добавим более строгую проверку типа для plan_steps
             if not isinstance(plan_steps_raw, list):
-                # Возвращаем ошибку, если plan не список, но сохраняем мысль
-                return (f"Ошибка: План от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None) # type: ignore
+                return (f"Ошибка: План от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None)
             
-            plan_steps: List[Dict[str, Any]] = []
-            for step_raw in plan_steps_raw:
-                if not isinstance(step_raw, dict) or "tool_name" not in step_raw or "args" not in step_raw:
-                    return (f"Ошибка: Неверный формат шага в плане: {step_raw}. Мысль: {thought}", None) # type: ignore
-                if not isinstance(step_raw["args"], dict):
-                     return (f"Ошибка: Аргументы шага должны быть словарем: {step_raw['args']}. Мысль: {thought}", None) # type: ignore
-                plan_steps.append(step_raw)
-
-
-            if not plan_steps and thought: # Если план пуст, но есть мысль - это может быть ответ на вопрос
-                return thought, None # type: ignore
+            conceptual_plan_steps: List[ConceptualPlanStep] = []
+            for i, step_raw in enumerate(plan_steps_raw):
+                if not isinstance(step_raw, dict):
+                    return (f"Ошибка: Шаг {i+1} в плане не является словарем: {step_raw}. Мысль: {thought}", None)
                 
-            return thought, plan_steps # type: ignore
+                # Validate ConceptualPlanStep structure
+                required_keys = {"step_id", "goal", "status", "reason_for_status", "tool_logs", "final_result"}
+                if not required_keys.issubset(step_raw.keys()):
+                    missing_keys = required_keys - step_raw.keys()
+                    return (f"Ошибка: Шаг {i+1} в плане не содержит обязательные ключи: {missing_keys}. Шаг: {step_raw}. Мысль: {thought}", None)
+
+                if not isinstance(step_raw.get("goal"), str) or not step_raw.get("goal"):
+                     return (f"Ошибка: 'goal' в шаге {i+1} должен быть непустой строкой. Шаг: {step_raw}. Мысль: {thought}", None)
+                if not isinstance(step_raw.get("step_id"), str) or not step_raw.get("step_id"):
+                     return (f"Ошибка: 'step_id' в шаге {i+1} должен быть непустой строкой. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("status") != "pending":
+                     return (f"Ошибка: 'status' в шаге {i+1} должен быть 'pending'. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("reason_for_status") is not None: # Initially should be null
+                     return (f"Ошибка: 'reason_for_status' в шаге {i+1} должен быть null. Шаг: {step_raw}. Мысль: {thought}", None)
+                if not isinstance(step_raw.get("tool_logs"), list) or step_raw.get("tool_logs"): # Initially should be empty list
+                     return (f"Ошибка: 'tool_logs' в шаге {i+1} должен быть пустым списком. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("final_result") is not None: # Initially should be null
+                     return (f"Ошибка: 'final_result' в шаге {i+1} должен быть null. Шаг: {step_raw}. Мысль: {thought}", None)
+                
+                # Type cast to ConceptualPlanStep after validation for type checking benefits
+                conceptual_plan_steps.append(ConceptualPlanStep(**step_raw)) # type: ignore 
+
+            if not conceptual_plan_steps and thought: 
+                return thought, None # This is a direct answer or a non-task, no plan needed
+                
+            return thought, conceptual_plan_steps
 
         except json.JSONDecodeError as e:
-            error_message = f"Ошибка декодирования JSON ответа от Gemini: {e}\nОтвет Gemini:\n{raw_response}"
+            # json_string_to_parse will be available here if it was assigned
+            error_context = json_string_to_parse if json_string_to_parse is not None else "Строка для парсинга не была определена (ошибка до присвоения)."
+            error_message = f"Ошибка декодирования JSON ответа от Gemini: {e}\nСтрока для парсинга:\n{error_context}\nПолный ответ Gemini:\n{raw_response}"
             print(error_message) 
-            return error_message, None # type: ignore
+            return error_message, None
         except Exception as e:
-            error_message = f"Неожиданная ошибка при обработке ответа Gemini: {e}\nОтвет Gemini:\n{raw_response}"
+            error_message = f"Неожиданная ошибка при обработке ответа Gemini: {e}\nПолный ответ Gemini:\n{raw_response}"
             print(error_message)
-            return error_message, None # type: ignore
+            return error_message, None
+
+    def generate_correction_plan(
+        self, 
+        original_user_request: str, 
+        history: Optional[List[Dict[str, str]]], 
+        failed_plan_outcomes: List[Dict[str, Any]], # This comes from ToolCallLogEntry like structures
+        error_message: str
+    ) -> Tuple[Optional[str], Optional[List[ConceptualPlanStep]]]:
+        """
+        Генерирует концептуальный корректирующий план на основе информации о предыдущем неудачном выполнении.
+        """
+        if not self.gemini_client:
+            return "Ошибка: Gemini клиент не инициализирован для корректировки.", None
+
+        formatted_history = ""
+        if history:
+            for message in history:
+                formatted_history += f"{message['role'].capitalize()}: {message['content']}\n"
+            formatted_history += "\n"
+
+        prompt_parts = [
+            PLANNER_SYSTEM_PROMPT,
+            "\n--- Контекст Неудачного Плана ---",
+            f"\nПервоначальный запрос пользователя был: {original_user_request}\n",
+            "История диалога (если есть):\n" + (formatted_history if formatted_history else "Нет предыдущей истории.\n"),
+            "\nБыл выполнен план со следующими результатами:\n"
+        ]
+
+        for i, outcome in enumerate(failed_plan_outcomes):
+            outcome_data_str = outcome.get('data', '') # Default to empty string if no data
+            args_str = json.dumps(outcome.get('args'), ensure_ascii=False)
+            status_message = ""
+            if outcome.get('error'):
+                status_message = f"ОШИБКА: {outcome.get('error')}"
+            elif outcome_data_str: # data is not None or empty
+                if isinstance(outcome_data_str, list) and not outcome_data_str:
+                    status_message = "Результат: (пустой список или нет вывода)"
+                else:
+                    status_message = f"Результат: {json.dumps(outcome_data_str, ensure_ascii=False)}"
+            else: # No error, no data, or data was empty string initially
+                status_message = "Успешно (нет специфичных данных для вывода)"
+            
+            prompt_parts.append(f"  Шаг {i+1}: {outcome.get('tool_name')}({args_str}) - {status_message}\n")
+        
+        prompt_parts.append(f"\nВыполнение было прервано из-за следующей ошибки на последнем релевантном шаге: {error_message}\n")
+        prompt_parts.append("--- Запрос на Корректировку ---")
+        prompt_parts.append("\nПожалуйста, проанализируй ошибку и контекст. Твоя задача — создать НОВЫЙ КОНЦЕПТУАЛЬНЫЙ план действий, чтобы:")
+        prompt_parts.append("\n1. Исправить возникшую ошибку ИЛИ обойти её, используя высокоуровневые концептуальные шаги.")
+        prompt_parts.append("\n2. Попытаться достичь первоначальной цели пользователя, если это всё ещё возможно после исправления/обхода ошибки.")
+        prompt_parts.append("\nЕсли ошибку исправить невозможно или первоначальная цель недостижима, объясни это в поле 'thought'.")
+        prompt_parts.append("\nНовый план должен быть списком концептуальных шагов в JSON-формате, как описано в системных инструкциях (каждый шаг с 'goal', 'step_id', 'status':'pending', 'tool_logs':[], 'reason_for_status':null, 'final_result':null).")
+        prompt_parts.append("\n\nIMPORTANT: Your entire response for this specific turn MUST be a single, valid JSON object. Start directly with '{' and end directly with '}'. Do not include any other text, explanations, conversational filler, or markdown formatting before or after the JSON object.")
+
+        full_request_to_gemini = "".join(prompt_parts)
+        # print(f"\nDEBUG: Полный промпт для КОРРЕКТИРОВКИ Gemini:\n{full_request_to_gemini}\n") # Для отладки
+
+        raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
+
+        if not raw_response:
+            return "Не удалось получить ответ от Gemini для корректировки плана.", None
+
+        if not isinstance(raw_response, str):
+            return "Ошибка: Ответ от Gemini (корректировка) не является строкой.", None
+
+        json_string_to_parse = None
+        try:
+            first_brace = raw_response.find('{')
+            last_brace = raw_response.rfind('}')
+
+            if first_brace == -1 or last_brace == -1 or last_brace < first_brace:
+                error_msg = f"Ошибка: Не удалось найти корректные ограничители JSON ('{{' и '}}') в ответе Gemini (корректировка).\nОтвет Gemini:\n{raw_response}"
+                print(error_msg)
+                return error_msg, None
+            
+            json_string_to_parse = raw_response[first_brace:last_brace+1]
+            parsed_data = json.loads(json_string_to_parse)
+            
+            thought = parsed_data.get("thought", "Мысли отсутствуют (корректировка).")
+            plan_steps_raw = parsed_data.get("plan", [])
+
+            if not isinstance(plan_steps_raw, list):
+                return (f"Ошибка: Корректирующий план от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None)
+            
+            conceptual_plan_steps: List[ConceptualPlanStep] = []
+            for i, step_raw in enumerate(plan_steps_raw):
+                if not isinstance(step_raw, dict):
+                    return (f"Ошибка: Шаг {i+1} в корректирующем плане не является словарем: {step_raw}. Мысль: {thought}", None)
+
+                # Validate ConceptualPlanStep structure
+                required_keys = {"step_id", "goal", "status", "reason_for_status", "tool_logs", "final_result"}
+                if not required_keys.issubset(step_raw.keys()):
+                    missing_keys = required_keys - step_raw.keys()
+                    return (f"Ошибка: Шаг {i+1} в корректирующем плане не содержит обязательные ключи: {missing_keys}. Шаг: {step_raw}. Мысль: {thought}", None)
+
+                if not isinstance(step_raw.get("goal"), str) or not step_raw.get("goal"):
+                     return (f"Ошибка: 'goal' в корректирующем шаге {i+1} должен быть непустой строкой. Шаг: {step_raw}. Мысль: {thought}", None)
+                if not isinstance(step_raw.get("step_id"), str) or not step_raw.get("step_id"):
+                     return (f"Ошибка: 'step_id' в корректирующем шаге {i+1} должен быть непустой строкой. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("status") != "pending":
+                     return (f"Ошибка: 'status' в корректирующем шаге {i+1} должен быть 'pending'. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("reason_for_status") is not None:
+                     return (f"Ошибка: 'reason_for_status' в корректирующем шаге {i+1} должен быть null. Шаг: {step_raw}. Мысль: {thought}", None)
+                if not isinstance(step_raw.get("tool_logs"), list) or step_raw.get("tool_logs"):
+                     return (f"Ошибка: 'tool_logs' в корректирующем шаге {i+1} должен быть пустым списком. Шаг: {step_raw}. Мысль: {thought}", None)
+                if step_raw.get("final_result") is not None:
+                     return (f"Ошибка: 'final_result' в корректирующем шаге {i+1} должен быть null. Шаг: {step_raw}. Мысль: {thought}", None)
+                
+                conceptual_plan_steps.append(ConceptualPlanStep(**step_raw)) # type: ignore
+
+            if not conceptual_plan_steps and thought: 
+                return thought, None # This could be a valid case where Gemini explains why it can't correct
+                
+            return thought, conceptual_plan_steps
+
+        except json.JSONDecodeError as e:
+            error_context = json_string_to_parse if json_string_to_parse is not None else "Строка для парсинга не была определена (ошибка до присвоения)."
+            error_msg = f"Ошибка декодирования JSON ответа от Gemini (корректировка): {e}\nСтрока для парсинга:\n{error_context}\nПолный ответ Gemini:\n{raw_response}"
+            print(error_msg) 
+            return error_msg, None
+        except Exception as e:
+            error_msg = f"Неожиданная ошибка при обработке ответа Gemini (корректировка): {e}\nПолный ответ Gemini:\n{raw_response}"
+            print(error_msg)
+            return error_msg, None
+
+    def determine_next_action_for_goal(
+        self,
+        goal_description: str,
+        history: Optional[List[Dict[str, str]]], # Overall conversation history (optional for prompt)
+        goal_execution_log: List[ToolCallLogEntry], # Log of tool calls FOR THIS GOAL
+        all_prior_conceptual_steps: Optional[List[ConceptualPlanStep]] = None 
+    ) -> Tuple[Optional[str], Optional[Dict[str, Any]], Optional[Union[str, Dict[str, Any]]]]: # thought, next_tool_call, goal_status_or_feedback
+        """
+        Определяет следующее действие (вызов инструмента) для достижения цели, статус цели, или необходимость обратной связи.
+        учитывая результаты предыдущих концептуальных шагов.
+        """
+        if not self.gemini_client:
+            return "Ошибка: Gemini клиент не инициализирован для определения следующего действия.", None, None
+
+        # formatted_conversation_history = "" # Optional: Not used in the primary prompt for this method yet
+        # if history:
+        #     for message in history:
+        #         formatted_conversation_history += f"{message['role'].capitalize()}: {message['content']}\n"
+        #     formatted_conversation_history += "\n"
+        
+        formatted_prior_steps_summary = ""
+        if all_prior_conceptual_steps:
+            summary_parts = ["\n--- Обзор Результатов Предыдущих Концептуальных Шагов ---"]
+            if not all_prior_conceptual_steps: # Should be caught by the outer if, but good for safety
+                summary_parts.append("  (Нет выполненных предыдущих шагов)")
+            else:
+                for i, step in enumerate(all_prior_conceptual_steps):
+                    summary_parts.append(f"  Предыдущий Шаг {i+1}: \"{step['goal']}\"")
+                    summary_parts.append(f"    Статус: {step['status']}")
+                    if step['reason_for_status']:
+                        summary_parts.append(f"    Пояснение к статусу: {step['reason_for_status']}")
+                    # if step['final_result'] is not None: # Keep commented as per instruction
+                    #    summary_parts.append(f"    Итоговый результат шага: {json.dumps(step['final_result'], ensure_ascii=False, indent=2)}")
+            formatted_prior_steps_summary = "\n".join(summary_parts) + "\n"
+
+
+        formatted_log_entries = []
+        if not goal_execution_log:
+            formatted_log_entries.append("  Еще не было предпринято никаких действий для этой цели.")
+        else:
+            for i, log_entry in enumerate(goal_execution_log):
+                entry_str = f"  Действие {i+1}:\n"
+                entry_str += f"    Инструмент: {log_entry['tool_name']}({json.dumps(log_entry['args'], ensure_ascii=False)})\n"
+                if log_entry['outcome_error']:
+                    entry_str += f"    Результат: Ошибка - {log_entry['outcome_error']}\n"
+                else:
+                    # Ensure outcome_data is dumped with indent if it's complex, otherwise just convert to string
+                    data_str = json.dumps(log_entry['outcome_data'], ensure_ascii=False, indent=2) if not isinstance(log_entry['outcome_data'], str) else log_entry['outcome_data']
+                    entry_str += f"    Результат: {data_str}\n"
+                formatted_log_entries.append(entry_str)
+        formatted_log_string = "\n".join(formatted_log_entries)
+
+        prompt_parts = [
+            "Ты — ИИ-ассистент, отвечающий за определение СЛЕДУЮЩЕГО ДЕЙСТВИЯ для достижения конкретной цели. Тебе предоставлены доступные инструменты, описание цели, история уже предпринятых действий (включая их результаты) для этой цели, и ОБЗОР РЕЗУЛЬТАТОВ ПРЕДЫДУЩИХ КОНЦЕПТУАЛЬНЫХ ШАГОВ.",
+            AVAILABLE_TOOLS_DESCRIPTIONS,
+            formatted_prior_steps_summary, # Inserted summary of prior steps
+            f"\n--- Текущая Цель ---\n{goal_description}\n",
+            "--- История Действий для Этой Цели ---",
+            formatted_log_string,
+            "\n--- Твоя Задача ---",
+            "Проанализируй цель, историю действий для этой цели, и ОБЗОР РЕЗУЛЬТАТОВ ПРЕДЫДУЩИХ КОНЦЕПТУАЛЬНЫХ ШАГОВ. Определи ОДНО следующее действие (вызов инструмента) ИЛИ реши, достигнута ли цель или она недостижима.",
+            "ВАЖНО: Внимательно изучи ОБЗОР РЕЗУЛЬТАТОВ ПРЕДЫДУЩИХ КОНЦЕПТУАЛЬНЫХ ШАГОВ (если предоставлен). Если результат предыдущего шага делает текущую цель нелогичной, невыполнимой или уже достигнутой, ты ДОЛЖЕН это учесть. Например, если предыдущий шаг не нашел необходимый файл, не пытайся его читать в текущей цели, а укажи, что цель невыполнима из-за этого.",
+            "Если цель уже достигнута на основе предыдущих действий или ОБЗОРА ПРЕДЫДУЩИХ ШАГОВ, или если она не может быть достигнута, укажи это.",
+            "Если для достижения цели нужно выполнить еще одно действие, предложи вызов ОДНОГО инструмента.",
+            "ВАЖНО: Не предлагай многошаговые планы здесь. Только ОДИН следующий вызов инструмента или статус цели.",
+            "\n--- Формат Ответа ---",
+            "Ответ должен быть строкой в формате JSON, содержащей ОБЯЗАТЕЛЬНО ключ \"thought\" и ОДИН из следующих ключей:",
+            "1. \"next_tool_call\": Объект со следующими ключами:",
+            "   - \"tool_name\": (строка) Имя инструмента для вызова.",
+            "   - \"args\": (словарь) Аргументы для этого инструмента.",
+            "2. \"goal_status\": (строка) Установи в \"achieved\" если цель достигнута, или \"unachievable\" если цель не может быть достигнута.",
+            "   - \"reason\": (строка, ОБЯЗАТЕЛЬНО если goal_status указан) Краткое пояснение, почему цель достигнута или недостижима.",
+            "3. \"goal_feedback\": Объект, если прямое выполнение инструментом невозможно или требуется иное действие. Должен содержать:",
+            "   - \"status\": (строка) Один из следующих вариантов: 'needs_clarification' (нужны уточнения от пользователя), 'needs_manual_intervention' (требуется ручное вмешательство, т.к. автоматизировать нельзя), 'requires_code_generation' (требуется генерация кода, который затем может быть записан в файл), 'unsupported_action' (действие не поддерживается текущими инструментами).",
+            "   - \"message_to_user\": (строка, ОБЯЗАТЕЛЬНО) Сообщение или вопрос для пользователя, поясняющий ситуацию или запрашивающий информацию.",
+            "\nПримеры JSON ответа:",
+            "Пример 1 (следующий шаг):",
+            "{\"thought\": \"Нужно прочитать файл, указанный в логе.\", \"next_tool_call\": {\"tool_name\": \"read_file\", \"args\": {\"filepath\": \"docs/some_file.txt\"}}}",
+            "Пример 2 (цель достигнута):",
+            "{\"thought\": \"Вся необходимая информация собрана и обработана.\", \"goal_status\": \"achieved\", \"reason\": \"Файл успешно прочитан и его содержимое сохранено.\"}",
+            "Пример 3 (цель недостижима):",
+            "{\"thought\": \"Файл не найден после нескольких попыток, и нет информации для его создания.\", \"goal_status\": \"unachievable\", \"reason\": \"Файл не найден по указанному пути.\"}",
+            "Пример 4 (требуется обратная связь/уточнение):",
+            "{\"thought\": \"Цель 'создать красивую веб-страницу с JS' слишком абстрактна. Нужно уточнить у пользователя детали дизайна и конкретную функциональность JS.\", \"goal_feedback\": {\"status\": \"needs_clarification\", \"message_to_user\": \"Я могу помочь с созданием базовой HTML структуры и записью JS кода в файл, но для 'красивой страницы' мне нужны более конкретные требования к дизайну и функциональности. Не могли бы вы их предоставить?\"}}",
+            # f"\nОбщая история диалога (для контекста, если нужно):\n{formatted_conversation_history}\n", # Optional
+            "\n\nIMPORTANT: Your entire response for this specific turn MUST be a single, valid JSON object as described above. Start directly with '{' and end directly with '}'. Do not include any other text, explanations, conversational filler, or markdown formatting before or after the JSON object."
+        ]
+        full_request_to_gemini = "".join(prompt_parts)
+        # print(f"\nDEBUG: Полный промпт для ОПРЕДЕЛЕНИЯ ДЕЙСТВИЯ Gemini:\n{full_request_to_gemini}\n")
+
+        raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
+
+        if not raw_response:
+            return "Не удалось получить ответ от Gemini для определения действия.", None, None
+        if not isinstance(raw_response, str):
+            return "Ошибка: Ответ от Gemini (определение действия) не является строкой.", None, None
+
+        json_string_to_parse = None
+        try:
+            first_brace = raw_response.find('{')
+            last_brace = raw_response.rfind('}')
+
+            if first_brace == -1 or last_brace == -1 or last_brace < first_brace:
+                error_msg = f"Ошибка: Не удалось найти корректные ограничители JSON в ответе Gemini (определение действия).\nОтвет Gemini:\n{raw_response}"
+                print(error_msg)
+                return error_msg, None, None
+            
+            json_string_to_parse = raw_response[first_brace:last_brace+1]
+            parsed_data = json.loads(json_string_to_parse)
+            
+            thought = parsed_data.get("thought")
+            if not thought or not isinstance(thought, str):
+                 print(f"Предупреждение: 'thought' отсутствует или не является строкой в ответе Gemini (определение действия): {parsed_data}")
+                 thought = "Мысли отсутствуют или неверного формата."
+
+
+            next_tool_call = parsed_data.get("next_tool_call")
+            goal_status_str = parsed_data.get("goal_status")
+            goal_feedback_obj = parsed_data.get("goal_feedback")
+
+            if next_tool_call is not None:
+                if not isinstance(next_tool_call, dict):
+                    error_message = f"Ошибка: 'next_tool_call' от Gemini должен быть словарем. Получен: {type(next_tool_call)}\nСодержимое next_tool_call: {next_tool_call}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                tool_name = next_tool_call.get("tool_name")
+                args = next_tool_call.get("args")
+                if not isinstance(tool_name, str) or not tool_name:
+                    error_message = f"Ошибка: 'tool_name' в 'next_tool_call' должен быть непустой строкой.\nСодержимое next_tool_call: {next_tool_call}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                if not isinstance(args, dict):
+                    error_message = f"Ошибка: 'args' в 'next_tool_call' должен быть словарем.\nСодержимое next_tool_call: {next_tool_call}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                return thought, next_tool_call, None # Returning None for goal_status_or_feedback's string part
+            
+            elif goal_status_str is not None:
+                reason = parsed_data.get("reason")
+                if not isinstance(reason, str) or not reason.strip(): # Reason is now mandatory for goal_status
+                    error_message = f"Ошибка: 'reason' обязателен и должен быть непустой строкой, если 'goal_status' указан.\nПолученный goal_status: {goal_status_str}, reason: {reason}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                if not isinstance(goal_status_str, str) or goal_status_str not in ["achieved", "unachievable"]:
+                    error_message = f"Ошибка: 'goal_status' от Gemini имеет неверное значение. Ожидалось 'achieved' или 'unachievable'.\nПолучено: {goal_status_str}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                thought += f" Причина: {reason}." # Append mandatory reason to thought
+                return thought, None, goal_status_str # Returning goal_status_str for goal_status_or_feedback's string part
+            
+            elif goal_feedback_obj is not None:
+                if not isinstance(goal_feedback_obj, dict):
+                    error_message = f"Ошибка: 'goal_feedback' от Gemini должен быть словарем.\nПолучен: {type(goal_feedback_obj)}\nСодержимое: {goal_feedback_obj}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                feedback_status = goal_feedback_obj.get("status")
+                feedback_message = goal_feedback_obj.get("message_to_user")
+                if not isinstance(feedback_status, str) or not feedback_status: # Basic check, could be more specific (enum)
+                    error_message = f"Ошибка: 'status' в 'goal_feedback' должен быть непустой строкой.\nСодержимое goal_feedback: {goal_feedback_obj}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                if not isinstance(feedback_message, str) or not feedback_message.strip():
+                    error_message = f"Ошибка: 'message_to_user' в 'goal_feedback' должен быть непустой строкой.\nСодержимое goal_feedback: {goal_feedback_obj}\nМысль: {thought}\nПолный ответ Gemini (JSON часть):\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                    print(error_message)
+                    return error_message, None, None
+                return thought, None, goal_feedback_obj # Returning the dict for goal_status_or_feedback's Dict part
+            
+            else:
+                # Neither 'next_tool_call', 'goal_status', nor 'goal_feedback' found in valid JSON
+                error_message = f"Ошибка: Ответ Gemini (валидный JSON) не содержит обязательных ключей 'next_tool_call', 'goal_status' или 'goal_feedback'.\nМысль: {thought}\nСодержимое JSON ответа:\n{json_string_to_parse}\nИсходный сырой ответ:\n{raw_response}"
+                print(error_message)
+                return error_message, None, None
+
+        except json.JSONDecodeError as e:
+            error_context = json_string_to_parse if json_string_to_parse is not None else "Строка для парсинга не была определена (ошибка до присвоения json_string_to_parse)."
+            error_msg = f"Ошибка декодирования JSON (определение действия): {e}\nСтрока для парсинга:\n{error_context}\nПолный сырой ответ Gemini:\n{raw_response}"
+            print(error_msg) 
+            return error_msg, None, None
+        except Exception as e:
+            error_msg = f"Неожиданная ошибка при обработке ответа Gemini (определение действия): {e}\nМысль (если есть): {thought if 'thought' in locals() else 'недоступна'}\nJSON часть (если есть):\n{json_string_to_parse if json_string_to_parse is not None else 'недоступна'}\nПолный сырой ответ Gemini:\n{raw_response}"
+            print(error_msg)
+            return error_msg, None, None
 
 if __name__ == '__main__':
     # Для этого теста нужен GOOGLE_API_KEY
@@ -170,8 +535,8 @@ if __name__ == '__main__':
         print("Переменная окружения GOOGLE_API_KEY не установлена. Пропуск теста Planner.")
     else:
         print("--- Тестирование Planner ---")
-        gemini_cli = GeminiClient() 
-        planner = Planner(gemini_cli)
+        # planner = Planner(gemini_cli) # Старая инициализация
+        planner = Planner() # Новая инициализация, Planner сам создает GeminiClient
 
         # Пример 1: Задача без истории
         print("\nПример 1: Задача без истории")
@@ -180,12 +545,12 @@ if __name__ == '__main__':
         print(f"Размышления: {thought1}")
         if plan1 is not None:
             print("Сгенерированный план:")
-            for i, step_item in enumerate(plan1): # Renamed step to step_item
-                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
+            for i, step_item in enumerate(plan1):
+                print(f"  Шаг {i+1} ({step_item['step_id']}): {step_item['goal']} (Status: {step_item['status']})")
         else:
             print("План не был сгенерирован.")
 
-        # Пример 2: Вопрос с историей
+        # Пример 2: Вопрос с историей 
         print("\nПример 2: Вопрос с историей")
         history2: List[Dict[str, str]] = [
             {"role": "user", "content": "Какой мой предыдущий запрос?"},
@@ -196,12 +561,12 @@ if __name__ == '__main__':
         print(f"Размышления/Ответ: {thought2}")
         if plan2 is not None and plan2: # Проверяем, что plan2 не None и не пустой список
             print("Сгенерированный план (должен быть пуст для вопроса):")
-            for i, step_item in enumerate(plan2): # Renamed step to step_item
-                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
+            for i, step_item in enumerate(plan2):
+                print(f"  Шаг {i+1} ({step_item['step_id']}): {step_item['goal']} (Status: {step_item['status']})")
         else:
             print("План не был сгенерирован или пуст (это нормально для вопроса).")
         
-        # Пример 3: Задача с историей, которая может повлиять на планирование
+        # Пример 3: Задача с историей, которая может повлиять на планирование 
         print("\nПример 3: Задача с контекстной историей")
         history3: List[Dict[str, str]] = [
             {"role": "user", "content": "Я хочу создать папку для моего нового проекта 'Omega'."},
@@ -212,7 +577,7 @@ if __name__ == '__main__':
         print(f"Размышления: {thought3}")
         if plan3 is not None:
             print("Сгенерированный план:")
-            for i, step_item in enumerate(plan3): # Renamed step to step_item
-                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
+            for i, step_item in enumerate(plan3):
+                print(f"  Шаг {i+1} ({step_item['step_id']}): {step_item['goal']} (Status: {step_item['status']})")
         else:
             print("План не был сгенерирован.")
