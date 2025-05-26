@@ -1,0 +1,3296 @@
+#[1]Google AI for Developers [2]alternate [3]alternate [4]alternate
+   [5]alternate [6]alternate [7]alternate [8]alternate [9]alternate
+   [10]alternate [11]alternate [12]alternate [13]alternate [14]alternate
+   [15]alternate [16]alternate [17]alternate [18]alternate [19]alternate
+   [20]alternate [21]alternate [22]alternate [23]alternate [24]alternate
+
+   [25]Перейти к основному контенту
+
+   (BUTTON)
+   [26]Google AI for Developers
+     *
+
+   [27]Модели (BUTTON)
+     * Gemini
+     * [28]О сервисе
+     * [29]Документы
+     * [30]Справочник по API
+     * [31]Цена
+
+     * Изображение
+     * [32]О сервисе
+     * [33]Документы
+     * [34]Цена
+
+     * Вео
+     * [35]О сервисе
+     * [36]Документы
+     * [37]Цена
+
+     * Джемма
+     * [38]О сервисе
+     * [39]Документы
+     * [40]Джеммаверс
+
+   (BUTTON) Решения
+     * Стройте вместе с Близнецами
+     * [41]Gemini API
+     * [42]Google AI Studio
+
+     * Кастомизируйте открытые модели Gemma
+     * [43]Джемма открытые модели
+     * [44]Мультифреймворк с Keras
+     * [45]Точная настройка в Colab
+
+     * Запуск на устройстве
+     * [46]Google ИИ Край
+     * [47]Близнецы Нано на Android
+     * [48]Встроенные веб-API Chrome
+
+     * Стройте ответственно
+     * [49]Инструментарий ответственного GenAI
+     * [50]Безопасная платформа искусственного интеллекта
+
+   (BUTTON) Помощь по коду
+     * [51]Android Studio
+     * [52]Инструменты разработчика Chrome
+     * [53]Колаб
+     * [54]Firebase
+     * [55]Google Cloud
+     * [56]JetBrains
+     * [57]Жюль
+     * [58]Код ВС
+
+   (BUTTON) Витрина
+     * [59]Витрина Близнецов
+     * [60]Конкурс разработчиков Gemini API
+
+   (BUTTON) Сообщество
+     * [61]Форум Google по искусственному интеллекту
+     * [62]Близнецы для исследований
+
+   (BUTTON)
+   ____________________
+   /
+   (BUTTON)
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+   Войти
+
+   [63]Документация по API Gemini [64]Документация по API [65]Кулинарная
+   книга [66]Сообщество
+
+   ____________________
+
+   (BUTTON)
+   [67]Google AI for Developers
+     *
+
+     * [68]Модели
+          + Ещё
+          + [69]Документация по API Gemini
+          + [70]Документация по API
+          + [71]Кулинарная книга
+          + [72]Сообщество
+     * Решения
+          + Ещё
+     * Помощь по коду
+          + Ещё
+     * Витрина
+          + Ещё
+     * Сообщество
+          + Ещё
+
+     * Начать
+     * [73]Обзор
+     * [74]Краткое руководство
+     * [75]ключи API
+     * [76]Библиотеки
+     * [77]Совместимость с OpenAI
+     * Модели
+     * [78]Все модели
+     * [79]Цена
+     * [80]Ограничения ставок
+     * [81]Платежная информация
+     * Возможности модели
+     * [82]Генерация текста
+     * [83]Генерация изображения
+     * [84]Генерация видео
+     * [85]Генерация речи
+     * [86]Генерация музыки
+     * [87]Длинный контекст
+     * [88]Структурированный вывод
+     * [89]мышление
+     * [90]Вызов функции
+     * [91]Понимание документа
+     * [92]Понимание изображения
+     * [93]Видео понимание
+     * [94]Понимание звука
+     * [95]Выполнение кода
+     * [96]URL-контекст
+     * Заземление с помощью Google Поиска
+          + [97]Учебное пособие по заземлению
+          + [98]Используйте предложения поиска Google
+     * Руководства
+     * [99]Оперативное проектирование
+     * [100]Живой API
+     * [101]Кэширование контекста
+     * [102]Файловый API
+     * [103]Подсчет токенов
+     * Платформы с открытым исходным кодом
+          + [104]ЛангЧейн и ЛангГраф
+          + [105]CrewAI
+     * Тонкая настройка
+          + [106]Введение в тонкую настройку
+          + [107]Учебное пособие по тонкой настройке
+     * [108]Встраивания
+     * Безопасность
+          + [109]Настройки безопасности
+          + [110]Руководство по безопасности
+     * Ресурсы
+     * [111]Переход на Gen AI SDK
+     * [112]Примечания к выпускам
+     * [113]Устранение неполадок API
+     * ИИ-студия
+          + [114]Краткое руководство по Google AI Studio
+          + [115]УзнатьLM
+          + [116]Устранение неполадок AI Studio
+          + [117]Google Workspace
+     * Облачная платформа Google
+          + [118]API VertexAI Gemini
+          + [119]OAuth-аутентификация
+     * Правила
+     * [120]Условия использования
+     * [121]Доступные регионы
+     * [122]Дополнительные политики использования
+
+     * Gemini
+     * [123]О сервисе
+     * [124]Документы
+     * [125]Справочник по API
+     * [126]Цена
+     * Изображение
+     * [127]О сервисе
+     * [128]Документы
+     * [129]Цена
+     * Вео
+     * [130]О сервисе
+     * [131]Документы
+     * [132]Цена
+     * Джемма
+     * [133]О сервисе
+     * [134]Документы
+     * [135]Джеммаверс
+
+     * Стройте вместе с Близнецами
+     * [136]Gemini API
+     * [137]Google AI Studio
+     * Кастомизируйте открытые модели Gemma
+     * [138]Джемма открытые модели
+     * [139]Мультифреймворк с Keras
+     * [140]Точная настройка в Colab
+     * Запуск на устройстве
+     * [141]Google ИИ Край
+     * [142]Близнецы Нано на Android
+     * [143]Встроенные веб-API Chrome
+     * Стройте ответственно
+     * [144]Инструментарий ответственного GenAI
+     * [145]Безопасная платформа искусственного интеллекта
+
+     * [146]Android Studio
+     * [147]Инструменты разработчика Chrome
+     * [148]Колаб
+     * [149]Firebase
+     * [150]Google Cloud
+     * [151]JetBrains
+     * [152]Жюль
+     * [153]Код ВС
+
+     * [154]Витрина Близнецов
+     * [155]Конкурс разработчиков Gemini API
+
+     * [156]Форум Google по искусственному интеллекту
+     * [157]Близнецы для исследований
+
+   Эта страница переведена с помощью [158]Cloud Translation API.
+
+     * [159]Главная
+     * [160]Gemini API
+     * [161]Модели
+
+   (BUTTON) Отправить отзыв
+
+                        Генерация текста
+
+   API Gemini может генерировать текстовый вывод из различных входных
+   данных, включая текст, изображения, видео и аудио, используя модели
+   Gemini.
+
+   Вот базовый пример, который принимает один ввод текста:
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=["How does AI work?"]
+)
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "How does AI work?",
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Explain how AI works in a few words"),
+      nil,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "How does AI work?"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { text: 'How AI does work?' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Системные инструкции и настройки
+
+   Управлять поведением моделей Gemini можно с помощью системных
+   инструкций. Для этого передайте объект [162]GenerateContentConfig .
+
+Питон
+
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    config=types.GenerateContentConfig(
+        system_instruction="You are a cat. Your name is Neko."),
+    contents="Hello there"
+)
+
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Hello there",
+    config: {
+      systemInstruction: "You are a cat. Your name is Neko.",
+    },
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  config := &genai.GenerateContentConfig{
+      SystemInstruction: genai.NewContentFromText("You are a cat. Your name is N
+eko.", genai.RoleUser),
+  }
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Hello there"),
+      config,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "system_instruction": {
+      "parts": [
+        {
+          "text": "You are a cat. Your name is Neko."
+        }
+      ]
+    },
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Hello there"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const systemInstruction = {
+    parts: [{
+      text: 'You are a cat. Your name is Neko.'
+    }]
+  };
+
+  const payload = {
+    systemInstruction,
+    contents: [
+      {
+        parts: [
+          { text: 'Hello there' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Объект [163]GenerateContentConfig также позволяет переопределить
+   параметры генерации по умолчанию, такие как [164]температура .
+
+Питон
+
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=["Explain how AI works"],
+    config=types.GenerateContentConfig(
+        max_output_tokens=500,
+        temperature=0.1
+    )
+)
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works",
+    config: {
+      maxOutputTokens: 500,
+      temperature: 0.1,
+    },
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+    APIKey:  os.Getenv("GEMINI_API_KEY"),
+    Backend: genai.BackendGeminiAPI,
+  })
+
+  temp := float32(0.9)
+  topP := float32(0.5)
+  topK := float32(20.0)
+  maxOutputTokens := int32(100)
+
+  config := &genai.GenerateContentConfig{
+    Temperature:       &temp,
+    TopP:              &topP,
+    TopK:              &topK,
+    MaxOutputTokens:   maxOutputTokens,
+    ResponseMIMEType:  "application/json",
+  }
+
+  result, _ := client.Models.GenerateContent(
+    ctx,
+    "gemini-2.0-flash",
+    genai.Text("What is the average size of a swallow?"),
+    config,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:ge
+nerateContent?key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works"
+          }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "stopSequences": [
+        "Title"
+      ],
+      "temperature": 1.0,
+      "maxOutputTokens": 800,
+      "topP": 0.8,
+      "topK": 10
+    }
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 40,
+    maxOutputTokens: 8192,
+    responseMimeType: 'text/plain',
+  };
+
+  const payload = {
+    generationConfig,
+    contents: [
+      {
+        parts: [
+          { text: 'Explain how AI works in a few words' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Полный список настраиваемых параметров и их описания см. в разделе
+   [165]GenerateContentConfig в нашем справочнике по API.
+
+Мультимодальные входы
+
+   API Gemini поддерживает мультимодальные входные данные, позволяя
+   комбинировать текст с медиафайлами. В следующем примере показано
+   предоставление изображения:
+
+Питон
+
+from PIL import Image
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+image = Image.open("/path/to/organ.png")
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=[image, "Tell me about this instrument"]
+)
+print(response.text)
+
+JavaScript
+
+import {
+  GoogleGenAI,
+  createUserContent,
+  createPartFromUri,
+} from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const image = await ai.files.upload({
+    file: "/path/to/organ.png",
+  });
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: [
+      createUserContent([
+        "Tell me about this instrument",
+        createPartFromUri(image.uri, image.mimeType),
+      ]),
+    ],
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  imagePath := "/path/to/organ.jpg"
+  imgData, _ := os.ReadFile(imagePath)
+
+  parts := []*genai.Part{
+      genai.NewPartFromText("Tell me about this instrument"),
+      &genai.Part{
+          InlineData: &genai.Blob{
+              MIMEType: "image/jpeg",
+              Data:     imgData,
+          },
+      },
+  }
+
+  contents := []*genai.Content{
+      genai.NewContentFromParts(parts, genai.RoleUser),
+  }
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      contents,
+      nil,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+# Use a temporary file to hold the base64 encoded image data
+TEMP_B64=$(mktemp)
+trap 'rm -f "$TEMP_B64"' EXIT
+base64 $B64FLAGS $IMG_PATH > "$TEMP_B64"
+
+# Use a temporary file to hold the JSON payload
+TEMP_JSON=$(mktemp)
+trap 'rm -f "$TEMP_JSON"' EXIT
+
+cat > "$TEMP_JSON" << EOF
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Tell me about this instrument"
+        },
+        {
+          "inline_data": {
+            "mime_type": "image/jpeg",
+            "data": "$(cat "$TEMP_B64")"
+          }
+        }
+      ]
+    }
+  ]
+}
+EOF
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d "@$TEMP_JSON"
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const imageUrl = 'http://image/url';
+  const image = getImageData(imageUrl);
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { image },
+          { text: 'Tell me about this instrument' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+function getImageData(url) {
+  const blob = UrlFetchApp.fetch(url).getBlob();
+
+  return {
+    mimeType: blob.getContentType(),
+    data: Utilities.base64Encode(blob.getBytes())
+  };
+}
+
+   Альтернативные методы предоставления изображений и более совершенную
+   обработку изображений см. в нашем [166]руководстве по пониманию
+   изображений . API также поддерживает ввод и понимание [167]документов ,
+   [168]видео и [169]аудио .
+
+Потоковая передача ответов
+
+   По умолчанию модель возвращает ответ только после завершения всего
+   процесса генерации.
+
+   Для более плавного взаимодействия используйте потоковую передачу для
+   постепенного получения экземпляров [170]GenerateContentResponse по мере
+   их создания.
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content_stream(
+    model="gemini-2.0-flash",
+    contents=["Explain how AI works"]
+)
+for chunk in response:
+    print(chunk.text, end="")
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContentStream({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works",
+  });
+
+  for await (const chunk of response) {
+    console.log(chunk.text);
+  }
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  stream := client.Models.GenerateContentStream(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Write a story about a magic backpack."),
+      nil,
+  )
+
+  for chunk, _ := range stream {
+      part := chunk.Candidates[0].Content.Parts[0]
+      fmt.Print(part.Text)
+  }
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:s
+treamGenerateContent?alt=sse&key=${GEMINI_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --no-buffer \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { text: 'Explain how AI works' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:streamGenerateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Многоходовые разговоры (Чат)
+
+   Наши SDK предоставляют функциональные возможности для сбора нескольких
+   раундов подсказок и ответов в чат, что дает вам простой способ
+   отслеживать историю разговоров.
+
+   Примечание. Функциональность чата реализована только в составе SDK. За
+   кулисами он по-прежнему использует [171]generateContent .
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+chat = client.chats.create(model="gemini-2.0-flash")
+
+response = chat.send_message("I have 2 dogs in my house.")
+print(response.text)
+
+response = chat.send_message("How many paws are in my house?")
+print(response.text)
+
+for message in chat.get_history():
+    print(f'role - {message.role}',end=": ")
+    print(message.parts[0].text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const chat = ai.chats.create({
+    model: "gemini-2.0-flash",
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });
+
+  const response1 = await chat.sendMessage({
+    message: "I have 2 dogs in my house.",
+  });
+  console.log("Chat response 1:", response1.text);
+
+  const response2 = await chat.sendMessage({
+    message: "How many paws are in my house?",
+  });
+  console.log("Chat response 2:", response2.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  history := []*genai.Content{
+      genai.NewContentFromText("Hi nice to meet you! I have 2 dogs in my house."
+, genai.RoleUser),
+      genai.NewContentFromText("Great to meet you. What would you like to know?"
+, genai.RoleModel),
+  }
+
+  chat, _ := client.Chats.Create(ctx, "gemini-2.0-flash", nil, history)
+  res, _ := chat.SendMessage(ctx, genai.Part{Text: "How many paws are in my hous
+e?"})
+
+  if len(res.Candidates) > 0 {
+      fmt.Println(res.Candidates[0].Content.Parts[0].Text)
+  }
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:ge
+nerateContent?key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello"
+          }
+        ]
+      },
+      {
+        "role": "model",
+        "parts": [
+          {
+            "text": "Great to meet you. What would you like to know?"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "I have two dogs in my house. How many paws are in my house?
+"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: 'Hello' },
+        ],
+      },
+      {
+        role: 'model',
+        parts: [
+          { text: 'Great to meet you. What would you like to know?' },
+        ],
+      },
+      {
+        role: 'user',
+        parts: [
+          { text: 'I have two dogs in my house. How many paws are in my house?'
+},
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Потоковое вещание также можно использовать для многоходовых разговоров.
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+chat = client.chats.create(model="gemini-2.0-flash")
+
+response = chat.send_message_stream("I have 2 dogs in my house.")
+for chunk in response:
+    print(chunk.text, end="")
+
+response = chat.send_message_stream("How many paws are in my house?")
+for chunk in response:
+    print(chunk.text, end="")
+
+for message in chat.get_history():
+    print(f'role - {message.role}', end=": ")
+    print(message.parts[0].text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const chat = ai.chats.create({
+    model: "gemini-2.0-flash",
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });
+
+  const stream1 = await chat.sendMessageStream({
+    message: "I have 2 dogs in my house.",
+  });
+  for await (const chunk of stream1) {
+    console.log(chunk.text);
+    console.log("_".repeat(80));
+  }
+
+  const stream2 = await chat.sendMessageStream({
+    message: "How many paws are in my house?",
+  });
+  for await (const chunk of stream2) {
+    console.log(chunk.text);
+    console.log("_".repeat(80));
+  }
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  history := []*genai.Content{
+      genai.NewContentFromText("Hi nice to meet you! I have 2 dogs in my house."
+, genai.RoleUser),
+      genai.NewContentFromText("Great to meet you. What would you like to know?"
+, genai.RoleModel),
+  }
+
+  chat, _ := client.Chats.Create(ctx, "gemini-2.0-flash", nil, history)
+  stream := chat.SendMessageStream(ctx, genai.Part{Text: "How many paws are in m
+y house?"})
+
+  for chunk, _ := range stream {
+      part := chunk.Candidates[0].Content.Parts[0]
+      fmt.Print(part.Text)
+  }
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:st
+reamGenerateContent?alt=sse&key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello"
+          }
+        ]
+      },
+      {
+        "role": "model",
+        "parts": [
+          {
+            "text": "Great to meet you. What would you like to know?"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "I have two dogs in my house. How many paws are in my house?
+"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: 'Hello' },
+        ],
+      },
+      {
+        role: 'model',
+        parts: [
+          { text: 'Great to meet you. What would you like to know?' },
+        ],
+      },
+      {
+        role: 'user',
+        parts: [
+          { text: 'I have two dogs in my house. How many paws are in my house?'
+},
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:streamGenerateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Поддерживаемые модели
+
+   Все модели семейства Gemini поддерживают генерацию текста. Чтобы узнать
+   больше о моделях и их возможностях, посетите страницу [172]«Модели» .
+
+Лучшие практики
+
+Полезные советы
+
+   Для базовой генерации текста зачастую достаточно [173]простого
+   приглашения без необходимости использования примеров, системных
+   инструкций или специального форматирования.
+
+   Для более адаптированных результатов:
+     * Используйте [174]системные инструкции для управления моделью.
+     * Предоставьте несколько примеров входных и выходных данных для
+       руководства моделью. Это часто называют подсказкой [175]с
+       несколькими выстрелами .
+     * Рассмотрите [176]возможность тонкой настройки для расширенных
+       случаев использования.
+
+   Дополнительные советы можно получить в нашем [177]оперативном
+   руководстве по проектированию .
+
+Структурированный вывод
+
+   В некоторых случаях вам может потребоваться структурированный вывод,
+   например JSON. Чтобы узнать, как это сделать, обратитесь к нашему
+   руководству [178]по структурированному выводу .
+
+Что дальше
+
+     * Попробуйте [179]Gemini API для начала работы Colab .
+     * Изучите возможности Gemini по работе [180]с изображениями ,
+       [181]видео , [182]аудио и [183]документами .
+     * Узнайте о [184]стратегиях запроса мультимодальных файлов .
+
+   (BUTTON) Отправить отзыв
+
+   Если не указано иное, контент на этой странице предоставляется по
+   [185]лицензии Creative Commons "С указанием авторства 4.0", а примеры
+   кода – по [186]лицензии Apache 2.0. Подробнее об этом написано в
+   [187]правилах сайта. Java – это зарегистрированный товарный знак
+   корпорации Oracle и ее аффилированных лиц.
+
+   Последнее обновление: 2025-05-09 UTC.
+
+   (BUTTON) Хотите рассказать подробнее? [[["Прост для
+   понимания","easyToUnderstand","thumb-up"],["Помог мне решить мою
+   проблему","solvedMyProblem","thumb-up"],["Другое","otherUp","thumb-up"]
+   ],[["Отсутствует нужная мне
+   информация","missingTheInformationINeed","thumb-down"],["Слишком
+   сложен/слишком много
+   шагов","tooComplicatedTooManySteps","thumb-down"],["Устарел","outOfDate
+   ","thumb-down"],["Проблема с переводом
+   текста","translationIssue","thumb-down"],["Проблемы
+   образцов/кода","samplesCodeIssue","thumb-down"],["Другое","otherDown","
+   thumb-down"]],["Последнее обновление: 2025-05-09 UTC."],[],[]]
+
+     * [188]Условия использования
+     * [189]Конфиденциальность
+     * [190]Manage cookies
+
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+References
+
+   1. https://ai.google.dev/s/opensearch.xml?hl=ru
+   2. https://ai.google.dev/gemini-api/docs/text-generation
+   3. https://ai.google.dev/gemini-api/docs/text-generation
+   4. https://ai.google.dev/gemini-api/docs/text-generation?hl=ar
+   5. https://ai.google.dev/gemini-api/docs/text-generation?hl=bn
+   6. https://ai.google.dev/gemini-api/docs/text-generation?hl=zh-cn
+   7. https://ai.google.dev/gemini-api/docs/text-generation?hl=zh-tw
+   8. https://ai.google.dev/gemini-api/docs/text-generation?hl=fa
+   9. https://ai.google.dev/gemini-api/docs/text-generation?hl=fr
+  10. https://ai.google.dev/gemini-api/docs/text-generation?hl=de
+  11. https://ai.google.dev/gemini-api/docs/text-generation?hl=he
+  12. https://ai.google.dev/gemini-api/docs/text-generation?hl=hi
+  13. https://ai.google.dev/gemini-api/docs/text-generation?hl=id
+  14. https://ai.google.dev/gemini-api/docs/text-generation?hl=it
+  15. https://ai.google.dev/gemini-api/docs/text-generation?hl=ja
+  16. https://ai.google.dev/gemini-api/docs/text-generation?hl=ko
+  17. https://ai.google.dev/gemini-api/docs/text-generation?hl=pl
+  18. https://ai.google.dev/gemini-api/docs/text-generation?hl=pt-br
+  19. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru
+  20. https://ai.google.dev/gemini-api/docs/text-generation?hl=es-419
+  21. https://ai.google.dev/gemini-api/docs/text-generation?hl=th
+  22. https://ai.google.dev/gemini-api/docs/text-generation?hl=tr
+  23. https://ai.google.dev/gemini-api/docs/text-generation?hl=vi
+  24. https://ai.google.dev/gemini-api/docs/text-generation?hl=sq
+  25. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru#main-content
+  26. https://ai.google.dev/
+  27. https://ai.google.dev/gemini-api/docs?hl=ru
+  28. https://deepmind.google/gemini?hl=ru
+  29. https://ai.google.dev/gemini-api/docs?hl=ru
+  30. https://ai.google.dev/api?hl=ru
+  31. https://ai.google.dev/pricing?hl=ru
+  32. https://deepmind.google/technologies/imagen-3/?hl=ru
+  33. https://ai.google.dev/gemini-api/docs/image-generation?hl=ru#imagen
+  34. https://ai.google.dev/pricing?hl=ru
+  35. https://deepmind.google/technologies/veo/veo-2/?hl=ru
+  36. https://ai.google.dev/gemini-api/docs/video?hl=ru
+  37. https://ai.google.dev/pricing?hl=ru
+  38. https://deepmind.google/models/gemma?hl=ru
+  39. https://ai.google.dev/gemma/docs?hl=ru
+  40. https://ai.google.dev/gemma/gemmaverse?hl=ru
+  41. https://ai.google.dev/gemini-api/docs?hl=ru
+  42. https://aistudio.google.com/?hl=ru
+  43. https://ai.google.dev/gemma?hl=ru
+  44. https://keras.io/keras_3/
+  45. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb?hl=ru
+  46. https://ai.google.dev/edge?hl=ru
+  47. https://developer.android.com/ai/gemini-nano?hl=ru
+  48. https://developer.chrome.com/docs/ai/built-in?hl=ru
+  49. https://ai.google.dev/responsible?hl=ru
+  50. https://saif.google/?hl=ru
+  51. https://developer.android.com/gemini-in-android?hl=ru
+  52. https://developer.chrome.com/docs/devtools/console/understand-messages?hl=ru
+  53. https://colab.google/?hl=ru
+  54. https://firebase.google.com/products/generative-ai?hl=ru
+  55. https://cloud.google.com/products/gemini/code-assist?hl=ru
+  56. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+  57. https://labs.google.com/jules/home?hl=ru
+  58. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+  59. https://ai.google.dev/showcase?hl=ru
+  60. https://ai.google.dev/competition?hl=ru
+  61. https://discuss.ai.google.dev/?hl=ru
+  62. https://ai.google.dev/gemini-api/docs/gemini-for-research?hl=ru
+  63. https://ai.google.dev/gemini-api/docs?hl=ru
+  64. https://ai.google.dev/api?hl=ru
+  65. https://github.com/google-gemini/cookbook
+  66. https://discuss.ai.google.dev/c/gemini-api/?hl=ru
+  67. https://ai.google.dev/
+  68. https://ai.google.dev/gemini-api/docs
+  69. https://ai.google.dev/gemini-api/docs
+  70. https://ai.google.dev/api
+  71. https://github.com/google-gemini/cookbook
+  72. https://discuss.ai.google.dev/c/gemini-api/
+  73. https://ai.google.dev/gemini-api/docs
+  74. https://ai.google.dev/gemini-api/docs/quickstart
+  75. https://ai.google.dev/gemini-api/docs/api-key
+  76. https://ai.google.dev/gemini-api/docs/libraries
+  77. https://ai.google.dev/gemini-api/docs/openai
+  78. https://ai.google.dev/gemini-api/docs/models
+  79. https://ai.google.dev/gemini-api/docs/pricing
+  80. https://ai.google.dev/gemini-api/docs/rate-limits
+  81. https://ai.google.dev/gemini-api/docs/billing
+  82. https://ai.google.dev/gemini-api/docs/text-generation
+  83. https://ai.google.dev/gemini-api/docs/image-generation
+  84. https://ai.google.dev/gemini-api/docs/video
+  85. https://ai.google.dev/gemini-api/docs/speech-generation
+  86. https://ai.google.dev/gemini-api/docs/music-generation
+  87. https://ai.google.dev/gemini-api/docs/long-context
+  88. https://ai.google.dev/gemini-api/docs/structured-output
+  89. https://ai.google.dev/gemini-api/docs/thinking
+  90. https://ai.google.dev/gemini-api/docs/function-calling
+  91. https://ai.google.dev/gemini-api/docs/document-processing
+  92. https://ai.google.dev/gemini-api/docs/image-understanding
+  93. https://ai.google.dev/gemini-api/docs/video-understanding
+  94. https://ai.google.dev/gemini-api/docs/audio
+  95. https://ai.google.dev/gemini-api/docs/code-execution
+  96. https://ai.google.dev/gemini-api/docs/url-context
+  97. https://ai.google.dev/gemini-api/docs/grounding
+  98. https://ai.google.dev/gemini-api/docs/grounding/search-suggestions
+  99. https://ai.google.dev/gemini-api/docs/prompting-strategies
+ 100. https://ai.google.dev/gemini-api/docs/live
+ 101. https://ai.google.dev/gemini-api/docs/caching
+ 102. https://ai.google.dev/gemini-api/docs/files
+ 103. https://ai.google.dev/gemini-api/docs/tokens
+ 104. https://ai.google.dev/gemini-api/docs/langgraph-example
+ 105. https://ai.google.dev/gemini-api/docs/crewai-example
+ 106. https://ai.google.dev/gemini-api/docs/model-tuning
+ 107. https://ai.google.dev/gemini-api/docs/model-tuning/tutorial
+ 108. https://ai.google.dev/gemini-api/docs/embeddings
+ 109. https://ai.google.dev/gemini-api/docs/safety-settings
+ 110. https://ai.google.dev/gemini-api/docs/safety-guidance
+ 111. https://ai.google.dev/gemini-api/docs/migrate
+ 112. https://ai.google.dev/gemini-api/docs/changelog
+ 113. https://ai.google.dev/gemini-api/docs/troubleshooting
+ 114. https://ai.google.dev/gemini-api/docs/ai-studio-quickstart
+ 115. https://ai.google.dev/gemini-api/docs/learnlm
+ 116. https://ai.google.dev/gemini-api/docs/troubleshoot-ai-studio
+ 117. https://ai.google.dev/gemini-api/docs/workspace
+ 118. https://ai.google.dev/gemini-api/docs/migrate-to-cloud
+ 119. https://ai.google.dev/gemini-api/docs/oauth
+ 120. https://ai.google.dev/gemini-api/terms
+ 121. https://ai.google.dev/gemini-api/docs/available-regions
+ 122. https://ai.google.dev/gemini-api/docs/usage-policies
+ 123. https://deepmind.google/gemini
+ 124. https://ai.google.dev/gemini-api/docs
+ 125. https://ai.google.dev/api
+ 126. https://ai.google.dev/pricing
+ 127. https://deepmind.google/technologies/imagen-3/
+ 128. https://ai.google.dev/gemini-api/docs/image-generation#imagen
+ 129. https://ai.google.dev/pricing
+ 130. https://deepmind.google/technologies/veo/veo-2/
+ 131. https://ai.google.dev/gemini-api/docs/video
+ 132. https://ai.google.dev/pricing
+ 133. https://deepmind.google/models/gemma
+ 134. https://ai.google.dev/gemma/docs
+ 135. https://ai.google.dev/gemma/gemmaverse
+ 136. https://ai.google.dev/gemini-api/docs
+ 137. https://aistudio.google.com/
+ 138. https://ai.google.dev/gemma
+ 139. https://keras.io/keras_3/
+ 140. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb
+ 141. https://ai.google.dev/edge
+ 142. https://developer.android.com/ai/gemini-nano
+ 143. https://developer.chrome.com/docs/ai/built-in
+ 144. https://ai.google.dev/responsible
+ 145. https://saif.google/
+ 146. https://developer.android.com/gemini-in-android
+ 147. https://developer.chrome.com/docs/devtools/console/understand-messages
+ 148. https://colab.google/
+ 149. https://firebase.google.com/products/generative-ai
+ 150. https://cloud.google.com/products/gemini/code-assist
+ 151. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+ 152. https://labs.google.com/jules/home
+ 153. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+ 154. https://ai.google.dev/showcase
+ 155. https://ai.google.dev/competition
+ 156. https://discuss.ai.google.dev/
+ 157. https://ai.google.dev/gemini-api/docs/gemini-for-research
+ 158. https://cloud.google.com/translate/?hl=ru
+ 159. https://ai.google.dev/?hl=ru
+ 160. https://ai.google.dev/gemini-api?hl=ru
+ 161. https://ai.google.dev/gemini-api/docs?hl=ru
+ 162. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 163. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 164. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 165. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 166. https://ai.google.dev/gemini-api/docs/image-understanding?hl=ru
+ 167. https://ai.google.dev/gemini-api/docs/document-processing?hl=ru
+ 168. https://ai.google.dev/gemini-api/docs/video-understanding?hl=ru
+ 169. https://ai.google.dev/gemini-api/docs/audio?hl=ru
+ 170. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerateContentResponse
+ 171. https://ai.google.dev/api/generate-content?hl=ru#method:-models.generatecontent
+ 172. https://ai.google.dev/gemini-api/docs/models?hl=ru
+ 173. https://ai.google.dev/gemini-api/docs/prompting-strategies?hl=ru#few-shot
+ 174. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru#system-instructions
+ 175. https://ai.google.dev/gemini-api/docs/prompting-strategies?hl=ru#few-shot
+ 176. https://ai.google.dev/gemini-api/docs/model-tuning?hl=ru
+ 177. https://ai.google.dev/gemini/docs/prompting-strategies?hl=ru
+ 178. https://ai.google.dev/gemini-api/docs/structured-output?hl=ru
+ 179. https://colab.research.google.com/github/google-gemini/cookbook/blob/main/quickstarts/Get_started.ipynb?hl=ru
+ 180. https://ai.google.dev/gemini-api/docs/image-understanding?hl=ru
+ 181. https://ai.google.dev/gemini-api/docs/video-understanding?hl=ru
+ 182. https://ai.google.dev/gemini-api/docs/audio?hl=ru
+ 183. https://ai.google.dev/gemini-api/docs/document-processing?hl=ru
+ 184. https://ai.google.dev/gemini-api/docs/files?hl=ru#prompt-guide
+ 185. https://creativecommons.org/licenses/by/4.0/
+ 186. https://www.apache.org/licenses/LICENSE-2.0
+ 187. https://developers.google.com/site-policies?hl=ru
+ 188. https://policies.google.com/terms?hl=ru
+ 189. https://policies.google.com/privacy?hl=ru
+ 190. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru
+ Warning: User-Agent string does not contain "Lynx" or "L_y_n_x"!
+
+#[1]Google AI for Developers [2]alternate [3]alternate [4]alternate
+   [5]alternate [6]alternate [7]alternate [8]alternate [9]alternate
+   [10]alternate [11]alternate [12]alternate [13]alternate [14]alternate
+   [15]alternate [16]alternate [17]alternate [18]alternate [19]alternate
+   [20]alternate [21]alternate [22]alternate [23]alternate [24]alternate
+
+   [25]Перейти к основному контенту
+
+   (BUTTON)
+   [26]Google AI for Developers
+     *
+
+   [27]Модели (BUTTON)
+     * Gemini
+     * [28]О сервисе
+     * [29]Документы
+     * [30]Справочник по API
+     * [31]Цена
+
+     * Изображение
+     * [32]О сервисе
+     * [33]Документы
+     * [34]Цена
+
+     * Вео
+     * [35]О сервисе
+     * [36]Документы
+     * [37]Цена
+
+     * Джемма
+     * [38]О сервисе
+     * [39]Документы
+     * [40]Джеммаверс
+
+   (BUTTON) Решения
+     * Стройте вместе с Близнецами
+     * [41]Gemini API
+     * [42]Google AI Studio
+
+     * Кастомизируйте открытые модели Gemma
+     * [43]Джемма открытые модели
+     * [44]Мультифреймворк с Keras
+     * [45]Точная настройка в Colab
+
+     * Запуск на устройстве
+     * [46]Google ИИ Край
+     * [47]Близнецы Нано на Android
+     * [48]Встроенные веб-API Chrome
+
+     * Стройте ответственно
+     * [49]Инструментарий ответственного GenAI
+     * [50]Безопасная платформа искусственного интеллекта
+
+   (BUTTON) Помощь по коду
+     * [51]Android Studio
+     * [52]Инструменты разработчика Chrome
+     * [53]Колаб
+     * [54]Firebase
+     * [55]Google Cloud
+     * [56]JetBrains
+     * [57]Жюль
+     * [58]Код ВС
+
+   (BUTTON) Витрина
+     * [59]Витрина Близнецов
+     * [60]Конкурс разработчиков Gemini API
+
+   (BUTTON) Сообщество
+     * [61]Форум Google по искусственному интеллекту
+     * [62]Близнецы для исследований
+
+   (BUTTON)
+   ____________________
+   /
+   (BUTTON)
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+   Войти
+
+   [63]Документация по API Gemini [64]Документация по API [65]Кулинарная
+   книга [66]Сообщество
+
+   ____________________
+
+   (BUTTON)
+   [67]Google AI for Developers
+     *
+
+     * [68]Модели
+          + Ещё
+          + [69]Документация по API Gemini
+          + [70]Документация по API
+          + [71]Кулинарная книга
+          + [72]Сообщество
+     * Решения
+          + Ещё
+     * Помощь по коду
+          + Ещё
+     * Витрина
+          + Ещё
+     * Сообщество
+          + Ещё
+
+     * Начать
+     * [73]Обзор
+     * [74]Краткое руководство
+     * [75]ключи API
+     * [76]Библиотеки
+     * [77]Совместимость с OpenAI
+     * Модели
+     * [78]Все модели
+     * [79]Цена
+     * [80]Ограничения ставок
+     * [81]Платежная информация
+     * Возможности модели
+     * [82]Генерация текста
+     * [83]Генерация изображения
+     * [84]Генерация видео
+     * [85]Генерация речи
+     * [86]Генерация музыки
+     * [87]Длинный контекст
+     * [88]Структурированный вывод
+     * [89]мышление
+     * [90]Вызов функции
+     * [91]Понимание документа
+     * [92]Понимание изображения
+     * [93]Видео понимание
+     * [94]Понимание звука
+     * [95]Выполнение кода
+     * [96]URL-контекст
+     * Заземление с помощью Google Поиска
+          + [97]Учебное пособие по заземлению
+          + [98]Используйте предложения поиска Google
+     * Руководства
+     * [99]Оперативное проектирование
+     * [100]Живой API
+     * [101]Кэширование контекста
+     * [102]Файловый API
+     * [103]Подсчет токенов
+     * Платформы с открытым исходным кодом
+          + [104]ЛангЧейн и ЛангГраф
+          + [105]CrewAI
+     * Тонкая настройка
+          + [106]Введение в тонкую настройку
+          + [107]Учебное пособие по тонкой настройке
+     * [108]Встраивания
+     * Безопасность
+          + [109]Настройки безопасности
+          + [110]Руководство по безопасности
+     * Ресурсы
+     * [111]Переход на Gen AI SDK
+     * [112]Примечания к выпускам
+     * [113]Устранение неполадок API
+     * ИИ-студия
+          + [114]Краткое руководство по Google AI Studio
+          + [115]УзнатьLM
+          + [116]Устранение неполадок AI Studio
+          + [117]Google Workspace
+     * Облачная платформа Google
+          + [118]API VertexAI Gemini
+          + [119]OAuth-аутентификация
+     * Правила
+     * [120]Условия использования
+     * [121]Доступные регионы
+     * [122]Дополнительные политики использования
+
+     * Gemini
+     * [123]О сервисе
+     * [124]Документы
+     * [125]Справочник по API
+     * [126]Цена
+     * Изображение
+     * [127]О сервисе
+     * [128]Документы
+     * [129]Цена
+     * Вео
+     * [130]О сервисе
+     * [131]Документы
+     * [132]Цена
+     * Джемма
+     * [133]О сервисе
+     * [134]Документы
+     * [135]Джеммаверс
+
+     * Стройте вместе с Близнецами
+     * [136]Gemini API
+     * [137]Google AI Studio
+     * Кастомизируйте открытые модели Gemma
+     * [138]Джемма открытые модели
+     * [139]Мультифреймворк с Keras
+     * [140]Точная настройка в Colab
+     * Запуск на устройстве
+     * [141]Google ИИ Край
+     * [142]Близнецы Нано на Android
+     * [143]Встроенные веб-API Chrome
+     * Стройте ответственно
+     * [144]Инструментарий ответственного GenAI
+     * [145]Безопасная платформа искусственного интеллекта
+
+     * [146]Android Studio
+     * [147]Инструменты разработчика Chrome
+     * [148]Колаб
+     * [149]Firebase
+     * [150]Google Cloud
+     * [151]JetBrains
+     * [152]Жюль
+     * [153]Код ВС
+
+     * [154]Витрина Близнецов
+     * [155]Конкурс разработчиков Gemini API
+
+     * [156]Форум Google по искусственному интеллекту
+     * [157]Близнецы для исследований
+
+   Эта страница переведена с помощью [158]Cloud Translation API.
+
+     * [159]Главная
+     * [160]Gemini API
+     * [161]Модели
+
+   (BUTTON) Отправить отзыв
+
+             Вызов функций с помощью Gemini API
+
+   Вызов функций позволяет подключать модели к внешним инструментам и API.
+   Вместо генерации текстовых ответов модель понимает, когда вызывать
+   определенные функции, и предоставляет необходимые параметры для
+   выполнения реальных действий. Это позволяет модели выступать в качестве
+   моста между естественным языком и реальными действиями и данными. Вызов
+   функций имеет 3 основных варианта использования:
+     * Расширяйте знания: получайте доступ к информации из внешних
+       источников, таких как базы данных, API и базы знаний.
+     * Расширение возможностей: используйте внешние инструменты для
+       выполнения вычислений и расширения ограничений модели, например, с
+       помощью калькулятора или создания диаграмм.
+     * Выполнение действий: взаимодействие с внешними системами с помощью
+       API, например планирование встреч, создание счетов, отправка
+       электронных писем или управление устройствами умного дома.
+
+   (weather) Получить прогноз погоды (meeting) Расписание встреч (chart)
+   Создать диаграмму
+
+Питон
+
+ from google import genai
+ from google.genai import types
+
+ # Define the function declaration for the model
+ schedule_meeting_function = {
+     "name": "schedule_meeting",
+     "description": "Schedules a meeting with specified attendees at a given tim
+e and date.",
+     "parameters": {
+         "type": "object",
+         "properties": {
+             "attendees": {
+                 "type": "array",
+                 "items": {"type": "string"},
+                 "description": "List of people attending the meeting.",
+             },
+             "date": {
+                 "type": "string",
+                 "description": "Date of the meeting (e.g., '2024-07-29')",
+             },
+             "time": {
+                 "type": "string",
+                 "description": "Time of the meeting (e.g., '15:00')",
+             },
+             "topic": {
+                 "type": "string",
+                 "description": "The subject or topic of the meeting.",
+             },
+         },
+         "required": ["attendees", "date", "time", "topic"],
+     },
+ }
+
+ # Configure the client and tools
+ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+ tools = types.Tool(function_declarations=[schedule_meeting_function])
+ config = types.GenerateContentConfig(tools=[tools])
+
+ # Send request with function declarations
+ response = client.models.generate_content(
+     model="gemini-2.0-flash",
+     contents="Schedule a meeting with Bob and Alice for 03/14/2025 at 10:00 AM
+about the Q3 planning.",
+     config=config,
+ )
+
+ # Check for a function call
+ if response.candidates[0].content.parts[0].function_call:
+     function_call = response.candidates[0].content.parts[0].function_call
+     print(f"Function to call: {function_call.name}")
+     print(f"Arguments: {function_call.args}")
+     #  In a real app, you would call your function here:
+     #  result = schedule_meeting(**function_call.args)
+ else:
+     print("No function call found in the response.")
+     print(response.text)
+
+JavaScript
+
+import { GoogleGenAI, Type } from '@google/genai';
+
+// Configure the client
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Define the function declaration for the model
+const scheduleMeetingFunctionDeclaration = {
+  name: 'schedule_meeting',
+  description: 'Schedules a meeting with specified attendees at a given time and
+ date.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      attendees: {
+        type: Type.ARRAY,
+        items: { type: Type.STRING },
+        description: 'List of people attending the meeting.',
+      },
+      date: {
+        type: Type.STRING,
+        description: 'Date of the meeting (e.g., "2024-07-29")',
+      },
+      time: {
+        type: Type.STRING,
+        description: 'Time of the meeting (e.g., "15:00")',
+      },
+      topic: {
+        type: Type.STRING,
+        description: 'The subject or topic of the meeting.',
+      },
+    },
+    required: ['attendees', 'date', 'time', 'topic'],
+  },
+};
+
+// Send request with function declarations
+const response = await ai.models.generateContent({
+  model: 'gemini-2.0-flash',
+  contents: 'Schedule a meeting with Bob and Alice for 03/27/2025 at 10:00 AM ab
+out the Q3 planning.',
+  config: {
+    tools: [{
+      functionDeclarations: [scheduleMeetingFunctionDeclaration]
+    }],
+  },
+});
+
+// Check for function calls in the response
+if (response.functionCalls && response.functionCalls.length > 0) {
+  const functionCall = response.functionCalls[0]; // Assuming one function call
+  console.log(`Function to call: ${functionCall.name}`);
+  console.log(`Arguments: ${JSON.stringify(functionCall.args)}`);
+  // In a real app, you would call your actual function here:
+  // const result = await scheduleMeeting(functionCall.args);
+} else {
+  console.log("No function call found in the response.");
+  console.log(response.text);
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Schedule a meeting with Bob and Alice for 03/27/2025 at 10:
+00 AM about the Q3 planning."
+          }
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "functionDeclarations": [
+          {
+            "name": "schedule_meeting",
+            "description": "Schedules a meeting with specified attendees at a gi
+ven time and date.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "attendees": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "List of people attending the meeting."
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date of the meeting (e.g., '2024-07-29')"
+                },
+                "time": {
+                  "type": "string",
+                  "description": "Time of the meeting (e.g., '15:00')"
+                },
+                "topic": {
+                  "type": "string",
+                  "description": "The subject or topic of the meeting."
+                }
+              },
+              "required": ["attendees", "date", "time", "topic"]
+            }
+          }
+        ]
+      }
+    ]
+  }'
+
+Как работает вызов функций
+
+   Обзор вызова функций
+
+   Вызов функции подразумевает структурированное взаимодействие между
+   вашим приложением, моделью и внешними функциями. Вот разбивка процесса:
+    1. Определите декларацию функции: Определите декларацию функции в коде
+       вашего приложения. Декларации функций описывают имя функции,
+       параметры и цель для модели.
+    2. Вызов LLM с декларациями функций: отправка приглашения пользователя
+       вместе с декларацией(ями) функций в модель. Она анализирует запрос
+       и определяет, будет ли полезен вызов функции. Если да, она отвечает
+       структурированным объектом JSON.
+    3. Выполнение кода функции (ваша ответственность): Модель не выполняет
+       функцию сама по себе. Это ответственность вашего приложения —
+       обрабатывать ответ и проверять вызов функции, если
+          + Да : извлеките имя и аргументы функции и выполните
+            соответствующую функцию в вашем приложении.
+          + Нет: Модель предоставила прямой текстовый ответ на подсказку
+            (этот поток менее подчеркнут в примере, но является возможным
+            результатом).
+    4. Создать удобный для пользователя ответ: Если функция была
+       выполнена, захватить результат и отправить его обратно в модель в
+       последующем повороте диалога. Она будет использовать результат для
+       генерации окончательного удобного для пользователя ответа, который
+       включает информацию из вызова функции.
+
+   Этот процесс может повторяться в течение нескольких ходов, что
+   позволяет осуществлять сложные взаимодействия и рабочие процессы.
+   Модель также поддерживает вызов нескольких функций в одном ходе (
+   [162]параллельный вызов функций ) и последовательно (
+   [163]композиционный вызов функций ).
+
+Шаг 1: Определение объявления функции
+
+   Определите функцию и ее объявление в коде вашего приложения, которое
+   позволяет пользователям устанавливать значения света и делать запрос
+   API. Эта функция может вызывать внешние службы или API.
+
+Питон
+
+from google.genai import types
+
+# Define a function that the model can call to control smart lights
+set_light_values_declaration = {
+    "name": "set_light_values",
+    "description": "Sets the brightness and color temperature of a light.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "brightness": {
+                "type": "integer",
+                "description": "Light level from 0 to 100. Zero is off and 100 i
+s full brightness",
+            },
+            "color_temp": {
+                "type": "string",
+                "enum": ["daylight", "cool", "warm"],
+                "description": "Color temperature of the light fixture, which ca
+n be `daylight`, `cool` or `warm`.",
+            },
+        },
+        "required": ["brightness", "color_temp"],
+    },
+}
+
+# This is the actual function that would be called based on the model's suggesti
+on
+def set_light_values(brightness: int, color_temp: str) -> dict[str, int | str]:
+    """Set the brightness and color temperature of a room light. (mock API).
+
+    Args:
+        brightness: Light level from 0 to 100. Zero is off and 100 is full brigh
+tness
+        color_temp: Color temperature of the light fixture, which can be `daylig
+ht`, `cool` or `warm`.
+
+    Returns:
+        A dictionary containing the set brightness and color temperature.
+    """
+    return {"brightness": brightness, "colorTemperature": color_temp}
+
+
+JavaScript
+
+import { Type } from '@google/genai';
+
+// Define a function that the model can call to control smart lights
+const setLightValuesFunctionDeclaration = {
+  name: 'set_light_values',
+  description: 'Sets the brightness and color temperature of a light.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      brightness: {
+        type: Type.NUMBER,
+        description: 'Light level from 0 to 100. Zero is off and 100 is full bri
+ghtness',
+      },
+      color_temp: {
+        type: Type.STRING,
+        enum: ['daylight', 'cool', 'warm'],
+        description: 'Color temperature of the light fixture, which can be `dayl
+ight`, `cool` or `warm`.',
+      },
+    },
+    required: ['brightness', 'color_temp'],
+  },
+};
+
+/**
+* Set the brightness and color temperature of a room light. (mock API)
+* @param {number} brightness - Light level from 0 to 100. Zero is off and 100 is
+ full brightness
+* @param {string} color_temp - Color temperature of the light fixture, which can
+ be `daylight`, `cool` or `warm`.
+* @return {Object} A dictionary containing the set brightness and color temperat
+ure.
+*/
+function setLightValues(brightness, color_temp) {
+  return {
+    brightness: brightness,
+    colorTemperature: color_temp
+  };
+}
+
+Шаг 2: Вызов модели с объявлениями функций
+
+   После того, как вы определили объявления функций, вы можете предложить
+   модели использовать функцию. Она анализирует приглашение и объявления
+   функций и решает, ответить напрямую или вызвать функцию. Если функция
+   вызывается, объект ответа будет содержать предложение вызова функции.
+
+Питон
+
+from google import genai
+
+# Generation Config with Function Declaration
+tools = types.Tool(function_declarations=[set_light_values_declaration])
+config = types.GenerateContentConfig(tools=[tools])
+
+# Configure the client
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+# Define user prompt
+contents = [
+    types.Content(
+        role="user", parts=[types.Part(text="Turn the lights down to a romantic
+level")]
+    )
+]
+
+# Send request with function declarations
+response = client.models.generate_content(
+    model="gemini-2.0-flash", config=config, contents=contents
+)
+
+print(response.candidates[0].content.parts[0].function_call)
+
+JavaScript
+
+import { GoogleGenAI } from '@google/genai';
+
+// Generation Config with Function Declaration
+const config = {
+  tools: [{
+    functionDeclarations: [setLightValuesFunctionDeclaration]
+  }]
+};
+
+// Configure the client
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Define user prompt
+const contents = [
+  {
+    role: 'user',
+    parts: [{ text: 'Turn the lights down to a romantic level' }]
+  }
+];
+
+// Send request with function declarations
+const response = await ai.models.generateContent({
+  model: 'gemini-2.0-flash',
+  contents: contents,
+  config: config
+});
+
+console.log(response.functionCalls[0]);
+
+   Затем модель возвращает объект functionCall в схеме, совместимой с
+   OpenAPI, определяющей, как вызвать одну или несколько объявленных
+   функций, чтобы ответить на вопрос пользователя.
+
+Питон
+
+id=None args={'color_temp': 'warm', 'brightness': 25} name='set_light_values'
+
+JavaScript
+
+{
+  name: 'set_light_values',
+  args: { brightness: 25, color_temp: 'warm' }
+}
+
+Шаг 3: Выполнить код функции set_light_values
+
+   Извлеките сведения о вызове функции из ответа модели, проанализируйте
+   аргументы и выполните функцию set_light_values ​​в нашем коде.
+
+Питон
+
+# Extract tool call details
+tool_call = response.candidates[0].content.parts[0].function_call
+
+if tool_call.name == "set_light_values":
+    result = set_light_values(**tool_call.args)
+    print(f"Function execution result: {result}")
+
+JavaScript
+
+// Extract tool call details
+const tool_call = response.functionCalls[0]
+
+let result;
+if (tool_call.name === 'set_light_values') {
+  result = setLightValues(tool_call.args.brightness, tool_call.args.color_temp);
+  console.log(`Function execution result: ${JSON.stringify(result)}`);
+}
+
+Шаг 4: Создайте удобный для пользователя ответ с результатом функции и
+вызовите модель еще раз.
+
+   Наконец, отправьте результат выполнения функции обратно в модель, чтобы
+   она могла включить эту информацию в свой окончательный ответ
+   пользователю.
+
+Питон
+
+# Create a function response part
+function_response_part = types.Part.from_function_response(
+    name=tool_call.name,
+    response={"result": result},
+)
+
+# Append function call and result of the function execution to contents
+contents.append(types.Content(role="model", parts=[types.Part(function_call=tool
+_call)])) # Append the model's function call message
+contents.append(types.Content(role="user", parts=[function_response_part])) # Ap
+pend the function response
+
+final_response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    config=config,
+    contents=contents,
+)
+
+print(final_response.text)
+
+JavaScript
+
+// Create a function response part
+const function_response_part = {
+  name: tool_call.name,
+  response: { result }
+}
+
+// Append function call and result of the function execution to contents
+contents.push({ role: 'model', parts: [{ functionCall: tool_call }] });
+contents.push({ role: 'user', parts: [{ functionResponse: function_response_part
+ }] });
+
+// Get the final response from the model
+const final_response = await ai.models.generateContent({
+  model: 'gemini-2.0-flash',
+  contents: contents,
+  config: config
+});
+
+console.log(final_response.text);
+
+   Это завершает поток вызова функции. Модель успешно использовала функцию
+   set_light_values ​​для выполнения действия запроса пользователя.
+
+Декларации функций
+
+   При реализации вызова функции в приглашении вы создаете объект tools ,
+   который содержит одно или несколько function declarations . Вы
+   определяете функции с помощью JSON, в частности, с [164]выбранным
+   подмножеством формата [165]схемы OpenAPI . Одно объявление функции
+   может включать следующие параметры:
+     * name (string): Уникальное имя для функции ( get_weather_forecast ,
+       send_email ). Используйте описательные имена без пробелов и
+       специальных символов (используйте подчеркивания или camelCase).
+     * description (string): Четкое и подробное объяснение цели и
+       возможностей функции. Это важно для модели, чтобы понять, когда
+       использовать функцию. Будьте конкретны и приведите примеры, если
+       это полезно («Находит кинотеатры на основе местоположения и,
+       возможно, названия фильма, который в данный момент идет в
+       кинотеатрах»).
+     * parameters (объект): определяет входные параметры, ожидаемые
+       функцией.
+          + type (строка): определяет общий тип данных, например, object .
+          + properties (объект): Перечисляет отдельные параметры, каждый
+            из которых содержит:
+               o type (строка): тип данных параметра, например string ,
+                 integer , boolean, array .
+               o description (string): Описание назначения и формата
+                 параметра. Предоставьте примеры и ограничения («Город и
+                 штат, например, «Сан-Франциско, Калифорния» или почтовый
+                 индекс, например, «95616».)
+               o enum (массив, необязательно): Если значения параметров из
+                 фиксированного набора, используйте "enum" для
+                 перечисления допустимых значений вместо того, чтобы
+                 просто описывать их в описании. Это повышает точность
+                 ("enum": ["daylight", "cool", "warm"]).
+          + required (массив): массив строк, в котором перечислены имена
+            параметров, обязательные для работы функции.
+
+Параллельный вызов функций
+
+   Помимо вызова функции с одним ходом, вы также можете вызывать несколько
+   функций одновременно. Параллельный вызов функций позволяет выполнять
+   несколько функций одновременно и используется, когда функции не зависят
+   друг от друга. Это полезно в таких сценариях, как сбор данных из
+   нескольких независимых источников, например, получение данных о
+   клиентах из разных баз данных или проверка уровней запасов на разных
+   складах или выполнение нескольких действий, например, переоборудование
+   квартиры в дискотеку.
+
+Питон
+
+power_disco_ball = {
+    "name": "power_disco_ball",
+    "description": "Powers the spinning disco ball.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "power": {
+                "type": "boolean",
+                "description": "Whether to turn the disco ball on or off.",
+            }
+        },
+        "required": ["power"],
+    },
+}
+
+start_music = {
+    "name": "start_music",
+    "description": "Play some music matching the specified parameters.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "energetic": {
+                "type": "boolean",
+                "description": "Whether the music is energetic or not.",
+            },
+            "loud": {
+                "type": "boolean",
+                "description": "Whether the music is loud or not.",
+            },
+        },
+        "required": ["energetic", "loud"],
+    },
+}
+
+dim_lights = {
+    "name": "dim_lights",
+    "description": "Dim the lights.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "brightness": {
+                "type": "number",
+                "description": "The brightness of the lights, 0.0 is off, 1.0 is
+ full.",
+            }
+        },
+        "required": ["brightness"],
+    },
+}
+
+JavaScript
+
+import { Type } from '@google/genai';
+
+const powerDiscoBall = {
+  name: 'power_disco_ball',
+  description: 'Powers the spinning disco ball.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      power: {
+        type: Type.BOOLEAN,
+        description: 'Whether to turn the disco ball on or off.'
+      }
+    },
+    required: ['power']
+  }
+};
+
+const startMusic = {
+  name: 'start_music',
+  description: 'Play some music matching the specified parameters.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      energetic: {
+        type: Type.BOOLEAN,
+        description: 'Whether the music is energetic or not.'
+      },
+      loud: {
+        type: Type.BOOLEAN,
+        description: 'Whether the music is loud or not.'
+      }
+    },
+    required: ['energetic', 'loud']
+  }
+};
+
+const dimLights = {
+  name: 'dim_lights',
+  description: 'Dim the lights.',
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      brightness: {
+        type: Type.NUMBER,
+        description: 'The brightness of the lights, 0.0 is off, 1.0 is full.'
+      }
+    },
+    required: ['brightness']
+  }
+};
+
+   Вызовите модель с инструкцией, которая может использовать все указанные
+   инструменты. В этом примере используется tool_config . Чтобы узнать
+   больше, вы можете прочитать о [166]настройке вызова функций .
+
+Питон
+
+from google import genai
+from google.genai import types
+
+# Set up function declarations
+house_tools = [
+    types.Tool(function_declarations=[power_disco_ball, start_music, dim_lights]
+)
+]
+
+config = {
+    "tools": house_tools,
+    "automatic_function_calling": {"disable": True},
+    # Force the model to call 'any' function, instead of chatting.
+    "tool_config": {"function_calling_config": {"mode": "any"}},
+}
+
+# Configure the client
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+chat = client.chats.create(model="gemini-2.0-flash", config=config)
+response = chat.send_message("Turn this place into a party!")
+
+# Print out each of the function calls requested from this single call
+print("Example 1: Forced function calling")
+for fn in response.function_calls:
+    args = ", ".join(f"{key}={val}" for key, val in fn.args.items())
+    print(f"{fn.name}({args})")
+
+JavaScript
+
+import { GoogleGenAI } from '@google/genai';
+
+// Set up function declarations
+const houseFns = [powerDiscoBall, startMusic, dimLights];
+
+const config = {
+    tools: [{
+        functionDeclarations: houseFns
+    }],
+    // Force the model to call 'any' function, instead of chatting.
+    toolConfig: {
+        functionCallingConfig: {
+        mode: 'any'
+        }
+    }
+};
+
+// Configure the client
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Create a chat session
+const chat = ai.chats.create({
+    model: 'gemini-2.0-flash',
+    config: config
+});
+const response = await chat.sendMessage({message: 'Turn this place into a party!
+'});
+
+// Print out each of the function calls requested from this single call
+console.log("Example 1: Forced function calling");
+for (const fn of response.functionCalls) {
+    const args = Object.entries(fn.args)
+        .map(([key, val]) => `${key}=${val}`)
+        .join(', ');
+    console.log(`${fn.name}(${args})`);
+}
+
+   Каждый из напечатанных результатов отражает один вызов функции,
+   запрошенный моделью. Чтобы отправить результаты обратно, включите
+   ответы в том же порядке, в котором они были запрошены.
+
+   Python SDK поддерживает функцию, называемую [167]автоматическим вызовом
+   функции , которая преобразует функцию Python в объявления, обрабатывает
+   выполнение вызова функции и цикл ответа для вас. Ниже приведен пример
+   для нашего варианта использования disco.
+
+   Примечание: Автоматический вызов функций на данный момент является
+   единственной функцией Python SDK.
+
+Питон
+
+from google import genai
+from google.genai import types
+
+# Actual implementation functions
+def power_disco_ball_impl(power: bool) -> dict:
+    """Powers the spinning disco ball.
+
+    Args:
+        power: Whether to turn the disco ball on or off.
+
+    Returns:
+        A status dictionary indicating the current state.
+    """
+    return {"status": f"Disco ball powered {'on' if power else 'off'}"}
+
+def start_music_impl(energetic: bool, loud: bool) -> dict:
+    """Play some music matching the specified parameters.
+
+    Args:
+        energetic: Whether the music is energetic or not.
+        loud: Whether the music is loud or not.
+
+    Returns:
+        A dictionary containing the music settings.
+    """
+    music_type = "energetic" if energetic else "chill"
+    volume = "loud" if loud else "quiet"
+    return {"music_type": music_type, "volume": volume}
+
+def dim_lights_impl(brightness: float) -> dict:
+    """Dim the lights.
+
+    Args:
+        brightness: The brightness of the lights, 0.0 is off, 1.0 is full.
+
+    Returns:
+        A dictionary containing the new brightness setting.
+    """
+    return {"brightness": brightness}
+
+config = {
+    "tools": [power_disco_ball_impl, start_music_impl, dim_lights_impl],
+}
+
+chat = client.chats.create(model="gemini-2.0-flash", config=config)
+response = chat.send_message("Do everything you need to this place into party!")
+
+print("\nExample 2: Automatic function calling")
+print(response.text)
+# I've turned on the disco ball, started playing loud and energetic music, and d
+immed the lights to 50% brightness. Let's get this party started!
+
+Вызов композиционной функции
+
+   Gemini 2.0 поддерживает композиционный вызов функций, что означает, что
+   модель может объединять несколько вызовов функций вместе. Например,
+   чтобы ответить «Получить температуру в моем текущем местоположении»,
+   API Gemini может вызвать как функцию get_current_location() , так и
+   функцию get_weather() , которая принимает местоположение в качестве
+   параметра.
+
+   Примечание: Вызов композиционных функций в настоящее время доступен
+   только в [168]Live API . Объявление функции run() , которое
+   обрабатывает асинхронную настройку веб-сокета, опущено для краткости.
+
+Питон
+
+# Light control schemas
+turn_on_the_lights_schema = {'name': 'turn_on_the_lights'}
+turn_off_the_lights_schema = {'name': 'turn_off_the_lights'}
+
+prompt = """
+  Hey, can you write run some python code to turn on the lights, wait 10s and th
+en turn off the lights?
+  """
+
+tools = [
+    {'code_execution': {}},
+    {'function_declarations': [turn_on_the_lights_schema, turn_off_the_lights_sc
+hema]}
+]
+
+await run(prompt, tools=tools, modality="AUDIO")
+
+JavaScript
+
+// Light control schemas
+const turnOnTheLightsSchema = { name: 'turn_on_the_lights' };
+const turnOffTheLightsSchema = { name: 'turn_off_the_lights' };
+
+const prompt = `
+  Hey, can you write run some python code to turn on the lights, wait 10s and th
+en turn off the lights?
+`;
+
+const tools = [
+  { codeExecution: {} },
+  { functionDeclarations: [turnOnTheLightsSchema, turnOffTheLightsSchema] }
+];
+
+await run(prompt, tools=tools, modality="AUDIO")
+
+Режимы вызова функций
+
+   API Gemini позволяет вам контролировать, как модель использует
+   предоставленные инструменты (декларации функций). В частности, вы
+   можете установить режим в function_calling_config .
+     * AUTO (Default) : модель решает, генерировать ли ответ на
+       естественном языке или предлагать вызов функции на основе подсказки
+       и контекста. Это наиболее гибкий режим, рекомендуемый для
+       большинства сценариев.
+     * ANY : Модель ограничена тем, чтобы всегда предсказывать вызов
+       функции и гарантировать соответствие схеме функции. Если
+       allowed_function_names не указано, модель может выбирать из любого
+       из предоставленных объявлений функций. Если allowed_function_names
+       указано в виде списка, модель может выбирать только из функций в
+       этом списке. Используйте этот режим, когда требуется вызов функции
+       в ответ на каждый запрос (если применимо).
+     * NONE : модели запрещено делать вызовы функций. Это эквивалентно
+       отправке запроса без каких-либо объявлений функций. Используйте
+       это, чтобы временно отключить вызов функций, не удаляя определения
+       инструментов.
+
+Питон
+
+from google.genai import types
+
+# Configure function calling mode
+tool_config = types.ToolConfig(
+    function_calling_config=types.FunctionCallingConfig(
+        mode="ANY", allowed_function_names=["get_current_temperature"]
+    )
+)
+
+# Create the generation config
+config = types.GenerateContentConfig(
+    temperature=0,
+    tools=[tools],  # not defined here.
+    tool_config=tool_config,
+)
+
+JavaScript
+
+import { FunctionCallingConfigMode } from '@google/genai';
+
+// Configure function calling mode
+const toolConfig = {
+  functionCallingConfig: {
+    mode: FunctionCallingConfigMode.ANY,
+    allowedFunctionNames: ['get_current_temperature']
+  }
+};
+
+// Create the generation config
+const config = {
+  temperature: 0,
+  tools: tools, // not defined here.
+  toolConfig: toolConfig,
+};
+
+Автоматический вызов функций (только Python)
+
+   При использовании Python SDK вы можете предоставлять функции Python
+   напрямую как инструменты. SDK автоматически преобразует функцию Python
+   в объявления, обрабатывает выполнение вызова функции и цикл ответа для
+   вас. Затем Python SDK автоматически:
+    1. Обнаруживает ответы на вызовы функций из модели.
+    2. Вызовите соответствующую функцию Python в вашем коде.
+    3. Отправляет ответ функции обратно в модель.
+    4. Возвращает окончательный текстовый ответ модели.
+
+   Чтобы использовать это, определите свою функцию с подсказками типов и
+   строкой документации, а затем передайте саму функцию (не декларацию
+   JSON) в качестве инструмента:
+
+Питон
+
+from google import genai
+from google.genai import types
+
+# Define the function with type hints and docstring
+def get_current_temperature(location: str) -> dict:
+    """Gets the current temperature for a given location.
+
+    Args:
+        location: The city and state, e.g. San Francisco, CA
+
+    Returns:
+        A dictionary containing the temperature and unit.
+    """
+    # ... (implementation) ...
+    return {"temperature": 25, "unit": "Celsius"}
+
+# Configure the client and model
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  # Replace with your
+actual API key setup
+config = types.GenerateContentConfig(
+    tools=[get_current_temperature]
+)  # Pass the function itself
+
+# Make the request
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="What's the temperature in Boston?",
+    config=config,
+)
+
+print(response.text)  # The SDK handles the function call and returns the final
+text
+
+   Вы можете отключить автоматический вызов функций с помощью:
+
+Питон
+
+# To disable automatic function calling:
+config = types.GenerateContentConfig(
+    tools=[get_current_temperature],
+    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True
+)
+)
+
+Декларация схемы автоматической функции
+
+   Автоматическое извлечение схемы из функций Python работает не во всех
+   случаях. Например: оно не обрабатывает случаи, когда вы описываете поля
+   вложенного словаря-объекта. API может описывать любой из следующих
+   типов:
+
+Питон
+
+AllowedType = (int | float | bool | str | list['AllowedType'] | dict[str, Allowe
+dType])
+
+   Чтобы увидеть, как выглядит выведенная схема, вы можете преобразовать
+   ее с помощью [169]from_callable :
+
+Питон
+
+def multiply(a: float, b: float):
+    """Returns a * b."""
+    return a * b
+
+fn_decl = types.FunctionDeclaration.from_callable(callable=multiply, client=clie
+nt)
+
+# to_json_dict() provides a clean JSON representation.
+print(fn_decl.to_json_dict())
+
+Многофункциональное использование: объединение собственных инструментов с
+вызовом функций
+
+   С Gemini 2.0 вы можете включить несколько инструментов, объединяющих
+   собственные инструменты с вызовом функций одновременно. Вот пример,
+   который включает два инструмента, [170]Grounding with Google Search и
+   [171]code execution , в запросе с использованием [172]Live API .
+
+   Примечание: Использование нескольких инструментов в настоящее время
+   доступно только в [173]Live API . Объявление функции run() , которая
+   обрабатывает асинхронную настройку веб-сокета, опущено для краткости.
+
+Питон
+
+# Multiple tasks example - combining lights, code execution, and search
+prompt = """
+  Hey, I need you to do three things for me.
+
+    1.  Turn on the lights.
+    2.  Then compute the largest prime palindrome under 100000.
+    3.  Then use Google Search to look up information about the largest earthqua
+ke in California the week of Dec 5 2024.
+
+  Thanks!
+  """
+
+tools = [
+    {'google_search': {}},
+    {'code_execution': {}},
+    {'function_declarations': [turn_on_the_lights_schema, turn_off_the_lights_sc
+hema]} # not defined here.
+]
+
+# Execute the prompt with specified tools in audio modality
+await run(prompt, tools=tools, modality="AUDIO")
+
+JavaScript
+
+// Multiple tasks example - combining lights, code execution, and search
+const prompt = `
+  Hey, I need you to do three things for me.
+
+    1.  Turn on the lights.
+    2.  Then compute the largest prime palindrome under 100000.
+    3.  Then use Google Search to look up information about the largest earthqua
+ke in California the week of Dec 5 2024.
+
+  Thanks!
+`;
+
+const tools = [
+  { googleSearch: {} },
+  { codeExecution: {} },
+  { functionDeclarations: [turnOnTheLightsSchema, turnOffTheLightsSchema] } // n
+ot defined here.
+];
+
+// Execute the prompt with specified tools in audio modality
+await run(prompt, {tools: tools, modality: "AUDIO"});
+
+   Разработчики Python могут опробовать это в [174]блокноте Live API Tool
+   Use .
+
+Модель контекстного протокола (MCP)
+
+   [175]Model Context Protocol (MCP) — открытый стандарт для подключения
+   приложений ИИ к внешним инструментам и данным. MCP предоставляет общий
+   протокол для моделей для доступа к контексту, такому как функции
+   (инструменты), источники данных (ресурсы) или предопределенные
+   подсказки.
+
+   Gemini SDK имеют встроенную поддержку MCP, что сокращает шаблонный код
+   и предлагает [176]автоматический вызов инструментов для инструментов
+   MCP. Когда модель генерирует вызов инструмента MCP, клиентский SDK
+   Python и JavaScript может автоматически выполнить инструмент MCP и
+   отправить ответ обратно модели в последующем запросе, продолжая этот
+   цикл до тех пор, пока модель не перестанет делать вызовы инструментов.
+
+   Здесь вы можете найти пример использования локального сервера MCP с
+   Gemini и mcp SDK.
+
+Питон
+
+   Убедитесь, что на выбранной вами платформе установлена ​​последняя
+   версия [177]mcp SDK .
+pip install mcp
+
+   Примечание: Python поддерживает автоматический вызов инструмента,
+   передавая ClientSession в параметры tools . Если вы хотите отключить
+   его, вы можете предоставить automatic_function_calling с отключенным
+   True .
+import os
+import asyncio
+from datetime import datetime
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+from google import genai
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+# Create server parameters for stdio connection
+server_params = StdioServerParameters(
+    command="npx",  # Executable
+    args=["-y", "@philschmid/weather-mcp"],  # MCP Server
+    env=None,  # Optional environment variables
+)
+
+async def run():
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            # Prompt to get the weather for the current day in London.
+            prompt = f"What is the weather in London in {datetime.now().strftime
+('%Y-%m-%d')}?"
+            # Initialize the connection between client and server
+            await session.initialize()
+            # Send request to the model with MCP function declarations
+            response = await client.aio.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt,
+                config=genai.types.GenerateContentConfig(
+                    temperature=0,
+                    tools=[session],  # uses the session, will automatically cal
+l the tool
+                    # Uncomment if you **don't** want the sdk to automatically c
+all the tool
+                    # automatic_function_calling=genai.types.AutomaticFunctionCa
+llingConfig(
+                    #     disable=True
+                    # ),
+                ),
+            )
+            print(response.text)
+
+# Start the asyncio event loop and run the main function
+asyncio.run(run())
+
+JavaScript
+
+   Убедитесь, что на выбранной вами платформе установлена ​​последняя
+   версия mcp SDK.
+npm install @modelcontextprotocol/sdk
+
+   Примечание: JavaScript поддерживает автоматический вызов инструмента,
+   оборачивая client с помощью mcpToTool . Если вы хотите отключить его,
+   вы можете предоставить automaticFunctionCalling с отключенным true .
+import { GoogleGenAI, FunctionCallingConfigMode , mcpToTool} from '@google/genai
+';
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
+;
+
+// Create server parameters for stdio connection
+const serverParams = new StdioClientTransport({
+  command: "npx", // Executable
+  args: ["-y", "@philschmid/weather-mcp"] // MCP Server
+});
+
+const client = new Client(
+  {
+    name: "example-client",
+    version: "1.0.0"
+  }
+);
+
+// Configure the client
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Initialize the connection between client and server
+await client.connect(serverParams);
+
+// Send request to the model with MCP tools
+const response = await ai.models.generateContent({
+  model: "gemini-2.0-flash",
+  contents: `What is the weather in London in ${new Date().toLocaleDateString()}
+?`,
+  config: {
+    tools: [mcpToTool(client)],  // uses the session, will automatically call th
+e tool
+    // Uncomment if you **don't** want the sdk to automatically call the tool
+    // automaticFunctionCalling: {
+    //   disable: true,
+    // },
+  },
+});
+console.log(response.text)
+
+// Close the connection
+await client.close();
+
+Ограничения при встроенной поддержке MCP
+
+   Встроенная поддержка MCP является [178]экспериментальной функцией в
+   наших SDK и имеет следующие ограничения:
+     * Поддерживаются только инструменты, а не ресурсы или подсказки.
+     * Он доступен для Python и JavaScript/TypeScript SDK.
+     * В будущих версиях могут произойти критические изменения.
+
+   Ручная интеграция серверов MCP всегда возможна, если это ограничивает
+   ваши возможности.
+
+Поддерживаемые модели
+
+   Экспериментальные модели не включены. Их возможности вы можете найти на
+   странице [179]обзора моделей .
+   Модель Вызов функции Параллельный вызов функций Вызов композиционной
+   функции (Только API в реальном времени)
+
+   Близнецы 2.0 Флэш ✔️ ✔️ ✔️
+   Gemini 2.0 Flash-Lite Х Х Х
+   Близнецы 1.5 Флэш ✔️ ✔️ ✔️
+   Близнецы 1.5 Про ✔️ ✔️ ✔️
+
+Лучшие практики
+
+     * Описания функций и параметров: будьте предельно ясны и конкретны в
+       своих описаниях. Модель опирается на них, чтобы выбрать правильную
+       функцию и предоставить соответствующие аргументы.
+     * Именование: используйте описательные имена функций (без пробелов,
+       точек и тире).
+     * Строгая типизация: используйте определенные типы (целое число,
+       строка, перечисление) для параметров, чтобы уменьшить количество
+       ошибок. Если параметр имеет ограниченный набор допустимых значений,
+       используйте перечисление.
+     * Выбор инструмента: Хотя модель может использовать произвольное
+       количество инструментов, предоставление слишком большого количества
+       может увеличить риск выбора неправильного или неоптимального
+       инструмента. Для достижения наилучших результатов стремитесь
+       предоставлять только соответствующие инструменты для контекста или
+       задачи, в идеале сохраняя активный набор максимум в 10-20.
+       Рассмотрите динамический выбор инструментов на основе контекста
+       разговора, если у вас большое общее количество инструментов.
+     * Оперативное проектирование:
+          + Предоставьте контекст: расскажите модели о ее роли (например,
+            «Вы полезный помощник по прогнозу погоды»).
+          + Дайте инструкции: укажите, как и когда использовать функции
+            (например, «Не угадывайте даты; всегда используйте будущую
+            дату для прогнозов»).
+          + Поощряйте уточнения: попросите модель задавать уточняющие
+            вопросы при необходимости.
+     * Температура: используйте низкую температуру (например, 0) для более
+       детерминированных и надежных вызовов функций.
+     * Проверка: если вызов функции имеет существенные последствия
+       (например, размещение заказа), проверьте вызов у ​​пользователя
+       перед его выполнением.
+     * Обработка ошибок : реализуйте надежную обработку ошибок в своих
+       функциях, чтобы изящно обрабатывать неожиданные входные данные или
+       сбои API. Возвращайте информативные сообщения об ошибках, которые
+       модель может использовать для генерации полезных ответов
+       пользователю.
+     * Безопасность: Помните о безопасности при вызове внешних API.
+       Используйте соответствующие механизмы аутентификации и авторизации.
+       Избегайте раскрытия конфиденциальных данных при вызовах функций.
+     * Ограничения по токенам: Описания функций и параметры учитываются в
+       вашем лимите входных токенов. Если вы достигаете лимитов по
+       токенам, рассмотрите возможность ограничения количества функций или
+       длины описаний, разбейте сложные задачи на более мелкие, более
+       целевые наборы функций.
+
+Примечания и ограничения
+
+     * Поддерживается только [180]подмножество схемы OpenAPI .
+     * Поддерживаемые типы параметров в Python ограничены.
+     * Автоматический вызов функций доступен только в Python SDK.
+
+   (BUTTON) Отправить отзыв
+
+   Если не указано иное, контент на этой странице предоставляется по
+   [181]лицензии Creative Commons "С указанием авторства 4.0", а примеры
+   кода – по [182]лицензии Apache 2.0. Подробнее об этом написано в
+   [183]правилах сайта. Java – это зарегистрированный товарный знак
+   корпорации Oracle и ее аффилированных лиц.
+
+   Последнее обновление: 2025-05-20 UTC.
+
+   (BUTTON) Хотите рассказать подробнее? [[["Прост для
+   понимания","easyToUnderstand","thumb-up"],["Помог мне решить мою
+   проблему","solvedMyProblem","thumb-up"],["Другое","otherUp","thumb-up"]
+   ],[["Отсутствует нужная мне
+   информация","missingTheInformationINeed","thumb-down"],["Слишком
+   сложен/слишком много
+   шагов","tooComplicatedTooManySteps","thumb-down"],["Устарел","outOfDate
+   ","thumb-down"],["Проблема с переводом
+   текста","translationIssue","thumb-down"],["Проблемы
+   образцов/кода","samplesCodeIssue","thumb-down"],["Другое","otherDown","
+   thumb-down"]],["Последнее обновление: 2025-05-20 UTC."],[],[]]
+
+     * [184]Условия использования
+     * [185]Конфиденциальность
+     * [186]Manage cookies
+
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+References
+
+   1. https://ai.google.dev/s/opensearch.xml?hl=ru
+   2. https://ai.google.dev/gemini-api/docs/function-calling
+   3. https://ai.google.dev/gemini-api/docs/function-calling
+   4. https://ai.google.dev/gemini-api/docs/function-calling?hl=ar
+   5. https://ai.google.dev/gemini-api/docs/function-calling?hl=bn
+   6. https://ai.google.dev/gemini-api/docs/function-calling?hl=zh-cn
+   7. https://ai.google.dev/gemini-api/docs/function-calling?hl=zh-tw
+   8. https://ai.google.dev/gemini-api/docs/function-calling?hl=fa
+   9. https://ai.google.dev/gemini-api/docs/function-calling?hl=fr
+  10. https://ai.google.dev/gemini-api/docs/function-calling?hl=de
+  11. https://ai.google.dev/gemini-api/docs/function-calling?hl=he
+  12. https://ai.google.dev/gemini-api/docs/function-calling?hl=hi
+  13. https://ai.google.dev/gemini-api/docs/function-calling?hl=id
+  14. https://ai.google.dev/gemini-api/docs/function-calling?hl=it
+  15. https://ai.google.dev/gemini-api/docs/function-calling?hl=ja
+  16. https://ai.google.dev/gemini-api/docs/function-calling?hl=ko
+  17. https://ai.google.dev/gemini-api/docs/function-calling?hl=pl
+  18. https://ai.google.dev/gemini-api/docs/function-calling?hl=pt-br
+  19. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru
+  20. https://ai.google.dev/gemini-api/docs/function-calling?hl=es-419
+  21. https://ai.google.dev/gemini-api/docs/function-calling?hl=th
+  22. https://ai.google.dev/gemini-api/docs/function-calling?hl=tr
+  23. https://ai.google.dev/gemini-api/docs/function-calling?hl=vi
+  24. https://ai.google.dev/gemini-api/docs/function-calling?hl=sq
+  25. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru&example=meeting#main-content
+  26. https://ai.google.dev/
+  27. https://ai.google.dev/gemini-api/docs?hl=ru
+  28. https://deepmind.google/gemini?hl=ru
+  29. https://ai.google.dev/gemini-api/docs?hl=ru
+  30. https://ai.google.dev/api?hl=ru
+  31. https://ai.google.dev/pricing?hl=ru
+  32. https://deepmind.google/technologies/imagen-3/?hl=ru
+  33. https://ai.google.dev/gemini-api/docs/image-generation?hl=ru#imagen
+  34. https://ai.google.dev/pricing?hl=ru
+  35. https://deepmind.google/technologies/veo/veo-2/?hl=ru
+  36. https://ai.google.dev/gemini-api/docs/video?hl=ru
+  37. https://ai.google.dev/pricing?hl=ru
+  38. https://deepmind.google/models/gemma?hl=ru
+  39. https://ai.google.dev/gemma/docs?hl=ru
+  40. https://ai.google.dev/gemma/gemmaverse?hl=ru
+  41. https://ai.google.dev/gemini-api/docs?hl=ru
+  42. https://aistudio.google.com/?hl=ru
+  43. https://ai.google.dev/gemma?hl=ru
+  44. https://keras.io/keras_3/
+  45. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb?hl=ru
+  46. https://ai.google.dev/edge?hl=ru
+  47. https://developer.android.com/ai/gemini-nano?hl=ru
+  48. https://developer.chrome.com/docs/ai/built-in?hl=ru
+  49. https://ai.google.dev/responsible?hl=ru
+  50. https://saif.google/?hl=ru
+  51. https://developer.android.com/gemini-in-android?hl=ru
+  52. https://developer.chrome.com/docs/devtools/console/understand-messages?hl=ru
+  53. https://colab.google/?hl=ru
+  54. https://firebase.google.com/products/generative-ai?hl=ru
+  55. https://cloud.google.com/products/gemini/code-assist?hl=ru
+  56. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+  57. https://labs.google.com/jules/home?hl=ru
+  58. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+  59. https://ai.google.dev/showcase?hl=ru
+  60. https://ai.google.dev/competition?hl=ru
+  61. https://discuss.ai.google.dev/?hl=ru
+  62. https://ai.google.dev/gemini-api/docs/gemini-for-research?hl=ru
+  63. https://ai.google.dev/gemini-api/docs?hl=ru
+  64. https://ai.google.dev/api?hl=ru
+  65. https://github.com/google-gemini/cookbook
+  66. https://discuss.ai.google.dev/c/gemini-api/?hl=ru
+  67. https://ai.google.dev/
+  68. https://ai.google.dev/gemini-api/docs
+  69. https://ai.google.dev/gemini-api/docs
+  70. https://ai.google.dev/api
+  71. https://github.com/google-gemini/cookbook
+  72. https://discuss.ai.google.dev/c/gemini-api/
+  73. https://ai.google.dev/gemini-api/docs
+  74. https://ai.google.dev/gemini-api/docs/quickstart
+  75. https://ai.google.dev/gemini-api/docs/api-key
+  76. https://ai.google.dev/gemini-api/docs/libraries
+  77. https://ai.google.dev/gemini-api/docs/openai
+  78. https://ai.google.dev/gemini-api/docs/models
+  79. https://ai.google.dev/gemini-api/docs/pricing
+  80. https://ai.google.dev/gemini-api/docs/rate-limits
+  81. https://ai.google.dev/gemini-api/docs/billing
+  82. https://ai.google.dev/gemini-api/docs/text-generation
+  83. https://ai.google.dev/gemini-api/docs/image-generation
+  84. https://ai.google.dev/gemini-api/docs/video
+  85. https://ai.google.dev/gemini-api/docs/speech-generation
+  86. https://ai.google.dev/gemini-api/docs/music-generation
+  87. https://ai.google.dev/gemini-api/docs/long-context
+  88. https://ai.google.dev/gemini-api/docs/structured-output
+  89. https://ai.google.dev/gemini-api/docs/thinking
+  90. https://ai.google.dev/gemini-api/docs/function-calling
+  91. https://ai.google.dev/gemini-api/docs/document-processing
+  92. https://ai.google.dev/gemini-api/docs/image-understanding
+  93. https://ai.google.dev/gemini-api/docs/video-understanding
+  94. https://ai.google.dev/gemini-api/docs/audio
+  95. https://ai.google.dev/gemini-api/docs/code-execution
+  96. https://ai.google.dev/gemini-api/docs/url-context
+  97. https://ai.google.dev/gemini-api/docs/grounding
+  98. https://ai.google.dev/gemini-api/docs/grounding/search-suggestions
+  99. https://ai.google.dev/gemini-api/docs/prompting-strategies
+ 100. https://ai.google.dev/gemini-api/docs/live
+ 101. https://ai.google.dev/gemini-api/docs/caching
+ 102. https://ai.google.dev/gemini-api/docs/files
+ 103. https://ai.google.dev/gemini-api/docs/tokens
+ 104. https://ai.google.dev/gemini-api/docs/langgraph-example
+ 105. https://ai.google.dev/gemini-api/docs/crewai-example
+ 106. https://ai.google.dev/gemini-api/docs/model-tuning
+ 107. https://ai.google.dev/gemini-api/docs/model-tuning/tutorial
+ 108. https://ai.google.dev/gemini-api/docs/embeddings
+ 109. https://ai.google.dev/gemini-api/docs/safety-settings
+ 110. https://ai.google.dev/gemini-api/docs/safety-guidance
+ 111. https://ai.google.dev/gemini-api/docs/migrate
+ 112. https://ai.google.dev/gemini-api/docs/changelog
+ 113. https://ai.google.dev/gemini-api/docs/troubleshooting
+ 114. https://ai.google.dev/gemini-api/docs/ai-studio-quickstart
+ 115. https://ai.google.dev/gemini-api/docs/learnlm
+ 116. https://ai.google.dev/gemini-api/docs/troubleshoot-ai-studio
+ 117. https://ai.google.dev/gemini-api/docs/workspace
+ 118. https://ai.google.dev/gemini-api/docs/migrate-to-cloud
+ 119. https://ai.google.dev/gemini-api/docs/oauth
+ 120. https://ai.google.dev/gemini-api/terms
+ 121. https://ai.google.dev/gemini-api/docs/available-regions
+ 122. https://ai.google.dev/gemini-api/docs/usage-policies
+ 123. https://deepmind.google/gemini
+ 124. https://ai.google.dev/gemini-api/docs
+ 125. https://ai.google.dev/api
+ 126. https://ai.google.dev/pricing
+ 127. https://deepmind.google/technologies/imagen-3/
+ 128. https://ai.google.dev/gemini-api/docs/image-generation#imagen
+ 129. https://ai.google.dev/pricing
+ 130. https://deepmind.google/technologies/veo/veo-2/
+ 131. https://ai.google.dev/gemini-api/docs/video
+ 132. https://ai.google.dev/pricing
+ 133. https://deepmind.google/models/gemma
+ 134. https://ai.google.dev/gemma/docs
+ 135. https://ai.google.dev/gemma/gemmaverse
+ 136. https://ai.google.dev/gemini-api/docs
+ 137. https://aistudio.google.com/
+ 138. https://ai.google.dev/gemma
+ 139. https://keras.io/keras_3/
+ 140. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb
+ 141. https://ai.google.dev/edge
+ 142. https://developer.android.com/ai/gemini-nano
+ 143. https://developer.chrome.com/docs/ai/built-in
+ 144. https://ai.google.dev/responsible
+ 145. https://saif.google/
+ 146. https://developer.android.com/gemini-in-android
+ 147. https://developer.chrome.com/docs/devtools/console/understand-messages
+ 148. https://colab.google/
+ 149. https://firebase.google.com/products/generative-ai
+ 150. https://cloud.google.com/products/gemini/code-assist
+ 151. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+ 152. https://labs.google.com/jules/home
+ 153. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+ 154. https://ai.google.dev/showcase
+ 155. https://ai.google.dev/competition
+ 156. https://discuss.ai.google.dev/
+ 157. https://ai.google.dev/gemini-api/docs/gemini-for-research
+ 158. https://cloud.google.com/translate/?hl=ru
+ 159. https://ai.google.dev/?hl=ru
+ 160. https://ai.google.dev/gemini-api?hl=ru
+ 161. https://ai.google.dev/gemini-api/docs?hl=ru
+ 162. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru#parallel_function_calling
+ 163. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru#compositional_function_calling
+ 164. https://ai.google.dev/api/caching?hl=ru#Schema
+ 165. https://spec.openapis.org/oas/v3.0.3#schemawr
+ 166. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru#function_calling_modes
+ 167. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru#automatic_function_calling_python_only
+ 168. https://ai.google.dev/gemini-api/docs/live?hl=ru
+ 169. https://googleapis.github.io/python-genai/genai.html#genai.types.FunctionDeclaration.from_callable
+ 170. https://ai.google.dev/gemini-api/docs/grounding?hl=ru
+ 171. https://ai.google.dev/gemini-api/docs/code-execution?hl=ru
+ 172. https://ai.google.dev/gemini-api/docs/live?hl=ru
+ 173. https://ai.google.dev/gemini-api/docs/live?hl=ru
+ 174. https://github.com/google-gemini/cookbook/blob/main/quickstarts/Get_started_LiveAPI_tools.ipynb
+ 175. https://modelcontextprotocol.io/introduction
+ 176. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru#automatic_function_calling_python_only
+ 177. https://modelcontextprotocol.io/introduction
+ 178. https://ai.google.dev/gemini-api/docs/models?hl=ru#preview
+ 179. https://ai.google.dev/gemini-api/docs/models?hl=ru
+ 180. https://ai.google.dev/api/caching?hl=ru#FunctionDeclaration
+ 181. https://creativecommons.org/licenses/by/4.0/
+ 182. https://www.apache.org/licenses/LICENSE-2.0
+ 183. https://developers.google.com/site-policies?hl=ru
+ 184. https://policies.google.com/terms?hl=ru
+ 185. https://policies.google.com/privacy?hl=ru
+ 186. https://ai.google.dev/gemini-api/docs/function-calling?hl=ru&example=meeting
+ Warning: User-Agent string does not contain "Lynx" or "L_y_n_x"!

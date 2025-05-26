@@ -1,0 +1,1586 @@
+#[1]Google AI for Developers [2]alternate [3]alternate [4]alternate
+   [5]alternate [6]alternate [7]alternate [8]alternate [9]alternate
+   [10]alternate [11]alternate [12]alternate [13]alternate [14]alternate
+   [15]alternate [16]alternate [17]alternate [18]alternate [19]alternate
+   [20]alternate [21]alternate [22]alternate [23]alternate [24]alternate
+
+   [25]Перейти к основному контенту
+
+   (BUTTON)
+   [26]Google AI for Developers
+     *
+
+   [27]Модели (BUTTON)
+     * Gemini
+     * [28]О сервисе
+     * [29]Документы
+     * [30]Справочник по API
+     * [31]Цена
+
+     * Изображение
+     * [32]О сервисе
+     * [33]Документы
+     * [34]Цена
+
+     * Вео
+     * [35]О сервисе
+     * [36]Документы
+     * [37]Цена
+
+     * Джемма
+     * [38]О сервисе
+     * [39]Документы
+     * [40]Джеммаверс
+
+   (BUTTON) Решения
+     * Стройте вместе с Близнецами
+     * [41]Gemini API
+     * [42]Google AI Studio
+
+     * Кастомизируйте открытые модели Gemma
+     * [43]Джемма открытые модели
+     * [44]Мультифреймворк с Keras
+     * [45]Точная настройка в Colab
+
+     * Запуск на устройстве
+     * [46]Google ИИ Край
+     * [47]Близнецы Нано на Android
+     * [48]Встроенные веб-API Chrome
+
+     * Стройте ответственно
+     * [49]Инструментарий ответственного GenAI
+     * [50]Безопасная платформа искусственного интеллекта
+
+   (BUTTON) Помощь по коду
+     * [51]Android Studio
+     * [52]Инструменты разработчика Chrome
+     * [53]Колаб
+     * [54]Firebase
+     * [55]Google Cloud
+     * [56]JetBrains
+     * [57]Жюль
+     * [58]Код ВС
+
+   (BUTTON) Витрина
+     * [59]Витрина Близнецов
+     * [60]Конкурс разработчиков Gemini API
+
+   (BUTTON) Сообщество
+     * [61]Форум Google по искусственному интеллекту
+     * [62]Близнецы для исследований
+
+   (BUTTON)
+   ____________________
+   /
+   (BUTTON)
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+   Войти
+
+   [63]Документация по API Gemini [64]Документация по API [65]Кулинарная
+   книга [66]Сообщество
+
+   ____________________
+
+   (BUTTON)
+   [67]Google AI for Developers
+     *
+
+     * [68]Модели
+          + Ещё
+          + [69]Документация по API Gemini
+          + [70]Документация по API
+          + [71]Кулинарная книга
+          + [72]Сообщество
+     * Решения
+          + Ещё
+     * Помощь по коду
+          + Ещё
+     * Витрина
+          + Ещё
+     * Сообщество
+          + Ещё
+
+     * Начать
+     * [73]Обзор
+     * [74]Краткое руководство
+     * [75]ключи API
+     * [76]Библиотеки
+     * [77]Совместимость с OpenAI
+     * Модели
+     * [78]Все модели
+     * [79]Цена
+     * [80]Ограничения ставок
+     * [81]Платежная информация
+     * Возможности модели
+     * [82]Генерация текста
+     * [83]Генерация изображения
+     * [84]Генерация видео
+     * [85]Генерация речи
+     * [86]Генерация музыки
+     * [87]Длинный контекст
+     * [88]Структурированный вывод
+     * [89]мышление
+     * [90]Вызов функции
+     * [91]Понимание документа
+     * [92]Понимание изображения
+     * [93]Видео понимание
+     * [94]Понимание звука
+     * [95]Выполнение кода
+     * [96]URL-контекст
+     * Заземление с помощью Google Поиска
+          + [97]Учебное пособие по заземлению
+          + [98]Используйте предложения поиска Google
+     * Руководства
+     * [99]Оперативное проектирование
+     * [100]Живой API
+     * [101]Кэширование контекста
+     * [102]Файловый API
+     * [103]Подсчет токенов
+     * Платформы с открытым исходным кодом
+          + [104]ЛангЧейн и ЛангГраф
+          + [105]CrewAI
+     * Тонкая настройка
+          + [106]Введение в тонкую настройку
+          + [107]Учебное пособие по тонкой настройке
+     * [108]Встраивания
+     * Безопасность
+          + [109]Настройки безопасности
+          + [110]Руководство по безопасности
+     * Ресурсы
+     * [111]Переход на Gen AI SDK
+     * [112]Примечания к выпускам
+     * [113]Устранение неполадок API
+     * ИИ-студия
+          + [114]Краткое руководство по Google AI Studio
+          + [115]УзнатьLM
+          + [116]Устранение неполадок AI Studio
+          + [117]Google Workspace
+     * Облачная платформа Google
+          + [118]API VertexAI Gemini
+          + [119]OAuth-аутентификация
+     * Правила
+     * [120]Условия использования
+     * [121]Доступные регионы
+     * [122]Дополнительные политики использования
+
+     * Gemini
+     * [123]О сервисе
+     * [124]Документы
+     * [125]Справочник по API
+     * [126]Цена
+     * Изображение
+     * [127]О сервисе
+     * [128]Документы
+     * [129]Цена
+     * Вео
+     * [130]О сервисе
+     * [131]Документы
+     * [132]Цена
+     * Джемма
+     * [133]О сервисе
+     * [134]Документы
+     * [135]Джеммаверс
+
+     * Стройте вместе с Близнецами
+     * [136]Gemini API
+     * [137]Google AI Studio
+     * Кастомизируйте открытые модели Gemma
+     * [138]Джемма открытые модели
+     * [139]Мультифреймворк с Keras
+     * [140]Точная настройка в Colab
+     * Запуск на устройстве
+     * [141]Google ИИ Край
+     * [142]Близнецы Нано на Android
+     * [143]Встроенные веб-API Chrome
+     * Стройте ответственно
+     * [144]Инструментарий ответственного GenAI
+     * [145]Безопасная платформа искусственного интеллекта
+
+     * [146]Android Studio
+     * [147]Инструменты разработчика Chrome
+     * [148]Колаб
+     * [149]Firebase
+     * [150]Google Cloud
+     * [151]JetBrains
+     * [152]Жюль
+     * [153]Код ВС
+
+     * [154]Витрина Близнецов
+     * [155]Конкурс разработчиков Gemini API
+
+     * [156]Форум Google по искусственному интеллекту
+     * [157]Близнецы для исследований
+
+   Эта страница переведена с помощью [158]Cloud Translation API.
+
+     * [159]Главная
+     * [160]Gemini API
+     * [161]Модели
+
+   (BUTTON) Отправить отзыв
+
+                        Генерация текста
+
+   API Gemini может генерировать текстовый вывод из различных входных
+   данных, включая текст, изображения, видео и аудио, используя модели
+   Gemini.
+
+   Вот базовый пример, который принимает один ввод текста:
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=["How does AI work?"]
+)
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "How does AI work?",
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Explain how AI works in a few words"),
+      nil,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "How does AI work?"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { text: 'How AI does work?' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Системные инструкции и настройки
+
+   Управлять поведением моделей Gemini можно с помощью системных
+   инструкций. Для этого передайте объект [162]GenerateContentConfig .
+
+Питон
+
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    config=types.GenerateContentConfig(
+        system_instruction="You are a cat. Your name is Neko."),
+    contents="Hello there"
+)
+
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Hello there",
+    config: {
+      systemInstruction: "You are a cat. Your name is Neko.",
+    },
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  config := &genai.GenerateContentConfig{
+      SystemInstruction: genai.NewContentFromText("You are a cat. Your name is N
+eko.", genai.RoleUser),
+  }
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Hello there"),
+      config,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "system_instruction": {
+      "parts": [
+        {
+          "text": "You are a cat. Your name is Neko."
+        }
+      ]
+    },
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Hello there"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const systemInstruction = {
+    parts: [{
+      text: 'You are a cat. Your name is Neko.'
+    }]
+  };
+
+  const payload = {
+    systemInstruction,
+    contents: [
+      {
+        parts: [
+          { text: 'Hello there' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Объект [163]GenerateContentConfig также позволяет переопределить
+   параметры генерации по умолчанию, такие как [164]температура .
+
+Питон
+
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=["Explain how AI works"],
+    config=types.GenerateContentConfig(
+        max_output_tokens=500,
+        temperature=0.1
+    )
+)
+print(response.text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works",
+    config: {
+      maxOutputTokens: 500,
+      temperature: 0.1,
+    },
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+    APIKey:  os.Getenv("GEMINI_API_KEY"),
+    Backend: genai.BackendGeminiAPI,
+  })
+
+  temp := float32(0.9)
+  topP := float32(0.5)
+  topK := float32(20.0)
+  maxOutputTokens := int32(100)
+
+  config := &genai.GenerateContentConfig{
+    Temperature:       &temp,
+    TopP:              &topP,
+    TopK:              &topK,
+    MaxOutputTokens:   maxOutputTokens,
+    ResponseMIMEType:  "application/json",
+  }
+
+  result, _ := client.Models.GenerateContent(
+    ctx,
+    "gemini-2.0-flash",
+    genai.Text("What is the average size of a swallow?"),
+    config,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:ge
+nerateContent?key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works"
+          }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "stopSequences": [
+        "Title"
+      ],
+      "temperature": 1.0,
+      "maxOutputTokens": 800,
+      "topP": 0.8,
+      "topK": 10
+    }
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 40,
+    maxOutputTokens: 8192,
+    responseMimeType: 'text/plain',
+  };
+
+  const payload = {
+    generationConfig,
+    contents: [
+      {
+        parts: [
+          { text: 'Explain how AI works in a few words' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Полный список настраиваемых параметров и их описания см. в разделе
+   [165]GenerateContentConfig в нашем справочнике по API.
+
+Мультимодальные входы
+
+   API Gemini поддерживает мультимодальные входные данные, позволяя
+   комбинировать текст с медиафайлами. В следующем примере показано
+   предоставление изображения:
+
+Питон
+
+from PIL import Image
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+image = Image.open("/path/to/organ.png")
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=[image, "Tell me about this instrument"]
+)
+print(response.text)
+
+JavaScript
+
+import {
+  GoogleGenAI,
+  createUserContent,
+  createPartFromUri,
+} from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const image = await ai.files.upload({
+    file: "/path/to/organ.png",
+  });
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: [
+      createUserContent([
+        "Tell me about this instrument",
+        createPartFromUri(image.uri, image.mimeType),
+      ]),
+    ],
+  });
+  console.log(response.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  imagePath := "/path/to/organ.jpg"
+  imgData, _ := os.ReadFile(imagePath)
+
+  parts := []*genai.Part{
+      genai.NewPartFromText("Tell me about this instrument"),
+      &genai.Part{
+          InlineData: &genai.Blob{
+              MIMEType: "image/jpeg",
+              Data:     imgData,
+          },
+      },
+  }
+
+  contents := []*genai.Content{
+      genai.NewContentFromParts(parts, genai.RoleUser),
+  }
+
+  result, _ := client.Models.GenerateContent(
+      ctx,
+      "gemini-2.0-flash",
+      contents,
+      nil,
+  )
+
+  fmt.Println(result.Text())
+}
+
+ОТДЫХ
+
+# Use a temporary file to hold the base64 encoded image data
+TEMP_B64=$(mktemp)
+trap 'rm -f "$TEMP_B64"' EXIT
+base64 $B64FLAGS $IMG_PATH > "$TEMP_B64"
+
+# Use a temporary file to hold the JSON payload
+TEMP_JSON=$(mktemp)
+trap 'rm -f "$TEMP_JSON"' EXIT
+
+cat > "$TEMP_JSON" << EOF
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Tell me about this instrument"
+        },
+        {
+          "inline_data": {
+            "mime_type": "image/jpeg",
+            "data": "$(cat "$TEMP_B64")"
+          }
+        }
+      ]
+    }
+  ]
+}
+EOF
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:g
+enerateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d "@$TEMP_JSON"
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const imageUrl = 'http://image/url';
+  const image = getImageData(imageUrl);
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { image },
+          { text: 'Tell me about this instrument' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+function getImageData(url) {
+  const blob = UrlFetchApp.fetch(url).getBlob();
+
+  return {
+    mimeType: blob.getContentType(),
+    data: Utilities.base64Encode(blob.getBytes())
+  };
+}
+
+   Альтернативные методы предоставления изображений и более совершенную
+   обработку изображений см. в нашем [166]руководстве по пониманию
+   изображений . API также поддерживает ввод и понимание [167]документов ,
+   [168]видео и [169]аудио .
+
+Потоковая передача ответов
+
+   По умолчанию модель возвращает ответ только после завершения всего
+   процесса генерации.
+
+   Для более плавного взаимодействия используйте потоковую передачу для
+   постепенного получения экземпляров [170]GenerateContentResponse по мере
+   их создания.
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+
+response = client.models.generate_content_stream(
+    model="gemini-2.0-flash",
+    contents=["Explain how AI works"]
+)
+for chunk in response:
+    print(chunk.text, end="")
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const response = await ai.models.generateContentStream({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works",
+  });
+
+  for await (const chunk of response) {
+    console.log(chunk.text);
+  }
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  stream := client.Models.GenerateContentStream(
+      ctx,
+      "gemini-2.0-flash",
+      genai.Text("Write a story about a magic backpack."),
+      nil,
+  )
+
+  for chunk, _ := range stream {
+      part := chunk.Candidates[0].Content.Parts[0]
+      fmt.Print(part.Text)
+  }
+}
+
+ОТДЫХ
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:s
+treamGenerateContent?alt=sse&key=${GEMINI_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --no-buffer \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { text: 'Explain how AI works' },
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:streamGenerateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Многоходовые разговоры (Чат)
+
+   Наши SDK предоставляют функциональные возможности для сбора нескольких
+   раундов подсказок и ответов в чат, что дает вам простой способ
+   отслеживать историю разговоров.
+
+   Примечание. Функциональность чата реализована только в составе SDK. За
+   кулисами он по-прежнему использует [171]generateContent .
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+chat = client.chats.create(model="gemini-2.0-flash")
+
+response = chat.send_message("I have 2 dogs in my house.")
+print(response.text)
+
+response = chat.send_message("How many paws are in my house?")
+print(response.text)
+
+for message in chat.get_history():
+    print(f'role - {message.role}',end=": ")
+    print(message.parts[0].text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const chat = ai.chats.create({
+    model: "gemini-2.0-flash",
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });
+
+  const response1 = await chat.sendMessage({
+    message: "I have 2 dogs in my house.",
+  });
+  console.log("Chat response 1:", response1.text);
+
+  const response2 = await chat.sendMessage({
+    message: "How many paws are in my house?",
+  });
+  console.log("Chat response 2:", response2.text);
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  history := []*genai.Content{
+      genai.NewContentFromText("Hi nice to meet you! I have 2 dogs in my house."
+, genai.RoleUser),
+      genai.NewContentFromText("Great to meet you. What would you like to know?"
+, genai.RoleModel),
+  }
+
+  chat, _ := client.Chats.Create(ctx, "gemini-2.0-flash", nil, history)
+  res, _ := chat.SendMessage(ctx, genai.Part{Text: "How many paws are in my hous
+e?"})
+
+  if len(res.Candidates) > 0 {
+      fmt.Println(res.Candidates[0].Content.Parts[0].Text)
+  }
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:ge
+nerateContent?key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello"
+          }
+        ]
+      },
+      {
+        "role": "model",
+        "parts": [
+          {
+            "text": "Great to meet you. What would you like to know?"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "I have two dogs in my house. How many paws are in my house?
+"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: 'Hello' },
+        ],
+      },
+      {
+        role: 'model',
+        parts: [
+          { text: 'Great to meet you. What would you like to know?' },
+        ],
+      },
+      {
+        role: 'user',
+        parts: [
+          { text: 'I have two dogs in my house. How many paws are in my house?'
+},
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:generateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+   Потоковое вещание также можно использовать для многоходовых разговоров.
+
+Питон
+
+from google import genai
+
+client = genai.Client(api_key="GEMINI_API_KEY")
+chat = client.chats.create(model="gemini-2.0-flash")
+
+response = chat.send_message_stream("I have 2 dogs in my house.")
+for chunk in response:
+    print(chunk.text, end="")
+
+response = chat.send_message_stream("How many paws are in my house?")
+for chunk in response:
+    print(chunk.text, end="")
+
+for message in chat.get_history():
+    print(f'role - {message.role}', end=": ")
+    print(message.parts[0].text)
+
+JavaScript
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "GEMINI_API_KEY" });
+
+async function main() {
+  const chat = ai.chats.create({
+    model: "gemini-2.0-flash",
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });
+
+  const stream1 = await chat.sendMessageStream({
+    message: "I have 2 dogs in my house.",
+  });
+  for await (const chunk of stream1) {
+    console.log(chunk.text);
+    console.log("_".repeat(80));
+  }
+
+  const stream2 = await chat.sendMessageStream({
+    message: "How many paws are in my house?",
+  });
+  for await (const chunk of stream2) {
+    console.log(chunk.text);
+    console.log("_".repeat(80));
+  }
+}
+
+await main();
+
+Идти
+
+package main
+
+import (
+  "context"
+  "fmt"
+  "os"
+  "google.golang.org/genai"
+)
+
+func main() {
+
+  ctx := context.Background()
+  client, _ := genai.NewClient(ctx, &genai.ClientConfig{
+      APIKey:  os.Getenv("GEMINI_API_KEY"),
+      Backend: genai.BackendGeminiAPI,
+  })
+
+  history := []*genai.Content{
+      genai.NewContentFromText("Hi nice to meet you! I have 2 dogs in my house."
+, genai.RoleUser),
+      genai.NewContentFromText("Great to meet you. What would you like to know?"
+, genai.RoleModel),
+  }
+
+  chat, _ := client.Chats.Create(ctx, "gemini-2.0-flash", nil, history)
+  stream := chat.SendMessageStream(ctx, genai.Part{Text: "How many paws are in m
+y house?"})
+
+  for chunk, _ := range stream {
+      part := chunk.Candidates[0].Content.Parts[0]
+      fmt.Print(part.Text)
+  }
+}
+
+ОТДЫХ
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:st
+reamGenerateContent?alt=sse&key=$GEMINI_API_KEY \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Hello"
+          }
+        ]
+      },
+      {
+        "role": "model",
+        "parts": [
+          {
+            "text": "Great to meet you. What would you like to know?"
+          }
+        ]
+      },
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "I have two dogs in my house. How many paws are in my house?
+"
+          }
+        ]
+      }
+    ]
+  }'
+
+Скрипт приложений
+
+// See https://developers.google.com/apps-script/guides/properties
+// for instructions on how to set the API key.
+const apiKey = PropertiesService.getScriptProperties().getProperty('GEMINI_API_K
+EY');
+
+function main() {
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: 'Hello' },
+        ],
+      },
+      {
+        role: 'model',
+        parts: [
+          { text: 'Great to meet you. What would you like to know?' },
+        ],
+      },
+      {
+        role: 'user',
+        parts: [
+          { text: 'I have two dogs in my house. How many paws are in my house?'
+},
+        ],
+      },
+    ],
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.
+0-flash:streamGenerateContent?key=${apiKey}`;
+  const options = {
+    method: 'POST',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload)
+  };
+
+  const response = UrlFetchApp.fetch(url, options);
+  const data = JSON.parse(response);
+  const content = data['candidates'][0]['content']['parts'][0]['text'];
+  console.log(content);
+}
+
+Поддерживаемые модели
+
+   Все модели семейства Gemini поддерживают генерацию текста. Чтобы узнать
+   больше о моделях и их возможностях, посетите страницу [172]«Модели» .
+
+Лучшие практики
+
+Полезные советы
+
+   Для базовой генерации текста зачастую достаточно [173]простого
+   приглашения без необходимости использования примеров, системных
+   инструкций или специального форматирования.
+
+   Для более адаптированных результатов:
+     * Используйте [174]системные инструкции для управления моделью.
+     * Предоставьте несколько примеров входных и выходных данных для
+       руководства моделью. Это часто называют подсказкой [175]с
+       несколькими выстрелами .
+     * Рассмотрите [176]возможность тонкой настройки для расширенных
+       случаев использования.
+
+   Дополнительные советы можно получить в нашем [177]оперативном
+   руководстве по проектированию .
+
+Структурированный вывод
+
+   В некоторых случаях вам может потребоваться структурированный вывод,
+   например JSON. Чтобы узнать, как это сделать, обратитесь к нашему
+   руководству [178]по структурированному выводу .
+
+Что дальше
+
+     * Попробуйте [179]Gemini API для начала работы Colab .
+     * Изучите возможности Gemini по работе [180]с изображениями ,
+       [181]видео , [182]аудио и [183]документами .
+     * Узнайте о [184]стратегиях запроса мультимодальных файлов .
+
+   (BUTTON) Отправить отзыв
+
+   Если не указано иное, контент на этой странице предоставляется по
+   [185]лицензии Creative Commons "С указанием авторства 4.0", а примеры
+   кода – по [186]лицензии Apache 2.0. Подробнее об этом написано в
+   [187]правилах сайта. Java – это зарегистрированный товарный знак
+   корпорации Oracle и ее аффилированных лиц.
+
+   Последнее обновление: 2025-05-09 UTC.
+
+   (BUTTON) Хотите рассказать подробнее? [[["Прост для
+   понимания","easyToUnderstand","thumb-up"],["Помог мне решить мою
+   проблему","solvedMyProblem","thumb-up"],["Другое","otherUp","thumb-up"]
+   ],[["Отсутствует нужная мне
+   информация","missingTheInformationINeed","thumb-down"],["Слишком
+   сложен/слишком много
+   шагов","tooComplicatedTooManySteps","thumb-down"],["Устарел","outOfDate
+   ","thumb-down"],["Проблема с переводом
+   текста","translationIssue","thumb-down"],["Проблемы
+   образцов/кода","samplesCodeIssue","thumb-down"],["Другое","otherDown","
+   thumb-down"]],["Последнее обновление: 2025-05-09 UTC."],[],[]]
+
+     * [188]Условия использования
+     * [189]Конфиденциальность
+     * [190]Manage cookies
+
+     * English
+     * Deutsch
+     * Español – América Latina
+     * Français
+     * Indonesia
+     * Italiano
+     * Polski
+     * Português – Brasil
+     * Shqip
+     * Tiếng Việt
+     * Türkçe
+     * Русский
+     * עברית
+     * العربيّة
+     * فارسی
+     * हिंदी
+     * বাংলা
+     * ภาษาไทย
+     * 中文 – 简体
+     * 中文 – 繁體
+     * 日本語
+     * 한국어
+
+References
+
+   1. https://ai.google.dev/s/opensearch.xml?hl=ru
+   2. https://ai.google.dev/gemini-api/docs/text-generation
+   3. https://ai.google.dev/gemini-api/docs/text-generation
+   4. https://ai.google.dev/gemini-api/docs/text-generation?hl=ar
+   5. https://ai.google.dev/gemini-api/docs/text-generation?hl=bn
+   6. https://ai.google.dev/gemini-api/docs/text-generation?hl=zh-cn
+   7. https://ai.google.dev/gemini-api/docs/text-generation?hl=zh-tw
+   8. https://ai.google.dev/gemini-api/docs/text-generation?hl=fa
+   9. https://ai.google.dev/gemini-api/docs/text-generation?hl=fr
+  10. https://ai.google.dev/gemini-api/docs/text-generation?hl=de
+  11. https://ai.google.dev/gemini-api/docs/text-generation?hl=he
+  12. https://ai.google.dev/gemini-api/docs/text-generation?hl=hi
+  13. https://ai.google.dev/gemini-api/docs/text-generation?hl=id
+  14. https://ai.google.dev/gemini-api/docs/text-generation?hl=it
+  15. https://ai.google.dev/gemini-api/docs/text-generation?hl=ja
+  16. https://ai.google.dev/gemini-api/docs/text-generation?hl=ko
+  17. https://ai.google.dev/gemini-api/docs/text-generation?hl=pl
+  18. https://ai.google.dev/gemini-api/docs/text-generation?hl=pt-br
+  19. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru
+  20. https://ai.google.dev/gemini-api/docs/text-generation?hl=es-419
+  21. https://ai.google.dev/gemini-api/docs/text-generation?hl=th
+  22. https://ai.google.dev/gemini-api/docs/text-generation?hl=tr
+  23. https://ai.google.dev/gemini-api/docs/text-generation?hl=vi
+  24. https://ai.google.dev/gemini-api/docs/text-generation?hl=sq
+  25. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru#main-content
+  26. https://ai.google.dev/
+  27. https://ai.google.dev/gemini-api/docs?hl=ru
+  28. https://deepmind.google/gemini?hl=ru
+  29. https://ai.google.dev/gemini-api/docs?hl=ru
+  30. https://ai.google.dev/api?hl=ru
+  31. https://ai.google.dev/pricing?hl=ru
+  32. https://deepmind.google/technologies/imagen-3/?hl=ru
+  33. https://ai.google.dev/gemini-api/docs/image-generation?hl=ru#imagen
+  34. https://ai.google.dev/pricing?hl=ru
+  35. https://deepmind.google/technologies/veo/veo-2/?hl=ru
+  36. https://ai.google.dev/gemini-api/docs/video?hl=ru
+  37. https://ai.google.dev/pricing?hl=ru
+  38. https://deepmind.google/models/gemma?hl=ru
+  39. https://ai.google.dev/gemma/docs?hl=ru
+  40. https://ai.google.dev/gemma/gemmaverse?hl=ru
+  41. https://ai.google.dev/gemini-api/docs?hl=ru
+  42. https://aistudio.google.com/?hl=ru
+  43. https://ai.google.dev/gemma?hl=ru
+  44. https://keras.io/keras_3/
+  45. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb?hl=ru
+  46. https://ai.google.dev/edge?hl=ru
+  47. https://developer.android.com/ai/gemini-nano?hl=ru
+  48. https://developer.chrome.com/docs/ai/built-in?hl=ru
+  49. https://ai.google.dev/responsible?hl=ru
+  50. https://saif.google/?hl=ru
+  51. https://developer.android.com/gemini-in-android?hl=ru
+  52. https://developer.chrome.com/docs/devtools/console/understand-messages?hl=ru
+  53. https://colab.google/?hl=ru
+  54. https://firebase.google.com/products/generative-ai?hl=ru
+  55. https://cloud.google.com/products/gemini/code-assist?hl=ru
+  56. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+  57. https://labs.google.com/jules/home?hl=ru
+  58. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+  59. https://ai.google.dev/showcase?hl=ru
+  60. https://ai.google.dev/competition?hl=ru
+  61. https://discuss.ai.google.dev/?hl=ru
+  62. https://ai.google.dev/gemini-api/docs/gemini-for-research?hl=ru
+  63. https://ai.google.dev/gemini-api/docs?hl=ru
+  64. https://ai.google.dev/api?hl=ru
+  65. https://github.com/google-gemini/cookbook
+  66. https://discuss.ai.google.dev/c/gemini-api/?hl=ru
+  67. https://ai.google.dev/
+  68. https://ai.google.dev/gemini-api/docs
+  69. https://ai.google.dev/gemini-api/docs
+  70. https://ai.google.dev/api
+  71. https://github.com/google-gemini/cookbook
+  72. https://discuss.ai.google.dev/c/gemini-api/
+  73. https://ai.google.dev/gemini-api/docs
+  74. https://ai.google.dev/gemini-api/docs/quickstart
+  75. https://ai.google.dev/gemini-api/docs/api-key
+  76. https://ai.google.dev/gemini-api/docs/libraries
+  77. https://ai.google.dev/gemini-api/docs/openai
+  78. https://ai.google.dev/gemini-api/docs/models
+  79. https://ai.google.dev/gemini-api/docs/pricing
+  80. https://ai.google.dev/gemini-api/docs/rate-limits
+  81. https://ai.google.dev/gemini-api/docs/billing
+  82. https://ai.google.dev/gemini-api/docs/text-generation
+  83. https://ai.google.dev/gemini-api/docs/image-generation
+  84. https://ai.google.dev/gemini-api/docs/video
+  85. https://ai.google.dev/gemini-api/docs/speech-generation
+  86. https://ai.google.dev/gemini-api/docs/music-generation
+  87. https://ai.google.dev/gemini-api/docs/long-context
+  88. https://ai.google.dev/gemini-api/docs/structured-output
+  89. https://ai.google.dev/gemini-api/docs/thinking
+  90. https://ai.google.dev/gemini-api/docs/function-calling
+  91. https://ai.google.dev/gemini-api/docs/document-processing
+  92. https://ai.google.dev/gemini-api/docs/image-understanding
+  93. https://ai.google.dev/gemini-api/docs/video-understanding
+  94. https://ai.google.dev/gemini-api/docs/audio
+  95. https://ai.google.dev/gemini-api/docs/code-execution
+  96. https://ai.google.dev/gemini-api/docs/url-context
+  97. https://ai.google.dev/gemini-api/docs/grounding
+  98. https://ai.google.dev/gemini-api/docs/grounding/search-suggestions
+  99. https://ai.google.dev/gemini-api/docs/prompting-strategies
+ 100. https://ai.google.dev/gemini-api/docs/live
+ 101. https://ai.google.dev/gemini-api/docs/caching
+ 102. https://ai.google.dev/gemini-api/docs/files
+ 103. https://ai.google.dev/gemini-api/docs/tokens
+ 104. https://ai.google.dev/gemini-api/docs/langgraph-example
+ 105. https://ai.google.dev/gemini-api/docs/crewai-example
+ 106. https://ai.google.dev/gemini-api/docs/model-tuning
+ 107. https://ai.google.dev/gemini-api/docs/model-tuning/tutorial
+ 108. https://ai.google.dev/gemini-api/docs/embeddings
+ 109. https://ai.google.dev/gemini-api/docs/safety-settings
+ 110. https://ai.google.dev/gemini-api/docs/safety-guidance
+ 111. https://ai.google.dev/gemini-api/docs/migrate
+ 112. https://ai.google.dev/gemini-api/docs/changelog
+ 113. https://ai.google.dev/gemini-api/docs/troubleshooting
+ 114. https://ai.google.dev/gemini-api/docs/ai-studio-quickstart
+ 115. https://ai.google.dev/gemini-api/docs/learnlm
+ 116. https://ai.google.dev/gemini-api/docs/troubleshoot-ai-studio
+ 117. https://ai.google.dev/gemini-api/docs/workspace
+ 118. https://ai.google.dev/gemini-api/docs/migrate-to-cloud
+ 119. https://ai.google.dev/gemini-api/docs/oauth
+ 120. https://ai.google.dev/gemini-api/terms
+ 121. https://ai.google.dev/gemini-api/docs/available-regions
+ 122. https://ai.google.dev/gemini-api/docs/usage-policies
+ 123. https://deepmind.google/gemini
+ 124. https://ai.google.dev/gemini-api/docs
+ 125. https://ai.google.dev/api
+ 126. https://ai.google.dev/pricing
+ 127. https://deepmind.google/technologies/imagen-3/
+ 128. https://ai.google.dev/gemini-api/docs/image-generation#imagen
+ 129. https://ai.google.dev/pricing
+ 130. https://deepmind.google/technologies/veo/veo-2/
+ 131. https://ai.google.dev/gemini-api/docs/video
+ 132. https://ai.google.dev/pricing
+ 133. https://deepmind.google/models/gemma
+ 134. https://ai.google.dev/gemma/docs
+ 135. https://ai.google.dev/gemma/gemmaverse
+ 136. https://ai.google.dev/gemini-api/docs
+ 137. https://aistudio.google.com/
+ 138. https://ai.google.dev/gemma
+ 139. https://keras.io/keras_3/
+ 140. https://colab.sandbox.google.com/github/google/generative-ai-docs/blob/main/site/en/gemma/docs/lora_tuning.ipynb
+ 141. https://ai.google.dev/edge
+ 142. https://developer.android.com/ai/gemini-nano
+ 143. https://developer.chrome.com/docs/ai/built-in
+ 144. https://ai.google.dev/responsible
+ 145. https://saif.google/
+ 146. https://developer.android.com/gemini-in-android
+ 147. https://developer.chrome.com/docs/devtools/console/understand-messages
+ 148. https://colab.google/
+ 149. https://firebase.google.com/products/generative-ai
+ 150. https://cloud.google.com/products/gemini/code-assist
+ 151. https://plugins.jetbrains.com/plugin/8079-google-cloud-code
+ 152. https://labs.google.com/jules/home
+ 153. https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode
+ 154. https://ai.google.dev/showcase
+ 155. https://ai.google.dev/competition
+ 156. https://discuss.ai.google.dev/
+ 157. https://ai.google.dev/gemini-api/docs/gemini-for-research
+ 158. https://cloud.google.com/translate/?hl=ru
+ 159. https://ai.google.dev/?hl=ru
+ 160. https://ai.google.dev/gemini-api?hl=ru
+ 161. https://ai.google.dev/gemini-api/docs?hl=ru
+ 162. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 163. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 164. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 165. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerationConfig
+ 166. https://ai.google.dev/gemini-api/docs/image-understanding?hl=ru
+ 167. https://ai.google.dev/gemini-api/docs/document-processing?hl=ru
+ 168. https://ai.google.dev/gemini-api/docs/video-understanding?hl=ru
+ 169. https://ai.google.dev/gemini-api/docs/audio?hl=ru
+ 170. https://ai.google.dev/api/generate-content?hl=ru#v1beta.GenerateContentResponse
+ 171. https://ai.google.dev/api/generate-content?hl=ru#method:-models.generatecontent
+ 172. https://ai.google.dev/gemini-api/docs/models?hl=ru
+ 173. https://ai.google.dev/gemini-api/docs/prompting-strategies?hl=ru#few-shot
+ 174. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru#system-instructions
+ 175. https://ai.google.dev/gemini-api/docs/prompting-strategies?hl=ru#few-shot
+ 176. https://ai.google.dev/gemini-api/docs/model-tuning?hl=ru
+ 177. https://ai.google.dev/gemini/docs/prompting-strategies?hl=ru
+ 178. https://ai.google.dev/gemini-api/docs/structured-output?hl=ru
+ 179. https://colab.research.google.com/github/google-gemini/cookbook/blob/main/quickstarts/Get_started.ipynb?hl=ru
+ 180. https://ai.google.dev/gemini-api/docs/image-understanding?hl=ru
+ 181. https://ai.google.dev/gemini-api/docs/video-understanding?hl=ru
+ 182. https://ai.google.dev/gemini-api/docs/audio?hl=ru
+ 183. https://ai.google.dev/gemini-api/docs/document-processing?hl=ru
+ 184. https://ai.google.dev/gemini-api/docs/files?hl=ru#prompt-guide
+ 185. https://creativecommons.org/licenses/by/4.0/
+ 186. https://www.apache.org/licenses/LICENSE-2.0
+ 187. https://developers.google.com/site-policies?hl=ru
+ 188. https://policies.google.com/terms?hl=ru
+ 189. https://policies.google.com/privacy?hl=ru
+ 190. https://ai.google.dev/gemini-api/docs/text-generation?hl=ru
+ Warning: User-Agent string does not contain "Lynx" or "L_y_n_x"!
