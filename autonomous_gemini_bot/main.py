@@ -116,6 +116,7 @@ def execute_plan(plan_steps: list) -> List[Dict[str, Any]]:
     return aggregated_results
 
 MAX_HISTORY_EXCHANGES = 5
+MAX_CORRECTION_ATTEMPTS = 1 # Maximum attempts to correct a failed plan
 
 def main_loop():
     print("Запуск основного цикла Autonomous Gemini Bot...")
@@ -126,66 +127,98 @@ def main_loop():
         return
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    main_system_prompt_content = None
     client_system_prompt_path = os.path.join(script_dir, "prompts", "system_prompt.txt")
-
-    if not os.path.exists(client_system_prompt_path):
-        print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта клиента {client_system_prompt_path} не найден.")
-        gemini_cli = GeminiClient()
+    if os.path.exists(client_system_prompt_path):
+        try:
+            with open(client_system_prompt_path, 'r', encoding='utf-8') as f:
+                main_system_prompt_content = f.read().strip()
+            if not main_system_prompt_content:
+                print(f"ПРЕДУПРЕЖДЕНИЕ: Системный промпт в файле {client_system_prompt_path} пуст.")
+                main_system_prompt_content = None # Ensure it's None if empty after stripping
+            else:
+                print(f"Содержимое системного промпта клиента загружено из {client_system_prompt_path}")
+        except Exception as e:
+            print(f"Ошибка при чтении файла системного промпта клиента {client_system_prompt_path}: {e}")
+            main_system_prompt_content = None
     else:
-        print(f"Файл системного промпта клиента найден: {client_system_prompt_path}")
-        gemini_cli = GeminiClient(system_prompt_path=client_system_prompt_path)
+        print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта клиента {client_system_prompt_path} не найден.")
+
+    gemini_cli = GeminiClient(system_prompt_text=main_system_prompt_content)
 
     if gemini_cli.system_prompt:
         print(f"Загруженный системный промпт КЛИЕНТА: {gemini_cli.system_prompt}")
     else:
-        print("Системный промпт КЛИЕНТА не был загружен.")
+        print("Системный промпт КЛИЕНТА не был загружен (либо файл не найден, пуст, или произошла ошибка при чтении).")
 
-    planner = Planner(gemini_cli)
+    planner = Planner() # Planner теперь сам управляет своим GeminiClient
 
     if not os.getenv('GOOGLE_API_KEY'):
         print("\nПРЕДУПРЕЖДЕНИЕ: Переменная окружения GOOGLE_API_KEY не установлена.")
         # return # Можно раскомментировать для строгой проверки
 
     print("\nВведите ваш запрос (или 'выход' для завершения):")
+    
+    original_user_request_for_correction = "" # Store the initial user request for correction context
+    correction_attempts = 0 # Initialize correction attempts for each new user request cycle
+
     while True:
         try:
-            user_request = input("> ")
-            if user_request.lower() == 'выход':
-                print("Завершение работы.")
-                break
-            if not user_request:
-                continue
+            # Only prompt for new input if not in a correction loop or if it's the first time
+            if not original_user_request_for_correction or correction_attempts == 0:
+                user_request = input("> ")
+                if user_request.lower() == 'выход':
+                    print("Завершение работы.")
+                    break
+                if not user_request:
+                    continue
+                original_user_request_for_correction = user_request # Save for potential correction later
+                correction_attempts = 0 # Reset for new primary request
+            else:
+                # This means we are in a correction loop, use the original request
+                user_request = original_user_request_for_correction
+                # Do not reset correction_attempts here, it's incremented in the failure case
 
-            # Add user request to history
-            conversation_history.append({"role": "user", "content": user_request})
+            # Add user request to history (only if it's a new primary request, not for corrections)
+            # Correction prompts will be handled by the planner with full context.
+            if correction_attempts == 0:
+                conversation_history.append({"role": "user", "content": user_request})
             if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
                 conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
             
             # Pass conversation_history to planner.generate_plan
-            print("\nДумаю над вашим запросом...")
-            thought_or_direct_answer, plan_steps = planner.generate_plan(user_request, history=conversation_history)
+            # This part will be skipped if we are in a correction loop and already have `plan_steps`
+            if correction_attempts == 0: # Only generate a new plan if not correcting
+                print("\nДумаю над вашим запросом...")
+                thought_or_direct_answer, plan_steps = planner.generate_plan(user_request, history=conversation_history)
 
-            if plan_steps is None: # This is the direct answer case from planner
-                print(f"Ответ Gemini (или мысли): {thought_or_direct_answer}")
-                if thought_or_direct_answer: # Ensure we don't append None
-                    conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
-                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
-                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
-                continue
+                if plan_steps is None: # This is the direct answer case from planner
+                    print(f"Ответ Gemini (или мысли): {thought_or_direct_answer}")
+                    if thought_or_direct_answer: # Ensure we don't append None
+                        conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
+                        if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
+                            conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
+                    original_user_request_for_correction = "" # Reset for next independent request
+                    correction_attempts = 0 # Reset attempts
+                    continue
 
-            if thought_or_direct_answer:
-                 print(f"Мои размышления по поводу задачи: {thought_or_direct_answer}")
-            
-            if not plan_steps: # Empty plan, but there was a thought_or_direct_answer
-                print("План не содержит шагов. Считаю задачу выполненной или не требующей действий.")
-                # This thought_or_direct_answer is the AI's response for an empty plan.
-                if thought_or_direct_answer: # Ensure we don't append None
-                    conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
-                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
-                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
-                continue
+                if thought_or_direct_answer:
+                     print(f"Мои размышления по поводу задачи: {thought_or_direct_answer}")
+                
+                if not plan_steps: # Empty plan, but there was a thought_or_direct_answer
+                    print("План не содержит шагов. Считаю задачу выполненной или не требующей действий.")
+                    if thought_or_direct_answer: # Ensure we don't append None
+                        conversation_history.append({"role": "assistant", "content": thought_or_direct_answer})
+                        if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
+                            conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
+                    original_user_request_for_correction = "" # Reset for next independent request
+                    correction_attempts = 0 # Reset attempts
+                    continue
+            # If plan_steps is already populated by a corrective plan, this block is skipped,
+            # and we proceed to print and execute the corrective plan.
 
-            print("\nСгенерирован следующий план:")
+            print("\nСгенерирован следующий план (или корректирующий план):")
             for i, step in enumerate(plan_steps):
                 print(f"  Шаг {i+1}: {step['tool_name']}({json.dumps(step['args'], ensure_ascii=False)})")
             
@@ -244,18 +277,62 @@ def main_loop():
                 if final_plan:
                     print(f"DEBUG: Неожиданный дополнительный план от Gemini: {final_plan}")
             
-            # This 'elif not plan_steps:' block is now handled before plan execution.
-            # The case where plan_steps is an empty list (not None) and has a thought
-            # is now handled by the 'if not plan_steps:' block after planner.generate_plan call.
+                    print(f"DEBUG: Неожиданный дополнительный план от Gemini: {final_plan}")
+                
+                correction_attempts = 0 # Reset on successful plan execution and summarization
+                original_user_request_for_correction = "" # Clear the stored request
 
             else: # План не был успешно выполнен (error in execution_outcomes[-1])
-                print("\nПлан не был полностью выполнен из-за ошибки на одном из шагов. "
-                      "Результаты выполнения (если есть) были выведены выше.")
-                # We don't add a new "assistant" message here as the errors from execute_plan are already printed.
-                # The summarization step (which would generate a new assistant message) was skipped.
+                print("\nПлан не был полностью выполнен из-за ошибки на одном из шагов.")
+                last_outcome = execution_outcomes[-1]
+                error_message = last_outcome.get('error', 'Неизвестная ошибка в последнем шаге.')
+                # failed_step_details = {"tool_name": last_outcome.get("tool_name"), "args": last_outcome.get("args")} # Not used directly by placeholder
+
+                if correction_attempts >= MAX_CORRECTION_ATTEMPTS:
+                    print("Достигнут лимит попыток исправления ошибки. План не может быть выполнен.")
+                    print(f"Последняя ошибка: {error_message}")
+                    # Add error message to history as assistant's final response for this attempt
+                    final_error_response = f"Не удалось выполнить задачу после {MAX_CORRECTION_ATTEMPTS} попыток исправления. Последняя ошибка: {error_message}"
+                    conversation_history.append({"role": "assistant", "content": final_error_response})
+                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
+                         conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
+                    correction_attempts = 0 # Reset for the next user request
+                    original_user_request_for_correction = "" # Reset for next user request
+                    continue # To the next user request
+
+                correction_attempts += 1
+                print(f"Обнаружена ошибка: {error_message}. Попытка # {correction_attempts} сгенерировать корректирующий план...")
+
+                # Placeholder call to planner.generate_correction_plan
+                # Ensure original_user_request_for_correction is used for the original request context
+                corrective_thought, corrective_plan_steps = planner.generate_plan( # Simulate with generate_plan for now
+                    user_request=f"CONTEXT: The previous plan execution failed. Original user request was: '{original_user_request_for_correction}'. Failed plan outcomes: {json.dumps(execution_outcomes, ensure_ascii=False)}. The error was: '{error_message}'. Please generate a new plan to achieve the original request, considering this failure.",
+                    history=conversation_history
+                )
+
+                if not corrective_plan_steps: # No corrective plan, or planner decided it cannot be fixed
+                    response_to_user = corrective_thought or "Gemini не смог предложить корректирующий план."
+                    print(response_to_user)
+                    conversation_history.append({"role": "assistant", "content": response_to_user})
+                    if len(conversation_history) > MAX_HISTORY_EXCHANGES * 2:
+                        conversation_history = conversation_history[-(MAX_HISTORY_EXCHANGES * 2):]
+                    correction_attempts = 0 # Reset attempts
+                    original_user_request_for_correction = "" # Reset for next user request
+                    continue # To the next user request
+                else:
+                    print("Получен корректирующий план. Попытка выполнения...")
+                    plan_steps = corrective_plan_steps # Update plan_steps with the corrective plan
+                    # The loop will continue, and execute_plan will be called with the new plan_steps
+                    # thought_or_direct_answer is not directly used here, as we have a new plan
+                    # We might want to print the corrective_thought if available
+                    if corrective_thought:
+                        print(f"Мысли по поводу корректирующего плана: {corrective_thought}")
+                    continue # Re-enter the loop to execute the new plan_steps
 
         except KeyboardInterrupt:
             print("\nПрервано пользователем. Завершение работы.")
+            original_user_request_for_correction = "" 
+            correction_attempts = 0
             break
         except Exception as e:
             print(f"Произошла непредвиденная ошибка в основном цикле: {e}")

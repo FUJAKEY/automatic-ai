@@ -1,8 +1,9 @@
 import google.generativeai as genai
 import os
+from typing import Optional
 
 class GeminiClient:
-    def __init__(self, api_key=None, system_prompt_path=None):
+    def __init__(self, api_key=None, system_prompt_text: Optional[str] = None):
         if api_key:
             genai.configure(api_key=api_key)
         else:
@@ -28,24 +29,11 @@ class GeminiClient:
             model_name = 'gemini-1.5-flash-latest'
             print(f"GeminiClient: Using default model: {model_name}")
 
-        self.system_prompt = None
-        if system_prompt_path:
-            try:
-                with open(system_prompt_path, 'r', encoding='utf-8') as f:
-                    self.system_prompt = f.read().strip() # Read and strip whitespace
-                if not self.system_prompt: # Check if prompt is empty after stripping
-                    self.system_prompt = None
-                    print(f"ПРЕДУПРЕЖДЕНИЕ: Системный промпт в файле {system_prompt_path} пуст.")
-            except FileNotFoundError:
-                print(f"ПРЕДУПРЕЖДЕНИЕ: Файл системного промпта не найден по пути: {system_prompt_path}")
-                self.system_prompt = None
-            except Exception as e:
-                print(f"Ошибка при загрузке системного промпта: {e}")
-                self.system_prompt = None
+        self.system_prompt = system_prompt_text # Store the provided system prompt text
 
         if self.system_prompt:
             self.model = genai.GenerativeModel(model_name, system_instruction=self.system_prompt)
-            print(f"GeminiClient: Model initialized with system prompt from {system_prompt_path}")
+            print(f"GeminiClient: Model initialized with provided system prompt.")
         else:
             self.model = genai.GenerativeModel(model_name)
             print(f"GeminiClient: Model initialized without a system prompt.")
@@ -65,21 +53,21 @@ class GeminiClient:
 if __name__ == '__main__':
     # Пример использования (потребуется установленный GOOGLE_API_KEY)
     # Замените 'YOUR_API_KEY' на ваш реальный ключ или установите переменную окружения
-    # client = GeminiClient(api_key='YOUR_API_KEY', 
-    #                       system_prompt_path='../prompts/system_prompt.txt')
-    
-    # Для теста без ключа, но с возможностью загрузки промпта (вызовы API не будут работать)
-    # client = GeminiClient(system_prompt_path='../prompts/system_prompt.txt')
-    # print(f"Загруженный системный промпт: {client.system_prompt}")
+    # client = GeminiClient(api_key='YOUR_API_KEY',
+    #                       system_prompt_text='Это пример системного промпта.')
+
+    # Для теста без ключа, но с возможностью использования системного промпта (вызовы API не будут работать)
+    # client = GeminiClient(system_prompt_text='Это пример системного промпта для теста.')
+    # print(f"Используемый системный промпт: {client.system_prompt}")
 
     # Чтобы протестировать отправку промпта, раскомментируйте и установите ключ:
     # if os.getenv('GOOGLE_API_KEY'):
-    #     client = GeminiClient(system_prompt_path='../prompts/system_prompt.txt')
+    #     client = GeminiClient(system_prompt_text='Ты полезный ассистент.')
     #     if client.system_prompt:
     #         print(f"Системный промпт: {client.system_prompt}")
     #     else:
-    #         print("Системный промпт не был загружен.")
-        
+    #         print("Системный промпт не был предоставлен.")
+
     #     prompt = "Расскажи короткий факт о космосе."
     #     print(f"Отправка промпта: {prompt}")
     #     answer = client.send_prompt(prompt)

@@ -86,19 +86,20 @@ PLANNER_SYSTEM_PROMPT = f"""
 """
 
 class Planner:
-    def __init__(self, gemini_client: GeminiClient):
-        self.gemini_client = gemini_client
-        # Мы могли бы использовать отдельную модель Gemini или конфигурацию для планировщика,
-        # но пока будем использовать тот же клиент.
-        # Важно, чтобы системный промпт для планирования был правильно подан.
+    def __init__(self):
+        # Planner теперь сам создает свой GeminiClient с нужным системным промптом
+        self.gemini_client = GeminiClient(system_prompt_text=PLANNER_SYSTEM_PROMPT)
+        # Важно, чтобы GeminiClient корректно обрабатывал API ключ (например, из переменных окружения)
 
     def generate_plan(self, user_request: str, history: Optional[List[Dict[str, str]]] = None) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
         """
         Генерирует план выполнения для запроса пользователя, учитывая историю диалога.
         Возвращает кортеж: (размышления_бота_или_ответ, список_шагов_плана_или_None)
         """
-        if not self.gemini_client:
-            return "Ошибка: Gemini клиент не инициализирован.", None
+        # Проверка self.gemini_client может остаться, если есть шанс, что инициализация GeminiClient
+        # не удалась, хотя текущая реализация GeminiClient не выбрасывает исключение при отсутствии ключа.
+        if not self.gemini_client: # Эта проверка может быть избыточной, если GeminiClient всегда создается.
+            return "Ошибка: Gemini клиент не инициализирован в Planner.", None
 
         formatted_history = ""
         if history:
@@ -112,56 +113,166 @@ class Planner:
         prompt_parts.append(f"\n\nВот текущий запрос пользователя, который нужно обработать (учитывая предыдущий диалог, если он есть):\n{user_request}")
         
         full_request_to_gemini = "".join(prompt_parts)
+        full_request_to_gemini += "\n\nIMPORTANT: Your entire response for this specific turn MUST be a single, valid JSON object. Start directly with '{' and end directly with '}'. Do not include any other text, explanations, conversational filler, or markdown formatting before or after the JSON object." # New line added
         
         # print(f"\nDEBUG: Полный промпт для Gemini (включая историю):\n{full_request_to_gemini}\n") # Для отладки
 
         raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
 
         if not raw_response:
-            return "Не удалось получить ответ от Gemini для планирования.", None # type: ignore
+            return "Не удалось получить ответ от Gemini для планирования.", None
 
+        if not isinstance(raw_response, str):
+            return "Ошибка: Ответ от Gemini не является строкой.", None
+
+        json_string_to_parse = None # Initialize for use in exception handling
         try:
-            # Ожидаем JSON в ответе
-            # Убираем возможные ```json ... ``` обертки
-            if raw_response.strip().startswith("```json"):
-                clean_response = raw_response.strip()[7:-3].strip()
-            elif raw_response.strip().startswith("```"): # на случай если просто ```
-                 clean_response = raw_response.strip()[3:-3].strip()
-            else:
-                clean_response = raw_response.strip()
+            first_brace = raw_response.find('{')
+            last_brace = raw_response.rfind('}')
+
+            if first_brace == -1 or last_brace == -1 or last_brace < first_brace:
+                error_message = f"Ошибка: Не удалось найти корректные ограничители JSON ('{{' и '}}') в ответе Gemini.\nОтвет Gemini:\n{raw_response}"
+                print(error_message)
+                return error_message, None
             
-            parsed_data = json.loads(clean_response)
+            json_string_to_parse = raw_response[first_brace:last_brace+1]
+            
+            parsed_data = json.loads(json_string_to_parse)
             
             thought = parsed_data.get("thought", "Мысли отсутствуют.")
             plan_steps_raw = parsed_data.get("plan", [])
 
-            # Добавим более строгую проверку типа для plan_steps
             if not isinstance(plan_steps_raw, list):
-                # Возвращаем ошибку, если plan не список, но сохраняем мысль
-                return (f"Ошибка: План от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None) # type: ignore
+                return (f"Ошибка: План от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None)
             
             plan_steps: List[Dict[str, Any]] = []
             for step_raw in plan_steps_raw:
                 if not isinstance(step_raw, dict) or "tool_name" not in step_raw or "args" not in step_raw:
-                    return (f"Ошибка: Неверный формат шага в плане: {step_raw}. Мысль: {thought}", None) # type: ignore
+                    return (f"Ошибка: Неверный формат шага в плане: {step_raw}. Мысль: {thought}", None)
                 if not isinstance(step_raw["args"], dict):
-                     return (f"Ошибка: Аргументы шага должны быть словарем: {step_raw['args']}. Мысль: {thought}", None) # type: ignore
+                     return (f"Ошибка: Аргументы шага должны быть словарем: {step_raw['args']}. Мысль: {thought}", None)
                 plan_steps.append(step_raw)
 
-
-            if not plan_steps and thought: # Если план пуст, но есть мысль - это может быть ответ на вопрос
-                return thought, None # type: ignore
+            if not plan_steps and thought: 
+                return thought, None
                 
-            return thought, plan_steps # type: ignore
+            return thought, plan_steps
 
         except json.JSONDecodeError as e:
-            error_message = f"Ошибка декодирования JSON ответа от Gemini: {e}\nОтвет Gemini:\n{raw_response}"
+            # json_string_to_parse will be available here if it was assigned
+            error_context = json_string_to_parse if json_string_to_parse is not None else "Строка для парсинга не была определена (ошибка до присвоения)."
+            error_message = f"Ошибка декодирования JSON ответа от Gemini: {e}\nСтрока для парсинга:\n{error_context}\nПолный ответ Gemini:\n{raw_response}"
             print(error_message) 
-            return error_message, None # type: ignore
+            return error_message, None
         except Exception as e:
-            error_message = f"Неожиданная ошибка при обработке ответа Gemini: {e}\nОтвет Gemini:\n{raw_response}"
+            error_message = f"Неожиданная ошибка при обработке ответа Gemini: {e}\nПолный ответ Gemini:\n{raw_response}"
             print(error_message)
-            return error_message, None # type: ignore
+            return error_message, None
+
+    def generate_correction_plan(
+        self, 
+        original_user_request: str, 
+        history: Optional[List[Dict[str, str]]], 
+        failed_plan_outcomes: List[Dict[str, Any]], 
+        error_message: str
+    ) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
+        """
+        Генерирует корректирующий план на основе информации о предыдущем неудачном выполнении.
+        """
+        if not self.gemini_client:
+            return "Ошибка: Gemini клиент не инициализирован для корректировки.", None
+
+        formatted_history = ""
+        if history:
+            for message in history:
+                formatted_history += f"{message['role'].capitalize()}: {message['content']}\n"
+            formatted_history += "\n"
+
+        prompt_parts = [
+            PLANNER_SYSTEM_PROMPT,
+            "\n--- Контекст Неудачного Плана ---",
+            f"\nПервоначальный запрос пользователя был: {original_user_request}\n",
+            "История диалога (если есть):\n" + (formatted_history if formatted_history else "Нет предыдущей истории.\n"),
+            "\nБыл выполнен план со следующими результатами:\n"
+        ]
+
+        for i, outcome in enumerate(failed_plan_outcomes):
+            outcome_data_str = outcome.get('data', '') # Default to empty string if no data
+            args_str = json.dumps(outcome.get('args'), ensure_ascii=False)
+            status_message = ""
+            if outcome.get('error'):
+                status_message = f"ОШИБКА: {outcome.get('error')}"
+            elif outcome_data_str: # data is not None or empty
+                if isinstance(outcome_data_str, list) and not outcome_data_str:
+                    status_message = "Результат: (пустой список или нет вывода)"
+                else:
+                    status_message = f"Результат: {json.dumps(outcome_data_str, ensure_ascii=False)}"
+            else: # No error, no data, or data was empty string initially
+                status_message = "Успешно (нет специфичных данных для вывода)"
+            
+            prompt_parts.append(f"  Шаг {i+1}: {outcome.get('tool_name')}({args_str}) - {status_message}\n")
+        
+        prompt_parts.append(f"\nВыполнение было прервано из-за следующей ошибки на последнем релевантном шаге: {error_message}\n")
+        prompt_parts.append("--- Запрос на Корректировку ---")
+        prompt_parts.append("\nПожалуйста, проанализируй ошибку и контекст. Твоя задача — создать НОВЫЙ план действий, чтобы:")
+        prompt_parts.append("\n1. Исправить возникшую ошибку ИЛИ обойти её.")
+        prompt_parts.append("\n2. Попытаться достичь первоначальной цели пользователя, если это всё ещё возможно после исправления/обхода ошибки.")
+        prompt_parts.append("\nЕсли ошибку исправить невозможно или первоначальная цель недостижима, объясни это в поле 'thought'.")
+        prompt_parts.append("\nНовый план должен быть в том же JSON-формате, что и раньше: {\"thought\": \" твои мысли о корректирующем плане...\", \"plan\": [{\"tool_name\": ..., \"args\": ...}, ...]}.")
+        prompt_parts.append("\n\nIMPORTANT: Your entire response for this specific turn MUST be a single, valid JSON object. Start directly with '{' and end directly with '}'. Do not include any other text, explanations, conversational filler, or markdown formatting before or after the JSON object.")
+
+        full_request_to_gemini = "".join(prompt_parts)
+        # print(f"\nDEBUG: Полный промпт для КОРРЕКТИРОВКИ Gemini:\n{full_request_to_gemini}\n") # Для отладки
+
+        raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
+
+        if not raw_response:
+            return "Не удалось получить ответ от Gemini для корректировки плана.", None
+
+        if not isinstance(raw_response, str):
+            return "Ошибка: Ответ от Gemini (корректировка) не является строкой.", None
+
+        json_string_to_parse = None
+        try:
+            first_brace = raw_response.find('{')
+            last_brace = raw_response.rfind('}')
+
+            if first_brace == -1 or last_brace == -1 or last_brace < first_brace:
+                error_msg = f"Ошибка: Не удалось найти корректные ограничители JSON ('{{' и '}}') в ответе Gemini (корректировка).\nОтвет Gemini:\n{raw_response}"
+                print(error_msg)
+                return error_msg, None
+            
+            json_string_to_parse = raw_response[first_brace:last_brace+1]
+            parsed_data = json.loads(json_string_to_parse)
+            
+            thought = parsed_data.get("thought", "Мысли отсутствуют (корректировка).")
+            plan_steps_raw = parsed_data.get("plan", [])
+
+            if not isinstance(plan_steps_raw, list):
+                return (f"Ошибка: Корректирующий план от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None)
+            
+            plan_steps: List[Dict[str, Any]] = []
+            for step_raw in plan_steps_raw:
+                if not isinstance(step_raw, dict) or "tool_name" not in step_raw or "args" not in step_raw:
+                    return (f"Ошибка: Неверный формат шага в корректирующем плане: {step_raw}. Мысль: {thought}", None)
+                if not isinstance(step_raw["args"], dict):
+                     return (f"Ошибка: Аргументы шага в корректирующем плане должны быть словарем: {step_raw['args']}. Мысль: {thought}", None)
+                plan_steps.append(step_raw)
+
+            if not plan_steps and thought: 
+                return thought, None # This could be a valid case where Gemini explains why it can't correct
+                
+            return thought, plan_steps
+
+        except json.JSONDecodeError as e:
+            error_context = json_string_to_parse if json_string_to_parse is not None else "Строка для парсинга не была определена (ошибка до присвоения)."
+            error_msg = f"Ошибка декодирования JSON ответа от Gemini (корректировка): {e}\nСтрока для парсинга:\n{error_context}\nПолный ответ Gemini:\n{raw_response}"
+            print(error_msg) 
+            return error_msg, None
+        except Exception as e:
+            error_msg = f"Неожиданная ошибка при обработке ответа Gemini (корректировка): {e}\nПолный ответ Gemini:\n{raw_response}"
+            print(error_msg)
+            return error_msg, None
 
 if __name__ == '__main__':
     # Для этого теста нужен GOOGLE_API_KEY
@@ -170,8 +281,8 @@ if __name__ == '__main__':
         print("Переменная окружения GOOGLE_API_KEY не установлена. Пропуск теста Planner.")
     else:
         print("--- Тестирование Planner ---")
-        gemini_cli = GeminiClient() 
-        planner = Planner(gemini_cli)
+        # planner = Planner(gemini_cli) # Старая инициализация
+        planner = Planner() # Новая инициализация, Planner сам создает GeminiClient
 
         # Пример 1: Задача без истории
         print("\nПример 1: Задача без истории")
