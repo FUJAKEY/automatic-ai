@@ -1,6 +1,7 @@
 import google.generativeai as genai
 from bot_core.gemini_client import GeminiClient # Предполагаем, что GeminiClient доступен
 import json
+from typing import Optional, List, Dict, Tuple, Any # Added for type hinting
 
 # Описание доступных инструментов для использования в промпте планировщика
 # Это должно соответствовать функциям в file_system_tools.py
@@ -16,22 +17,53 @@ AVAILABLE_TOOLS_DESCRIPTIONS = """
 
 # Системный промпт для планировщика
 PLANNER_SYSTEM_PROMPT = f"""
+--- Контекст Диалога ---
+Тебе может быть предоставлена история предыдущего диалога (ключ "history") в виде списка сообщений. Каждое сообщение в истории имеет "role" ("user" или "assistant") и "content".
+Используй эту историю, чтобы лучше понимать текущий запрос пользователя в контексте предыдущих обсуждений.
+История диалога важна для всех режимов работы: при первоначальном планировании, при ответах на простые вопросы, и при анализе результатов выполнения плана.
+--- Конец Контекста Диалога ---
+
 Ты — продвинутый ИИ-ассистент, отвечающий за планирование и декомпозицию задач.
 Твоя главная цель — разбить сложный запрос пользователя на последовательность конкретных, выполнимых шагов.
 Каждый шаг должен представлять собой вызов одного из доступных инструментов.
 
 {AVAILABLE_TOOLS_DESCRIPTIONS}
 
-Правила составления плана:
+--- Режим Ответа по Результатам Выполнения ---
+Иногда ты получишь запрос, который уже содержит первоначальный запрос пользователя, выполненный план и детальные результаты каждого шага (включая данные или ошибки). Такой запрос будет содержать фразы вроде "Первоначальный запрос пользователя был:", "Результаты выполнения шагов:" и "Пожалуйста, проанализируй результаты...".
+
+В этом режиме твоя задача — НЕ генерировать новый план. Вместо этого:
+1. Внимательно изучи первоначальный запрос и результаты выполнения всех шагов.
+2. Сформулируй полный и ясный ответ на первоначальный запрос пользователя, используя полученные данные.
+3. Если в результатах есть ошибки, объясни их пользователю.
+4. Твой ответ должен быть помещен в поле "thought".
+5. Поле "plan" должно быть пустым списком (`[]`).
+
+Пример для Режима Ответа:
+Если получен запрос с результатами выполнения команды 'list_directory_contents', которая вернула `["файл1.txt", "папка1/"]` на запрос "какие файлы и папки тут есть?", твой JSON ответ должен быть:
+{{
+  "thought": "В текущей директории находятся: файл1.txt и папка1/.",
+  "plan": []
+}}
+
+Если шаг завершился ошибкой, например, "Ошибка: Файл не найден", твой ответ должен это отразить:
+{{
+  "thought": "Я пытался прочитать файл, но получил ошибку: Файл не найден.",
+  "plan": []
+}}
+--- Конец Режима Ответа ---
+
+Правила составления плана (применяются, если это не Режим Ответа):
+- Не стесняйся использовать `execute_terminal_command` для проверки состояния файлов, содержимого директорий или для других операций, если подходящего специализированного инструмента нет или он неудобен в данном случае.
 - План должен быть списком шагов.
 - Каждый шаг должен быть словарем с ключами "tool_name" (имя одной из доступных функций, например, "write_to_file") и "args" (словарь аргументов для этой функции, например, {{"filepath": "output.txt", "content": "Результат"}}).
 - Думай пошагово. Прежде чем сгенерировать план, опиши свои размышления о том, как лучше всего выполнить запрос пользователя, какие инструменты использовать и в каком порядке.
-- Если запрос пользователя не является задачей, а вопросом или просьбой о предоставлении информации, которую можно дать без использования инструментов, то верни пустой список шагов и просто ответь на вопрос в поле "thought".
+- Если запрос пользователя не является задачей (например, это простое приветствие, общий вопрос, или просьба о информации, не требующая инструментов), то верни пустой список шагов (`"plan": []`). В этом случае, поле `"thought"` должно содержать **прямой и дружелюбный ответ пользователю**.
 - Всегда создавай файлы и директории внутри поддиректорий, чтобы поддерживать порядок. Не создавай много файлов на верхнем уровне рабочей директории. Придумывай осмысленные имена для директорий.
 - Если нужно создать файл, сначала убедись, что директория для него существует, или создай её (если это не было сделано ранее).
-- Результат должен быть строкой в формате JSON, содержащей два ключа: "thought" (твои размышления о задаче и плане) и "plan" (список шагов).
+- Результат должен быть строкой в формате JSON, содержащей два ключа: "thought" (твои размышления о задаче и плане, прямой ответ пользователю если план пуст, или ответ по результатам выполнения) и "plan" (список шагов, или пустой список для Режима Ответа и простых вопросов).
 
-Пример JSON ответа:
+Пример JSON ответа для ПЛАНИРОВАНИЯ ЗАДАЧИ:
 {{
   "thought": "Пользователь хочет создать файл с приветствием. Я использую write_to_file. Создам его в директории 'texts'.",
   "plan": [
@@ -46,9 +78,9 @@ PLANNER_SYSTEM_PROMPT = f"""
   ]
 }}
 
-Если это вопрос (например, "Как дела?" или "Что ты умеешь?"):
+Если это вопрос или приветствие (например, "Привет" или "Как дела?" или "Что ты умеешь?"):
 {{
-  "thought": "Пользователь задал вопрос. Я отвечу на него напрямую.",
+  "thought": "Привет! Я Gemini, ваш автономный ИИ-ассистент. Чем могу помочь сегодня?",
   "plan": []
 }}
 """
@@ -60,57 +92,33 @@ class Planner:
         # но пока будем использовать тот же клиент.
         # Важно, чтобы системный промпт для планирования был правильно подан.
 
-    def generate_plan(self, user_request: str) -> (str, list):
+    def generate_plan(self, user_request: str, history: Optional[List[Dict[str, str]]] = None) -> Tuple[Optional[str], Optional[List[Dict[str, Any]]]]:
         """
-        Генерирует план выполнения для запроса пользователя.
-        Возвращает кортеж: (размышления_бота, список_шагов_плана)
-        или (ответ_бота_на_вопрос, None) если это не задача.
+        Генерирует план выполнения для запроса пользователя, учитывая историю диалога.
+        Возвращает кортеж: (размышления_бота_или_ответ, список_шагов_плана_или_None)
         """
         if not self.gemini_client:
             return "Ошибка: Gemini клиент не инициализирован.", None
 
-        # Формируем промпт для Gemini, который включает системные инструкции и запрос пользователя
-        # В будущем, для моделей Gemini, поддерживающих system_instruction, его лучше передавать отдельно.
-        # Сейчас мы включаем его в основной промпт.
-        # prompt_for_gemini = PLANNER_SYSTEM_PROMPT + "\n\nЗапрос пользователя: " + user_request
-        
-        # Для Gemini API, системные инструкции и пользовательский запрос лучше передавать структурированно,
-        # если используется модель, которая это поддерживает (например, через messages API или system_instruction).
-        # В `send_prompt` нашего `GeminiClient` мы пока сделали простую конкатенацию для системного промпта,
-        # что не идеально. Здесь мы делаем так же, но это нужно будет улучшить.
-        
-        # Создаем контент для API, где PLANNER_SYSTEM_PROMPT - это как бы "инструкция"
-        # а user_request - это то, что пользователь реально сказал.
-        # Это не совсем "system prompt" в его каноническом виде для Gemini API,
-        # но это способ передать инструкции.
-        # TODO: Переделать на использование правильных ролей (system, user) когда GeminiClient будет это поддерживать.
-        
-        # Пока что GeminiClient.send_prompt ожидает один строковый промпт.
-        # Мы передаем ему комбинацию системного промпта планировщика и запроса пользователя.
-        # Это может быть не очень эффективно для модели, но для начала сойдет.
-        # В идеале, PLANNER_SYSTEM_PROMPT должен быть частью system_instruction модели или первым сообщением в чате.
-        
-        # Попытка сформировать промпт, который `gemini_client.send_prompt` сможет обработать.
-        # Текущая реализация `send_prompt` в `gemini_client` не очень хорошо обрабатывает system prompts.
-        # Она просто передает `user_prompt` в `model.generate_content()`.
-        # Поэтому нам нужно, чтобы `PLANNER_SYSTEM_PROMPT` был частью `user_prompt` для этой функции.
-        
-        # ВАЖНО: Текущая `GeminiClient.send_prompt` не использует `self.system_prompt` из конструктора
-        # при формировании запроса, если мы просто передаем ей `user_request`.
-        # Она использует `self.system_prompt` только если мы передаем его в `system_instruction` при создании модели,
-        # либо если мы строим сложный `contents` список.
-        # Давайте модифицируем `gemini_client.py` или будем передавать промпт по-другому.
+        formatted_history = ""
+        if history:
+            for message in history:
+                formatted_history += f"{message['role'].capitalize()}: {message['content']}\n"
+            formatted_history += "\n" # Add a separator
 
-        # Пока что, для простоты, будем считать, что PLANNER_SYSTEM_PROMPT - это то, что мы хотим, чтобы
-        # Gemini обработал, а user_request - это входные данные для этого "режима" Gemini.
-        # Мы передадим PLANNER_SYSTEM_PROMPT + user_request как единый запрос.
+        # Собираем полный промпт для Gemini
+        # История диалога предшествует системному промпту и текущему запросу.
+        prompt_parts = [formatted_history, PLANNER_SYSTEM_PROMPT]
+        prompt_parts.append(f"\n\nВот текущий запрос пользователя, который нужно обработать (учитывая предыдущий диалог, если он есть):\n{user_request}")
         
-        full_request_to_gemini = PLANNER_SYSTEM_PROMPT + f"\n\nВот запрос пользователя, который нужно обработать:\n{user_request}"
+        full_request_to_gemini = "".join(prompt_parts)
+        
+        # print(f"\nDEBUG: Полный промпт для Gemini (включая историю):\n{full_request_to_gemini}\n") # Для отладки
 
         raw_response = self.gemini_client.send_prompt(full_request_to_gemini)
 
         if not raw_response:
-            return "Не удалось получить ответ от Gemini для планирования.", None
+            return "Не удалось получить ответ от Gemini для планирования.", None # type: ignore
 
         try:
             # Ожидаем JSON в ответе
@@ -122,49 +130,38 @@ class Planner:
             else:
                 clean_response = raw_response.strip()
             
-            # parsed_response = genai.utils. यानी_response_to_dict(clean_response) # Используем утилиту Gemini, если она есть, или json.loads
-            # Заменил на json.loads, так как genai.utils. यानी_response_to_dict может не существовать или быть специфичным.
-            # import json # нужно будет добавить импорт
-            # parsed_response = json.loads(clean_response)
-
-            # Проблема: genai.utils.यानी_response_to_dict - это вымышленная функция.
-            # Нужно использовать стандартный json.loads.
-            # И Gemini может вернуть не чистый JSON, а с пояснениями.
-            # Нужно будет парсить аккуратнее или настроить промпт так, чтобы он возвращал ТОЛЬКО JSON.
-            # Пока что будем полагаться на то, что модель вернет JSON-совместимую строку.
-            
-            # Давайте используем стандартный json.loads и попросим модель быть строже с форматом.
-            # import json # Добавить в импорты модуля planner.py # Уже есть в начале файла
-
             parsed_data = json.loads(clean_response)
             
             thought = parsed_data.get("thought", "Мысли отсутствуют.")
-            plan_steps = parsed_data.get("plan", [])
+            plan_steps_raw = parsed_data.get("plan", [])
 
-            if not isinstance(plan_steps, list):
-                return f"Ошибка: План от Gemini не является списком: {plan_steps}", None
+            # Добавим более строгую проверку типа для plan_steps
+            if not isinstance(plan_steps_raw, list):
+                # Возвращаем ошибку, если plan не список, но сохраняем мысль
+                return (f"Ошибка: План от Gemini не является списком: {plan_steps_raw}. Мысль: {thought}", None) # type: ignore
             
-            # Валидация шагов плана (базовая)
-            for step in plan_steps:
-                if not isinstance(step, dict) or "tool_name" not in step or "args" not in step:
-                    return f"Ошибка: Неверный формат шага в плане: {step}", None
-                if not isinstance(step["args"], dict):
-                     return f"Ошибка: Аргументы шага должны быть словарем: {step['args']}", None
+            plan_steps: List[Dict[str, Any]] = []
+            for step_raw in plan_steps_raw:
+                if not isinstance(step_raw, dict) or "tool_name" not in step_raw or "args" not in step_raw:
+                    return (f"Ошибка: Неверный формат шага в плане: {step_raw}. Мысль: {thought}", None) # type: ignore
+                if not isinstance(step_raw["args"], dict):
+                     return (f"Ошибка: Аргументы шага должны быть словарем: {step_raw['args']}. Мысль: {thought}", None) # type: ignore
+                plan_steps.append(step_raw)
 
 
             if not plan_steps and thought: # Если план пуст, но есть мысль - это может быть ответ на вопрос
-                return thought, None 
+                return thought, None # type: ignore
                 
-            return thought, plan_steps
+            return thought, plan_steps # type: ignore
 
         except json.JSONDecodeError as e:
             error_message = f"Ошибка декодирования JSON ответа от Gemini: {e}\nОтвет Gemini:\n{raw_response}"
-            print(error_message) # Логируем для отладки
-            return error_message, None
+            print(error_message) 
+            return error_message, None # type: ignore
         except Exception as e:
             error_message = f"Неожиданная ошибка при обработке ответа Gemini: {e}\nОтвет Gemini:\n{raw_response}"
-            print(error_message) # Логируем для отладки
-            return error_message, None
+            print(error_message)
+            return error_message, None # type: ignore
 
 if __name__ == '__main__':
     # Для этого теста нужен GOOGLE_API_KEY
@@ -173,58 +170,49 @@ if __name__ == '__main__':
         print("Переменная окружения GOOGLE_API_KEY не установлена. Пропуск теста Planner.")
     else:
         print("--- Тестирование Planner ---")
-        # Используем существующий GeminiClient. API ключ должен быть в окружении.
-        # Путь к системному промпту клиента здесь не важен, т.к. Planner использует свой.
         gemini_cli = GeminiClient() 
-        
         planner = Planner(gemini_cli)
 
-        # Пример 1: Задача
-        print("\nПример 1: Задача")
-        # request1 = "Создай файл 'summary.txt' с текстом 'Это итог.' в новой папке 'results'."
+        # Пример 1: Задача без истории
+        print("\nПример 1: Задача без истории")
         request1 = "Создай файл 'summary.txt' с текстом 'Это итог.' в новой папке 'project_alpha/results'."
         thought1, plan1 = planner.generate_plan(request1)
-        
         print(f"Размышления: {thought1}")
-        if plan1 is not None: # Может быть None, если это был вопрос или ошибка
+        if plan1 is not None:
             print("Сгенерированный план:")
-            for i, step in enumerate(plan1):
-                print(f"  Шаг {i+1}: {step['tool_name']}({step['args']})")
+            for i, step_item in enumerate(plan1): # Renamed step to step_item
+                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
         else:
-            print("План не был сгенерирован (возможно, это был вопрос или произошла ошибка).")
+            print("План не был сгенерирован.")
 
-        # Пример 2: Вопрос
-        print("\nПример 2: Вопрос")
-        request2 = "Что ты умеешь делать?"
-        thought2, plan2 = planner.generate_plan(request2)
+        # Пример 2: Вопрос с историей
+        print("\nПример 2: Вопрос с историей")
+        history2: List[Dict[str, str]] = [
+            {"role": "user", "content": "Какой мой предыдущий запрос?"},
+            {"role": "assistant", "content": "Вы спрашивали о создании файла 'summary.txt'."}
+        ]
+        request2 = "А какой был первый файл, о котором я говорил?" # Это вымышленный вопрос для теста
+        thought2, plan2 = planner.generate_plan(request2, history=history2)
         print(f"Размышления/Ответ: {thought2}")
-        if plan2 is not None:
+        if plan2 is not None and plan2: # Проверяем, что plan2 не None и не пустой список
             print("Сгенерированный план (должен быть пуст для вопроса):")
-            for i, step in enumerate(plan2):
-                print(f"  Шаг {i+1}: {step['tool_name']}({step['args']})")
+            for i, step_item in enumerate(plan2): # Renamed step to step_item
+                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
         else:
-            print("План не был сгенерирован (это нормально для вопроса).")
-
-        # Пример 3: Более сложная задача
-        print("\nПример 3: Более сложная задача")
-        request3 = "Создай директорию 'app', внутри нее 'src' и 'tests'. В 'app/src' создай файл 'main.py' с кодом 'print(\"Hello App\")'. Затем покажи содержимое директории 'app'."
-        thought3, plan3 = planner.generate_plan(request3)
+            print("План не был сгенерирован или пуст (это нормально для вопроса).")
+        
+        # Пример 3: Задача с историей, которая может повлиять на планирование
+        print("\nПример 3: Задача с контекстной историей")
+        history3: List[Dict[str, str]] = [
+            {"role": "user", "content": "Я хочу создать папку для моего нового проекта 'Omega'."},
+            {"role": "assistant", "content": "Хорошо, я могу помочь создать папку 'Omega'."}
+        ]
+        request3 = "Теперь создай в этой папке файл readme.md с текстом 'Проект Омега'."
+        thought3, plan3 = planner.generate_plan(request3, history=history3)
         print(f"Размышления: {thought3}")
         if plan3 is not None:
             print("Сгенерированный план:")
-            for i, step in enumerate(plan3):
-                print(f"  Шаг {i+1}: {step['tool_name']}({step['args']})")
+            for i, step_item in enumerate(plan3): # Renamed step to step_item
+                print(f"  Шаг {i+1}: {step_item['tool_name']}({step_item['args']})")
         else:
             print("План не был сгенерирован.")
-            
-        # Пример 4: Некорректный JSON (если модель ошибется)
-        # Для этого теста нужно было бы мокать ответ Gemini
-        # print("\nПример 4: Некорректный JSON (симуляция)")
-        # class MockGeminiClient(GeminiClient):
-        #     def send_prompt(self, user_prompt):
-        #         return "Это не JSON"
-        # planner_mock = Planner(MockGeminiClient())
-        # thought4, plan4 = planner_mock.generate_plan("любой запрос")
-        # print(f"Размышления/Ошибка: {thought4}")
-        # if plan4 is None:
-        #     print("План не сгенерирован (ошибка JSON).")
